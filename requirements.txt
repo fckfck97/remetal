@@ -9,7 +9,7 @@ cryptography==37.0.4
 cssselect2==0.6.0
 decouple==0.0.7
 dj-database-url==1.0.0
-Django==4.1
+Django==4.0
 django-filter==22.1
 django-restframework==0.0.1
 django-userforeignkey==0.4.0
