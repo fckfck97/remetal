@@ -1,1 +1,1 @@
-web: gunicorn remetal.wsgi
+web: gunicorn remetal.wsgi:application --log-file - --log-le

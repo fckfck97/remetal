@@ -1,20 +1,25 @@
-{% extends 'padre/base.html' %}
-
-{% block page_content %}
+{% extends 'padre/base.html' %} {% block page_content %}
 <div class="card shadow mb-4">
   <!-- Card Header - Dropdown -->
-  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+  <div
+    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+  >
     <h6 class="m-0 font-weight-bold text-primary">Listado de Clientes</h6>
   </div>
   <!-- Card Body -->
   <div class="card-body">
     <div class="buttons-toolbar">
-      <a class="dropdown-item" onclick="return abrir_modal('{% url 'facturacion:nuevo_cliente' %}')" href="#"><i class="far fa-calendar-plus"></i> Nuevo</a>
+      <a
+        class="dropdown-item"
+        onclick="return abrir_modal('{% url 'facturacion:nuevo_cliente' %}')"
+        href="#"
+        ><i class="far fa-calendar-plus"></i> Nuevo</a
+      >
     </div>
     {% if not obj %}
     <div class="alert alert-info">No Hay Clientes</div>
     {% else %}
-    <table 
+    <table
       id="table"
       data-toggle="table"
       data-pagination="true"
@@ -26,14 +31,14 @@
       data-locale="es-MX"
     >
       <thead>
-          <th data-sortable="true" data-field="id">Id</th>
-          <th data-sortable="true" data-field="tipo">Tipo</th>
-          <th data-sortable="true" data-field="rif">RIF</th>        
-          <th data-sortable="true" data-field="razon_social">Razon Social.</th>
-          <th data-sortable="true" data-field="domicilio">Domicilio</th>
-          <th data-field="telefono">Teléfono</th>
-          <th data-field="estado">Estado</th>
-          <th class="all">Acciones</th>  
+        <th data-sortable="true" data-field="id">Id</th>
+        <th data-sortable="true" data-field="tipo">Tipo</th>
+        <th data-sortable="true" data-field="rif">RIF</th>
+        <th data-sortable="true" data-field="razon_social">Razon Social.</th>
+        <th data-sortable="true" data-field="domicilio">Domicilio</th>
+        <th data-field="telefono">Teléfono</th>
+        <th data-field="estado">Estado</th>
+        <th class="all">Acciones</th>
       </thead>
       <tbody>
         {% for item in obj%}
@@ -44,61 +49,62 @@
           <td>{{ item.razon_social }}</td>
           <td>{{ item.domicilio }}</td>
           <td>{{ item.celular }}</td>
-          <td >{#item.estado|yesno:"Activo,Inactivo"#}
+          <td>
+            {#item.estado|yesno:"Activo,Inactivo"#}
             <div onclick="inactivar({{item.id}})">
-                {% if item.estado %}
-                <i class="far fa-thumbs-up text-primary"></i>
+              {% if item.estado %}
+              <i class="far fa-thumbs-up text-primary"></i>
               {% else %}
-                <i class="far fa-thumbs-down text-danger"></i>
+              <i class="far fa-thumbs-down text-danger"></i>
               {% endif %}
             </div>
           </td>
           <td>
-            <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'facturacion:editar_cliente' item.id %}')"><i class="far fa-edit"></i></button>
+            <button
+              class="btn btn-warning btn-circle"
+              onclick="return abrir_modal('{% url 'facturacion:editar_cliente' item.id %}')"
+            >
+              <i class="far fa-edit"></i>
+            </button>
           </td>
         </tr>
         {% endfor %}
       </tbody>
-
     </table>
     {% endif %}
   </div>
 </div>
-{% endblock %}
-{% block js_page %}
+{% endblock %} {% block js_page %}
 <script>
-  function inactivar(id)
-  {
-    var data = {id:id};
+  function inactivar(id) {
+    var data = { id: id };
     data = JSON.stringify(data);
-    var token = '{{csrf_token}}';
+    var token = "{{csrf_token}}";
     // alert(token);
     // alert(id);
-    
+
     $.ajax({
-      headers : {"X-CSRFToken": token},
-      type:"POST",
-      url:"/facturacion/clientes/estado/"+id,
+      headers: { "X-CSRFToken": token },
+      type: "POST",
+      url: "/facturacion/clientes/estado/" + id,
       data: data,
-      success: function(response){
-        if(response==="OK")
-        {
+      success: function (response) {
+        if (response === "OK") {
           location.reload(true);
-        }
-        else{
+        } else {
           mensaje("Error Intentado Cambiar Estado a Cliente");
         }
       },
-      error: function(jqXHR, textStatus, errorThrow){
+      error: function (jqXHR, textStatus, errorThrow) {
         console.log(textStatus, errorThrow);
-        mensaje(errorThrow,'red');
+        mensaje(errorThrow, "red");
         cerrar_modal();
-      }
+      },
     });
   }
-// Call the dataTables jQuery plugin
-// $(document).ready(function() {
-//   $('.table').DataTable();
-// });
+  // Call the dataTables jQuery plugin
+  // $(document).ready(function() {
+  //   $('.table').DataTable();
+  // });
 </script>
 {% endblock %}

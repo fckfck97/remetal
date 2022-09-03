@@ -1,34 +1,39 @@
-{% extends 'padre/base.html' %}
-
-{% block page_content %}
+{% extends 'padre/base.html' %} {% block page_content %}
 <div class="card shadow mb-4">
   <!-- Card Header - Dropdown -->
-  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+  <div
+    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+  >
     <h6 class="m-0 font-weight-bold text-primary">Listado de Facturas</h6>
-
   </div>
   <!-- Card Body -->
   <div class="card-body">
-    {% comment %} <div class="row">
+    {% comment %}
+    <div class="row">
       <div class="col-md-4">
-        <input type="text" class="form-class" name="f1" id="f1" readonly>
+        <input type="text" class="form-class" name="f1" id="f1" readonly />
       </div>
       <div class="col-md-4">
-        <input type="text" class="form-class" name="f2" id="f2" readonly>
+        <input type="text" class="form-class" name="f2" id="f2" readonly />
       </div>
       <div class="col-md-4">
-        <button class="btn btn-warning" type="button" id="btnPrint">Imprimir</button>
+        <button class="btn btn-warning" type="button" id="btnPrint">
+          Imprimir
+        </button>
       </div>
-    </div> {% endcomment %}
-    <div class="col-md-4">
-      <a class="btn btn-success" href="{% url 'facturacion:nueva_factura'%}"><i cass="far fa-calendar-plus"></i> Nuevo</a>
     </div>
-    
+    {% endcomment %}
+    <div class="col-md-4">
+      <a class="btn btn-success" href="{% url 'facturacion:nueva_factura'%}"
+        ><i cass="far fa-calendar-plus"></i> Nuevo</a
+      >
+    </div>
+
     {% if not obj %}
     <div class="alert alert-info">No Hay Facturas</div>
-    {% endif %}    
+    {% endif %}
 
-    <table 
+    <table
       id="table"
       data-toggle="table"
       data-pagination="true"
@@ -39,51 +44,63 @@
       data-toolbar=".buttons-toolbar"
       data-locale="es-NI"
     >
-    <thead>
-      <th data-sortable="true" data-field="id">No.</th>        
-      <th data-sortable="true" data-field="nombres">Cliente</th>
-      <th data-sortable="true" data-field="apellidos">Total</th>
-      <th data-field="estado">Estado</th>
-      <th class="all">Acciones</th>
-    </thead>
-    <tbody>
-      {% for item in obj%}
-      <tr>
-        <td>RM-F-{{ item.id }}</td>
-        <td>{{ item.cliente.razon_social }}</td>
-        <td>{{ item.total }}</td>
-        <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
-        <td>
-          <a href="{% url 'facturacion:editar_factura' item.id %}" class="href btn btn-warning btn-circle"><i class="fas fa-edit"></i>
-            <a class="btn btn-danger btn-circle" onclick="return abrir_modal('{% url 'facturacion:eliminar_enc' item.id %}')" ><i class="fas fa-trash"></i></a>
-            <button type="button" class="btn btn-warning btn-circle"
-                                    onclick="pagar_factura({{ item.id }})">
-                                    <i class="fas fa-history"></i>
-                                </button>
-          </a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
+      <thead>
+        <th data-sortable="true" data-field="id">No.</th>
+        <th data-sortable="true" data-field="nombres">Cliente</th>
+        <th data-sortable="true" data-field="apellidos">Total</th>
+        <th data-field="estado">Estado</th>
+        <th class="all">Acciones</th>
+      </thead>
+      <tbody>
+        {% for item in obj%}
+        <tr>
+          <td>RM-F-{{ item.id }}</td>
+          <td>{{ item.cliente.razon_social }}</td>
+          <td>{{ item.total }}</td>
+          <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
+          <td>
+            <a
+              href="{% url 'facturacion:editar_factura' item.id %}"
+              class="href btn btn-warning btn-circle"
+              ><i class="fas fa-edit"></i>
+              <a
+                class="btn btn-danger btn-circle"
+                onclick="return abrir_modal('{% url 'facturacion:eliminar_enc' item.id %}')"
+                ><i class="fas fa-trash"></i
+              ></a>
+              <button
+                type="button"
+                class="btn btn-warning btn-circle"
+                onclick="pagar_factura({{ item.id }})"
+              >
+                <i class="fas fa-history"></i>
+              </button>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
 
     <div class="row p-1">
       <div class="col-lg-12">
-          <h6 class="m-0 font-weight-bold text-primary">Listado de Compras Pagadas</h6>
-          {% if obj2 %}
-          <table 
-            id="table"
-            data-toggle="table"
-            data-pagination="true"
-            data-search="true"
-            data-show-columns="true"
-            data-show-toggle="true"
-            data-show-fullscreen="true"
-            data-toolbar=".buttons-toolbar"
-            data-locale="es-NI"
-          >
+        <h6 class="m-0 font-weight-bold text-primary">
+          Listado de Compras Pagadas
+        </h6>
+        {% if obj2 %}
+        <table
+          id="table"
+          data-toggle="table"
+          data-pagination="true"
+          data-search="true"
+          data-show-columns="true"
+          data-show-toggle="true"
+          data-show-fullscreen="true"
+          data-toolbar=".buttons-toolbar"
+          data-locale="es-NI"
+        >
           <thead>
-            <th data-sortable="true" data-field="id">No.</th>        
+            <th data-sortable="true" data-field="id">No.</th>
             <th data-sortable="true" data-field="nombres">Cliente</th>
             <th data-sortable="true" data-field="apellidos">Total</th>
             <th data-field="estado">Estado</th>
@@ -93,7 +110,7 @@
           </thead>
           <tbody>
             {% for item in obj2 %}
-            
+
             <tr>
               <td>RM-F-{{ item.id }}</td>
               <td>{{ item.cliente.razon_social }}</td>
@@ -106,90 +123,94 @@
               {% if item.total <= 0 %}
               <td>Factura Invalida</td>
               {% else %}
-              <td><a class="btn btn-success btn-circle" href="{% url 'facturacion:factura_imprimir_one' item.id%}" target="reportes"><i class="fas fa-print"></i></a></td>
+              <td>
+                <a
+                  class="btn btn-success btn-circle"
+                  href="{% url 'facturacion:factura_imprimir_one' item.id%}"
+                  target="reportes"
+                  ><i class="fas fa-print"></i
+                ></a>
+              </td>
               {% endif %}
             </tr>
 
             {% endfor %}
           </tbody>
-          </table>
-          {% endif %}
-
-
-        </div>
+        </table>
+        {% endif %}
       </div>
+    </div>
   </div>
 </div>
 
-{% endblock %}
-{% block js_page %}
+{% endblock %} {% block js_page %}
 <script>
-  function pagar_factura(id)
-    {
-        // mensaje(id);
-        $.confirm({
-            theme:"modern",
-            icon:"fab fa-keycdn",
-            type:'green',
-            title: "Pago de Factura",
-            content: 'url:/facturacion/factura/pago_factura/' + id,
-            buttons:{
-                borrar:{
-                    text:"Pago",
-                    btnClass:"btn btn-danger",
-                    action: function(){
-                      var metodo = this.$content.find('input#metodo');
-                      var data = {"metodo":metodo.val()};
-	                    console.log(data);
+    function pagar_factura(id)
+      {
+          // mensaje(id);
+          $.confirm({
+              theme:"modern",
+              icon:"fab fa-keycdn",
+              type:'green',
+              title: "Pago de Factura",
+              content: 'url:/facturacion/factura/pago_factura/' + id,
+              buttons:{
+                  borrar:{
+                      text:"Pago",
+                      btnClass:"btn btn-danger",
+                      action: function(){
+                        var metodo = this.$content.find('input#metodo');
+                        var data = {"metodo":metodo.val()};
+  	                    console.log(data);
 
-                        var token = '{{csrf_token}}';
-                        $.ajax({
-                            headers: { "X-CSRFToken": token },
-                            type:"POST",
-                            data:data,
-                            url: '/facturacion/factura/pago_factura/' + id,
-                            success: function(r){
-                                console.log(r);
-                                if(r==="ok"){
-                                    location.reload(true);
-                                }else{
-                                    mensaje(r,'red');
-                                }
-                            },
-                            error: function(a,b,c){
-                                mensaje(c);
-                            }
-                        });
-                    }
-                    },
-                cancelar: function(){}
-                }
-        });
-    } 
-$(function(){
-  $("#f1, #f2").datetimepicker({
-      format: 'Y-m-d',
-      timepicker:false
+                          var token = '{{csrf_token}}';
+                          $.ajax({
+                              headers: { "X-CSRFToken": token },
+                              type:"POST",
+                              data:data,
+                              url: '/facturacion/factura/pago_factura/' + id,
+                              success: function(r){
+                                  console.log(r);
+                                  if(r==="ok"){
+                                      location.reload(true);
+                                  }else{
+                                      mensaje(r,'red');
+                                  }
+                              },
+                              error: function(a,b,c){
+                                  mensaje(c);
+                              }
+                          });
+                      }
+                      },
+                  cancelar: function(){}
+                  }
+          });
+      }
+  $(function(){
+    $("#f1, #f2").datetimepicker({
+        format: 'Y-m-d',
+        timepicker:false
+    });
+
+    {% comment %} $("#btnPrint").click(function(e){
+      e.preventDefault();
+      var f1,f2;
+      f1 = $("#f1").val();
+      f2 = $("#f2").val();
+      if(f1=="" || f1==null){
+        f1="2019-06-01";
+      }
+      if(f2=="" || f2==null){
+        var d = new Date();
+        var f2 = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+      }
+
+      var url = "imprimir-todas/" + f1 + "/" + f2;
+
+      window.open(url,'facturas');
+
+    }); {% endcomment %}
   });
-
-  {% comment %} $("#btnPrint").click(function(e){
-    e.preventDefault();
-    var f1,f2;
-    f1 = $("#f1").val();
-    f2 = $("#f2").val();
-    if(f1=="" || f1==null){
-      f1="2019-06-01";
-    }
-    if(f2=="" || f2==null){
-      var d = new Date();
-      var f2 = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
-    }
-    
-    var url = "imprimir-todas/" + f1 + "/" + f2;
-
-    window.open(url,'facturas');
-    
-  }); {% endcomment %}
-});
 </script>
 {% endblock %}

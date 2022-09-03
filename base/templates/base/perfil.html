@@ -1,26 +1,22 @@
-{% extends 'padre/base.html' %}
-
-{% block page_content %}
+{% extends 'padre/base.html' %} {% block page_content %}
 <table class="table table-striped table-hover">
-    <thead>
-        <th>Id</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>E-mail</th>
-        <th>Ultima Conexion</th>
-        <th>Fecha de Registro</th>
-    </thead>
-    <tbody>
-
-      <tr>
-          <td>{{ id }}</td>
-          <td>{{ nombre }}</td>
-          <td>{{ apellido }}</td>
-          <td>{{ email }}</td>
-          <td>{{ uc |date:"d/m/Y H:i:s"  }}</td>
-          <td>{{ dj|date:"d/m/Y H:i:s" }}</td>          
-      </tr>
-
-    </tbody>
+  <thead>
+    <th>Id</th>
+    <th>Nombre</th>
+    <th>Apellido</th>
+    <th>E-mail</th>
+    <th>Ultima Conexion</th>
+    <th>Fecha de Registro</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ id }}</td>
+      <td>{{ nombre }}</td>
+      <td>{{ apellido }}</td>
+      <td>{{ email }}</td>
+      <td>{{ uc |date:"d/m/Y H:i:s" }}</td>
+      <td>{{ dj|date:"d/m/Y H:i:s" }}</td>
+    </tr>
+  </tbody>
 </table>
 {% endblock %}

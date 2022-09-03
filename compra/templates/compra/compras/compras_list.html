@@ -1,19 +1,37 @@
-{% extends 'padre/base.html' %}
-
-{% block page_content %}
+{% extends 'padre/base.html' %} {% block page_content %}
 <div class="card shadow mb-4">
   <!-- Card Header - Dropdown -->
-  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+  <div
+    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+  >
     <h6 class="m-0 font-weight-bold text-primary">Listado de Compras</h6>
     <div class="dropdown no-arrow">
-      <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a
+        class="dropdown-toggle"
+        href="#"
+        role="button"
+        id="dropdownMenuLink"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
       </a>
-      <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+      <div
+        class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+        aria-labelledby="dropdownMenuLink"
+      >
         <div class="dropdown-header">Acciones:</div>
-        <a class="dropdown-item" href="{% url 'compra:nueva_compra'%}"><i class="far fa-calendar-plus"></i> Nueva</a>
-        <a class="dropdown-item" href="{% url 'compra:imprimir_factura_compra_todas'%}" target="reportes"><i class="fas fa-print"></i> Listado</a>
-      </div> 
+        <a class="dropdown-item" href="{% url 'compra:nueva_compra'%}"
+          ><i class="far fa-calendar-plus"></i> Nueva</a
+        >
+        <a
+          class="dropdown-item"
+          href="{% url 'compra:imprimir_factura_compra_todas'%}"
+          target="reportes"
+          ><i class="fas fa-print"></i> Listado</a
+        >
+      </div>
     </div>
   </div>
   <!-- Card Body -->
@@ -21,7 +39,7 @@
     {% if not obj %}
     <div class="alert alert-info">No hay compras</div>
     {% else %}
-    <table 
+    <table
       id="table"
       data-toggle="table"
       data-pagination="true"
@@ -32,14 +50,14 @@
       data-locale="es-MX"
     >
       <thead>
-        <th data-field='no_factura'>No. Factura</th>        
-        <th data-field='fecha_compra'>Fecha</th>
-        <th data-field='observacion'>Observación</th>
-        <th data-field='fecha_factura'>F. Factura</th>
-        <th data-field='sub_total'>Sub Total</th>
-        <th data-field='gastos_adicionales'>Gastos Adicionales</th>
-        <th data-field='total'>Total</th>
-        <th data-field='estado'>Estado</th>
+        <th data-field="no_factura">No. Factura</th>
+        <th data-field="fecha_compra">Fecha</th>
+        <th data-field="observacion">Observación</th>
+        <th data-field="fecha_factura">F. Factura</th>
+        <th data-field="sub_total">Sub Total</th>
+        <th data-field="gastos_adicionales">Gastos Adicionales</th>
+        <th data-field="total">Total</th>
+        <th data-field="estado">Estado</th>
         <th class="all">Acciones</th>
       </thead>
       <tbody>
@@ -54,107 +72,121 @@
           <td>{{ item.total }}</td>
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
-            <a class="btn btn-warning btn-circle" href="{% url 'compra:editar_compra' item.id %}"><i class="far fa-edit"></i></a>
-            <a class="btn btn-danger btn-circle" onclick="return abrir_modal('{% url 'compra:eliminar_enc' item.id %}')" target="reportes"><i class="fas fa-trash"></i></a>
-            <button type="button" class="btn btn-warning btn-circle"onclick="pagar_factura({{ item.id }})"><i class="fas fa-history"></i></button>
+            <a
+              class="btn btn-warning btn-circle"
+              href="{% url 'compra:editar_compra' item.id %}"
+              ><i class="far fa-edit"></i
+            ></a>
+            <a
+              class="btn btn-danger btn-circle"
+              onclick="return abrir_modal('{% url 'compra:eliminar_enc' item.id %}')"
+              target="reportes"
+              ><i class="fas fa-trash"></i
+            ></a>
+            <button
+              type="button"
+              class="btn btn-warning btn-circle"
+              onclick="pagar_factura({{ item.id }})"
+            >
+              <i class="fas fa-history"></i>
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %} {% if obj2 %}
+    <table
+      id="table"
+      data-toggle="table"
+      data-pagination="true"
+      data-search="true"
+      data-show-columns="true"
+      data-show-toggle="true"
+      data-toolbar=".buttons-toolbar"
+      data-locale="es-MX"
+    >
+      <thead>
+        <th data-field="no_factura">No. Factura</th>
+        <th data-field="fecha_factura">F. Factura</th>
+        <th data-field="observacion">Observación</th>
+        <th data-field="sub_total">Sub Total</th>
+        <th data-field="gastos_adicionales">Gastos Adicionales</th>
+        <th data-field="total">Total</th>
+        <th data-field="estado">Estado</th>
+        <th data-field="usuario">Usuario</th>
+        <th data-field="metodo">Metodo de Pago.</th>
+        <th class="all">Acciones</th>
+      </thead>
+      <tbody>
+        {% for item in obj2 %}
+        <tr>
+          <td>{{ item.no_factura }}</td>
+          <td>{{ item.fecha_factura }}</td>
+          <td>{{item.observacion}}</td>
+          <td>{{ item.sub_total }}</td>
+          <td>{{ item.gastos_adicionales }}</td>
+          <td>{{ item.total }}</td>
+          <td>{{item.pagado|yesno:"Pagado,No Pagado"}}</td>
+          <td>{{ item.user_cobra }}</td>
+          <td>{{ item.tipo_pago }}</td>
+          <td>
+            <a
+              class="btn btn-success btn-circle"
+              href="{% url 'compra:imprimir_factura_compra' item.id%}"
+              target="reportes"
+              ><i class="fas fa-print"></i
+            ></a>
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     {% endif %}
-    {% if obj2 %}
-    <table 
-    id="table"
-    data-toggle="table"
-    data-pagination="true"
-    data-search="true"
-    data-show-columns="true"
-    data-show-toggle="true"
-    data-toolbar=".buttons-toolbar"
-    data-locale="es-MX"
-  >
-    <thead>
-      <th data-field='no_factura'>No. Factura</th>      
-      <th data-field='fecha_factura'>F. Factura</th>
-      <th data-field='observacion'>Observación</th>      
-      <th data-field='sub_total'>Sub Total</th>
-      <th data-field='gastos_adicionales'>Gastos Adicionales</th>
-      <th data-field='total'>Total</th>
-      <th data-field='estado'>Estado</th>
-      <th data-field='usuario'>Usuario</th>
-      <th data-field='metodo'>Metodo de Pago.</th>
-      <th class="all">Acciones</th>
-    </thead>
-    <tbody>
-      {% for item in obj2 %}
-      <tr>
-        <td>{{ item.no_factura }}</td>
-        <td>{{ item.fecha_factura }}</td>
-        <td>{{item.observacion}}</td>
-        <td>{{ item.sub_total }}</td>
-        <td>{{ item.gastos_adicionales }}</td>
-        <td>{{ item.total }}</td>
-        <td>{{item.pagado|yesno:"Pagado,No Pagado"}}</td>
-        <td>{{ item.user_cobra }}</td>
-        <td>{{ item.tipo_pago }}</td>
-        <td>
-          <a class="btn btn-success btn-circle" href="{% url 'compra:imprimir_factura_compra' item.id%}" target="reportes"><i class="fas fa-print"></i></a>
-     
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-    {% endif %}
   </div>
 </div>
-{% endblock %}
-{% block js_page %}
+{% endblock %} {% block js_page %}
 <script>
-  function pagar_factura(id)
-    {
-        // mensaje(id);
-        $.confirm({
-            theme:"modern",
-            icon:"fab fa-keycdn",
-            type:'red',
-            title: "Pago de Factura",
-            content: 'url:/compra/pago_compra/' + id,
-            buttons:{
-                borrar:{
-                    text:"Pago",
-                    btnClass:"btn btn-danger",
-                    action: function(){
-                      var metodo = this.$content.find('input#metodo');
-                      var data = {"metodo":metodo.val()};
-	                    console.log(data);
+  function pagar_factura(id) {
+    // mensaje(id);
+    $.confirm({
+      theme: "modern",
+      icon: "fab fa-keycdn",
+      type: "red",
+      title: "Pago de Factura",
+      content: "url:/compra/pago_compra/" + id,
+      buttons: {
+        borrar: {
+          text: "Pago",
+          btnClass: "btn btn-danger",
+          action: function () {
+            var metodo = this.$content.find("input#metodo");
+            var data = { metodo: metodo.val() };
+            console.log(data);
 
-                        var token = '{{csrf_token}}';
-                        $.ajax({
-                            headers: { "X-CSRFToken": token },
-                            type:"POST",
-                            data:data,
-                            url: '/compra/pago_compra/' + id,
-                            success: function(r){
-                                console.log(r);
-                                if(r==="ok"){
-                                    location.reload(true);
-                                }else{
-                                    mensaje(r,'red');
-                                }
-                            },
-                            error: function(a,b,c){
-                                mensaje(c);
-                            }
-                        });
-                    }
-                    },
-                cancelar: function(){}
+            var token = "{{csrf_token}}";
+            $.ajax({
+              headers: { "X-CSRFToken": token },
+              type: "POST",
+              data: data,
+              url: "/compra/pago_compra/" + id,
+              success: function (r) {
+                console.log(r);
+                if (r === "ok") {
+                  location.reload(true);
+                } else {
+                  mensaje(r, "red");
                 }
-        });
-    } 
-
-
+              },
+              error: function (a, b, c) {
+                mensaje(c);
+              },
+            });
+          },
+        },
+        cancelar: function () {},
+      },
+    });
+  }
 </script>
 {% endblock %}
