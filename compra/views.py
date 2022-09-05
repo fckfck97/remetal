@@ -83,12 +83,16 @@ def compras(request,compra_id=None):
 
     if request.method=='GET':
         #codigo de facturacion
-        cod = ComprasEnc.objects.latest('id')
-        if cod.id is None:
-            cod.id = 0
-        c ={'no_factura': f"RM-C-{cod.id+1}"}
-        form_compras=ComprasEncForm(c)
+        try:
+            cod = ComprasEnc.objects.latest('id')
+            c ={'no_factura': f"RM-C-{cod.id+1}"}
+            form_compras=ComprasEncForm(c)
+        except:
+            cod = 0
+            c ={'no_factura': f"RM-C-{cod+1}"}
+            form_compras=ComprasEncForm(c)
         enc = ComprasEnc.objects.filter(pk=compra_id).first()
+        print(enc)
         if enc:
             det = ComprasDet.objects.filter(compra=enc)
             fecha_compra = datetime.date.isoformat(enc.fecha_compra)

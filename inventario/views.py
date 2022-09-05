@@ -172,9 +172,14 @@ class ProductoNew(SuccessMessageMixin,SinPrivilegios,CreateView):
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
-        codigo = Producto.objects.latest('id')
         context = super(ProductoNew, self).get_context_data(**kwargs)
-        context["codigo"] = codigo.id + 1
+        try:
+            codigo = Producto.objects.latest('id')
+            context["codigo"] = codigo.id + 1
+        except:
+            codigo = 0
+            context["codigo"] = codigo + 1
+        
         context["producto"] = Producto.objects.all()
         context["categorias"] = Categoria.objects.all()
         context["subcategorias"] = SubCategoria.objects.all()
