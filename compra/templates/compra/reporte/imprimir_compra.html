@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Factura:{{enc.id}}</title>
+    <title>Factura: RM-C-{{enc.id}}</title>
     <link rel="stylesheet" href="{% static 'base/css/recibo.css' %}" />
     <style type="text/css">
       @page {
-        width: 58mm;
+        width: 21mm;
         size: auto;
         margin: 0mm;
       }
@@ -18,14 +18,14 @@
   <body onload="window.print()" class="receipt">
     <div class="col-md-1 col-sm-1 col-xs-1 col-xl-1">
       <center>
+        <br /><br />
         <b class="text-center">Comercializadora Remetal, C.A</b><br />
         <small>Reporte de Compra de Materiales.</small><br />
       </center>
       <small>
         <br />
-        <b>Factura No.:</b>&nbsp;&nbsp;{{enc.id}}&nbsp;&nbsp;<br />
-        <b>Fecha Fact:</b>&nbsp;&nbsp;{{enc.fecha_factura
-        |date:"d/m/Y"}}&nbsp;&nbsp; <br />
+        <b>Factura No.:</b>&nbsp;&nbsp;RM-C-{{enc.id}}&nbsp;&nbsp;<br />
+        <b>Fecha Fact:</b>&nbsp;&nbsp;{{enc.fecha_factura|date:"d/m/Y"}}&nbsp;&nbsp; <br />
         <b>Proveedor:</b>&nbsp;&nbsp;{{enc.proveedor}}<br />
         {% if enc.proveedor.tipo == 'Natural'%}
         <b>Rif:</b>&nbsp;&nbsp;V-{{enc.proveedor.rif}}<br />
@@ -34,11 +34,9 @@
         {% else %}
         <b>Rif:</b>&nbsp;&nbsp;E-{{enc.proveedor.rif}}<br />
         {% endif %}
-
         <b>Telefono:</b>&nbsp;&nbsp;{{enc.proveedor.telefono}}<br />
-        <br /><br />
       </small>
-      <table class="table table-condensed table-sm" width="60%">
+      <table class="table table-condensed table-sm" width="10%">
         <thead>
           <th>Código</th>
           <th align="right">Cant.</th>
@@ -51,11 +49,11 @@
           {% for obj in detalle %}
           <tr>
             <td>{{obj.producto.id}}</td>
-            <td>{{obj.cantidad}}</td>
-            <td>{{obj.precio_prv}}</td>
-            <td>{{obj.sub_total}}</td>
-            <td>{{obj.gastos_adicionales}}</td>
-            <td>{{obj.total}}</td>
+            <td>{{obj.cantidad}}KG</td>
+            <td>{{obj.precio_prv}}$</td>
+            <td>{{obj.sub_total}}$</td>
+            <td>{{obj.gastos_adicionales}}$</td>
+            <td>{{obj.total}}$</td>
           </tr>
           <tr>
             <td colspan="5">{{obj.producto}}</td>
@@ -67,21 +65,18 @@
       <div class="col-xs-11">
         <div class="pull-right">
           <table class="table-responsive dt-responsive nowrap">
-            <thead>
-              <th colspan="2">Totales</th>
-            </thead>
             <tbody>
               <tr>
                 <td>Sub Total:</td>
-                <td align="right">{{enc.sub_total}}</td>
+                <td align="right">{{enc.sub_total}}$</td>
               </tr>
               <tr>
                 <td>Gastos A.:</td>
-                <td align="right">{{enc.gastos_adicionales}}</td>
+                <td align="right">{{enc.gastos_adicionales}}$</td>
               </tr>
               <tr>
                 <td>Total:</td>
-                <td align="right"><b>{{enc.total}}</b></td>
+                <td align="right"><b>{{enc.total}}$</b></td>
               </tr>
             </tbody>
           </table>

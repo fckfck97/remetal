@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import ComprasEnc, ComprasDet
 from django.utils import timezone, dateformat
-
+from django.db.models import Sum
 def imprimir_factura_compra(request,id):
     template_name="compra/reporte/imprimir_compra.html"
 
@@ -13,14 +13,16 @@ def imprimir_factura_compra(request,id):
         'enc':enc,
         'detalle':det
     }
-
+    print(enc.fecha_factura)
     return render(request,template_name,context)
 
 
 
 def imprimir_factura_compra_todas(request):
     template_name="compra/reporte/imprimir_compra_todas.html"
-
+    sub = ComprasEnc.objects.all().aggregate(Sum('sub_total'))
+    gastos = ComprasEnc.objects.all().aggregate(Sum('gastos_adicionales'))
+    total = ComprasEnc.objects.all().aggregate(Sum('total'))
     enc = ComprasEnc.objects.all()
     today = dateformat.format(timezone.now(), 'd-m-Y')
 
@@ -28,7 +30,11 @@ def imprimir_factura_compra_todas(request):
     context={
         'request':request,
         'enc':enc,
-        'hoy':today
+        'hoy':today,
+        'total':total['total__sum'],
+        'gastos':gastos['gastos_adicionales__sum'],
+        'sub_total':sub['sub_total__sum']
+
     }
 
     return render(request,template_name,context)

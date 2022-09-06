@@ -44,8 +44,8 @@ article { border: 4px double black; padding: 5mm 10mm; border-radius: 3mm }
 /*font-size: 10px;*/
 font: 8px, serif, arial;
 }
-th { font-size: 10pt; }
-td { font-size: 10pt; }
+th { font-size: 5pt; }
+td { font-size: 5pt; }
 
 .pie{
     font-size: 7px;
