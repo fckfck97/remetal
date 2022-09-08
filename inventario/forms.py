@@ -16,7 +16,7 @@ class CategoriaForm(ModelForm):
         super().__init__(*args,**kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class':'form-control'
+                'class':'form'
             })
 
 #formulario para la vista de las subcategorias
@@ -37,7 +37,7 @@ class SubCategoriaForm(forms.ModelForm):
         super().__init__(*args,**kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class':'form-control'
+                'class':'form'
             })
         self.fields['categoria'].empty_label =  "Seleccione Categoría"
 
@@ -54,7 +54,7 @@ class ProductoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class': 'form-control'
+                'class': 'form'
             })
         self.fields['ultima_compra'].widget.attrs['readonly'] = True
         self.fields['codigo'].widget.attrs['readonly'] = True

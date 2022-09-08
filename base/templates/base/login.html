@@ -5,64 +5,54 @@
 {% block page_content %}{% endblock %}
 {% block footer %}{% endblock %}
 {% block login %}
-<div class="container">
-
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-
-      <div class="col-xl-10 col-lg-12 col-md-9">
-
-        <div class="card o-hidden border-0 shadow-lg my-5">
-          <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-imag"></div>
-              <div class="col-lg-6">
-                <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
-                    <small class="text-danger">
-                        {% if form.errors %}
-                            {% for field in form %}
-                                {% if field.errors %}
-                                    {% for error in field.errors %}
-                                        {{ error|escape }}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-5">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                    <small class="text-danger">
+                                        {% if form.errors %}
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    {% for error in field.errors %}
+                                                        {{ error|escape }}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        
+                                            {% if form.non_field_errors%}
+                                                {% for error in form.non_field_errors %}
+                                                    {{ error|escape }}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    </small>
+                                    <div class="card-body">
+                                        <form class="user" method="POST">
+                                            {% csrf_token %}
+                                            <div class="form-floating mb-3">
+                                              <input type="text" class="form-control form-control-user" id="id_username" name="username" aria-describedby="emailHelp" placeholder="Usuario">
+                                              <label>Usuario</label>
+                                            </div>
+                                            <div class="form-floating mb-3">
+                                              <input type="password" class="form-control form-control-user" id="id_password" name="password" placeholder="Password">
+                                              <label>Password</label>
+                                            </div>
                         
-                            {% if form.non_field_errors%}
-                                {% for error in form.non_field_errors %}
-                                    {{ error|escape }}
-                                {% endfor %}
-                            {% endif %}
-                        {% endif %}
-                    </small>
-                  </div>
-                  <form class="user" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="id_username" name="username" aria-describedby="emailHelp" placeholder="Usuario">
+                                            {# { form.as_p } #}
+                        
+                                            <button type="submit" class="btn btn-primary btn-user btn-block">Acceder</button>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="id_password" name="password" placeholder="Password">
-                    </div>
-
-                    {# { form.as_p } #}
-
-                    <button type="submit" class="btn btn-primary btn-user btn-block">Acceder</button>
-                </div>
-              </div>
+                </main>
             </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-{% endblock %}
+            
+        {% endblock %}
 
 {% block js_page %}
 <script>

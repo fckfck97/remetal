@@ -1,22 +1,59 @@
-{% extends 'padre/base.html' %} {% block page_content %}
-<table class="table table-striped table-hover">
-  <thead>
-    <th>Id</th>
-    <th>Nombre</th>
-    <th>Apellido</th>
-    <th>E-mail</th>
-    <th>Ultima Conexion</th>
-    <th>Fecha de Registro</th>
-  </thead>
-  <tbody>
-    <tr>
-      <td>{{ id }}</td>
-      <td>{{ nombre }}</td>
-      <td>{{ apellido }}</td>
-      <td>{{ email }}</td>
-      <td>{{ uc |date:"d/m/Y H:i:s" }}</td>
-      <td>{{ dj|date:"d/m/Y H:i:s" }}</td>
-    </tr>
-  </tbody>
-</table>
-{% endblock %}
+{% extends 'padre/base.html' %} 
+{% if user.is_authenticated %}
+{% block page_content %} 
+    
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title text-center">
+                    Perfil
+                </h4>
+              </div>
+              <div class="card-body">
+                <div class="pt-3 pb-2 mb-3 border-bottom">
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="{{ form.name }}">Numero de Registro:</label>
+                        {{ id }}
+                    </div>
+                    <div class="form-group">
+                      <label for="{{ form.name }}">E-mail::</label>
+                        {{ email }}
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="{{ form.name }}">Nombre:</label>
+                      {{ nombre }}
+                        
+                      </div>
+                    <div class="form-group">
+                      <label for="{{ form.name }}">Ultima Conexion:</label>
+                        {{ uc |date:"d/m/Y H:i:s" }}
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="{{ form.name }}">Apellido:</label>
+                        {{ apellido }}
+                      </div>
+                    <div class="form-group">
+                      <label for="{{ form.name }}">Fecha de Registro:</label>
+                      {{ dj|date:"d/m/Y H:i:s" }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                
+              </div>
+            </div>
+        </div>
+      </div>
+          
+ {% endblock %}
+ {% endif %}
+

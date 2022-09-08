@@ -30,7 +30,6 @@ class ProveedorNew(SuccessMessageMixin,SinPrivilegios,CreateView):
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
-        #print(self.request.user.id)
         return super().form_valid(form)
 
 class ProveedorEdit(SuccessMessageMixin,SinPrivilegios,UpdateView):
