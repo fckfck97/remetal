@@ -187,7 +187,7 @@ def pago_compra(request, id):
 
     enc = ComprasEnc.objects.get(pk=id)
     if request.method=="GET":
-        enc.save()
+
         context={"det":enc}
 
     if request.method == "POST":
@@ -200,9 +200,7 @@ def pago_compra(request, id):
         enc.tipo_pago = metodo
         enc.user_cobra = request.user.username
         enc.save()
-        enc = ComprasEnc.objects.get(pk=id)
-        enc.pagado = True
-        enc.save()
+
         return HttpResponse("ok")
 
         

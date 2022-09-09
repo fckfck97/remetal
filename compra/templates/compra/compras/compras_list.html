@@ -147,14 +147,14 @@
     // mensaje(id);
     $.confirm({
       theme: "modern",
-      icon: "fab fa-keycdn",
-      type: "red",
+      icon: "fas fa-dollar-sign",
+      type: "green",
       title: "Pago de Factura",
       content: "url:/compra/pago_compra/" + id,
       buttons: {
         borrar: {
           text: "Pago",
-          btnClass: "btn btn-danger",
+          btnClass: "btn btn-success",
           action: function () {
             var metodo = this.$content.find("input#metodo");
             var data = { metodo: metodo.val() };

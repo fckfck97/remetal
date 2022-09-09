@@ -267,12 +267,13 @@
                   <td>{{ item.id }}</td>
                   <td>{{ item.producto }}</td>
                   <td>{{ item.producto.descripcion }}</td>
-                  <td>{{ item.cantidad }}</td>
-                  <td>{{ item.sub_total }}</td>
+                  <td>{{ item.cantidad }}KG</td>
+                  <td>{{ item.sub_total }}$</td>
                   {% if item.descuento < 0 %}
-                  <td>{{ item.descuento }}</td>
-                  {% else %}
                   <td>Sin Desc.</td>
+                  {% else %}
+                  <td>{{ item.descuento }}$</td>
+                  
                   {% endif%}
                   <td>{{ item.total }}</td>
                   <td>
@@ -426,12 +427,7 @@
               },
               error: function(a,b,c){
                   console.log(a);
-                  // console.log(b);
-                  // console.log(c);
-                  // console.log(a.status)
-                  // console.log(a.responseText.detail);
-                  // a.responseText["detail"]
-                  // mensaje(c,'red');
+
                   if(a.status==404){
                       mensaje("Producto -" + codigo + "- No Encontrado o No Existe",'red');
                       $("#codigo").val("");
@@ -490,7 +486,7 @@
       {
           // mensaje(id);
           $.confirm({
-              theme:"modern",
+              theme:"material",
               icon:"fab fa-keycdn",
               type:'red',
               title: "Confirmación Requerida",

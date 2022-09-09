@@ -108,7 +108,7 @@
             <tr>
               <td>RM-F-{{ item.id }}</td>
               <td>{{ item.cliente.razon_social }}</td>
-              <td>{{ item.total }}</td>
+              <td>{{ item.total }}$</td>
               {% if item.pagado %}
               <td>Pagado</td>
               {% endif %}
@@ -143,15 +143,15 @@
       {
           // mensaje(id);
           $.confirm({
-              theme:"modern",
-              icon:"fab fa-keycdn",
+              theme:"material",
+              icon:"fas fa-dollar-sign",
               type:'green',
               title: "Pago de Factura",
               content: 'url:/facturacion/factura/pago_factura/' + id,
               buttons:{
                   borrar:{
                       text:"Pago",
-                      btnClass:"btn btn-danger",
+                      btnClass:"btn btn-success",
                       action: function(){
                         var metodo = this.$content.find('input#metodo');
                         var data = {"metodo":metodo.val()};
@@ -181,30 +181,6 @@
                   }
           });
       }
-  $(function(){
-    $("#f1, #f2").datetimepicker({
-        format: 'Y-m-d',
-        timepicker:false
-    });
-
-    {% comment %} $("#btnPrint").click(function(e){
-      e.preventDefault();
-      var f1,f2;
-      f1 = $("#f1").val();
-      f2 = $("#f2").val();
-      if(f1=="" || f1==null){
-        f1="2019-06-01";
-      }
-      if(f2=="" || f2==null){
-        var d = new Date();
-        var f2 = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
-      }
-
-      var url = "imprimir-todas/" + f1 + "/" + f2;
-
-      window.open(url,'facturas');
-
-    }); {% endcomment %}
-  });
+  
 </script>
 {% endblock %}

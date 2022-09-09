@@ -42,9 +42,7 @@ class Home(LoginRequiredMixin, TemplateView):
 
         total = venta_ganancia_mes['total__sum'] - \
             compra_ganancia_mes['total__sum']
-        if total < 0:
-            total = total * -1
-        elif total is None:
+        if total is None:
             total = 0
         return total
 
@@ -58,11 +56,9 @@ class Home(LoginRequiredMixin, TemplateView):
         if compra_ganancia_ano['total__sum'] is None:
             compra_ganancia_ano['total__sum'] = 0
 
-        total_ano = compra_ganancia_ano['total__sum'] - \
-            venta_ganancia_ano['total__sum']
-        if total_ano < 0:
-            total_ano = total_ano * -1
-        elif total_ano is None:
+        total_ano = compra_ganancia_ano['total__sum'] - venta_ganancia_ano['total__sum']
+        
+        if total_ano is None:
             total_ano = 0
         return total_ano
 
@@ -92,9 +88,12 @@ class Home(LoginRequiredMixin, TemplateView):
                 factura['total__sum'] = 0
             compra_total.append(compra['total__sum'])
             facturacion_total.append(factura['total__sum'])
-
+        diferencia = [e1 - e2 for e1,
+                      e2 in zip(compra_total, facturacion_total)]
+        print(diferencia)
         context["cenc"] = compra_total
         context["fenc"] = facturacion_total
+        context["ganancias_mes"] = diferencia
         context["total"] = self.ganancias_mes(mes, ano)
         context["total_ano"] = self.ganancias_anuales(ano)
         context["gastos"] = gastos['gastos_adicionales__sum']
