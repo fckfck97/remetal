@@ -23,13 +23,13 @@
       >
         <div class="dropdown-header">Acciones:</div>
         <a class="dropdown-item" href="{% url 'compra:nueva_compra'%}"
-          ><i class="far fa-calendar-plus"></i> Nueva</a
+          ><i class="fa-solid fa-circle-plus"></i> Nueva</a
         >
         <a
           class="dropdown-item"
           href="{% url 'compra:imprimir_factura_compra_todas'%}"
           target="reportes"
-          ><i class="fas fa-print"></i> Listado</a
+          ><i class="fa-solid fa-list-ul"></i> Listado</a
         >
       </div>
     </div>
@@ -86,7 +86,7 @@
               class="btn btn-warning btn-circle"
               onclick="pagar_factura({{ item.id }})"
             >
-              <i class="fas fa-history"></i>
+              <i class="fa-solid fa-money-bill"></i>
             </button>
           </td>
         </tr>

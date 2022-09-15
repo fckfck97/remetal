@@ -12,12 +12,12 @@
     <meta name="author" content="" />
     <title>Sistema Compra y Venta Remetal, C.A</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
+      href="{% static 'base/css/simple-datatables.css' %}"
       rel="stylesheet"
     />
     <link href="{% static  'base/css/styles.css' %}" rel="stylesheet" />
     <script
-      src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
+      src="{% static 'base/js/fontawesome-610-all.js' %}"
       crossorigin="anonymous"
     ></script>
         <!-- Custom styles for this page -->
@@ -27,10 +27,10 @@
       <link rel="stylesheet" href="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.css' %}">
 
       <!-- XDSoft DateTimePicker -->  
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />  
+      <link rel="stylesheet" href="{% static 'base/css/jquery.datetimepicker.min.css' %}" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />  
 
-      <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="{% static 'base/css/bootstrap-table.min.css' %}">
+      <link href="{% static 'base/css/select2.min.css' %}" rel="stylesheet" />
   </head>
   <body class="sb-nav-fixed">
     {% block top_bar %}
@@ -59,7 +59,7 @@
             aria-describedby="btnNavbarSearch"
           />
           <button class="btn btn-primary" id="btnNavbarSearch" type="button">
-            <i class="fas fa-search"></i>
+            <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
       </form>
@@ -74,8 +74,8 @@
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-            ><i class="fas fa-user fa-fw"></i
-          ></a>
+            ><i class="fa-solid fa-user"></i>
+          </a>
           <ul
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="navbarDropdown"
@@ -107,7 +107,7 @@
               
               <a class="nav-link" href="/">
                 <div class="sb-nav-link-icon">
-                  <i class="fas fa-tachometer-alt"></i>
+                  <i class="fa-solid fa-chart-pie"></i>
                 </div>
                 Dashboard
               </a>
@@ -128,7 +128,7 @@
               >
               <div class="sb-nav-link-icon">
                 
-                <i class="fas fa-calendar "></i>
+                <i class="fa-solid fa-calendar-days"></i>
               </div>
               Catálogos
               <div class="sb-sidenav-collapse-arrow">
@@ -238,12 +238,12 @@
               <div class="sb-sidenav-menu-heading">Entradas y Salidas</div>
               <a class="nav-link" href="{% url 'compra:lista_compras' %}">
                 <div class="sb-nav-link-icon">
-                  <i class="fas fa-chart-area"></i>
+                  <i class="fa-solid fa-cart-shopping"></i>
                 </div>
                 Facturacion de Compras
               </a>
               <a class="nav-link" href="{% url 'facturacion:lista_factura' %}">
-                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                <div class="sb-nav-link-icon"><i class="fa-solid fa-cash-register"></i></div>
                 Facturacion de Ventas
               </a>
             </div>
@@ -316,13 +316,13 @@
   <!-- Core plugin JavaScript-->
     <script src="{% static  'base/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      src="{% static 'base/js/bootstrap.bundle.min.js' %}"
       crossorigin="anonymous"
     ></script>
     <script src="{% static 'base/js/scripts.js'%}"></script>
 
     <script
-      src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
+      src="{% static 'base/js/simple-datatables.js' %}"
       crossorigin="anonymous"
     ></script>
     <script src="{% static 'base/js/datatables-simple-demo.js' %}"></script>
@@ -332,15 +332,15 @@
 
   <script src="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.js' %}"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>  
+  <script src="{% static 'base/js/jquery.datetimepicker.full.min.js' %}" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>  
 
-  <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
-  <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table-locale-all.min.js"></script>
+  <script src="{% static 'base/js/bootstrap-table.min.js' %}"></script>
+  <script src="{% static 'base/js/bootstrap-table-locale-all.min.js' %}"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
+  <script src="{% static 'base/js/select2.min.js' %}"></script>
 
-  <script src="{% static  'base/js/jquery.chained.min.js' %}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
+  <script src="{% static 'base/js/jquery.chained.min.js' %}"></script>
+  <script src="{% static 'base/js/Chart.min.js' %}"></script>
 
 <script>
     $(document).ready(function () {
