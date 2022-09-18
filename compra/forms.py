@@ -12,7 +12,7 @@ class ProveedorForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class': 'form-control'
+                'class': 'form'
             })
 
     def clean(self):
@@ -45,7 +45,7 @@ class ComprasEncForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class': 'form-control'
+                'class': 'form'
             })
         self.fields['no_factura'].widget.attrs['readonly'] = True
         self.fields['fecha_compra'].widget.attrs['readonly'] = True
