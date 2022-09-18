@@ -1,4 +1,4 @@
-#!C:\Users\jm_17\Documents\Proyectos\Desarrollo\remetal\entorno\Scripts\python.exe
+#!/home/kali/remetal/entorno/bin/python
 # EASY-INSTALL-ENTRY-SCRIPT: 'future==0.18.2','console_scripts','pasteurize'
 import re
 import sys

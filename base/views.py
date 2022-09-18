@@ -66,7 +66,6 @@ class Home(LoginRequiredMixin, TemplateView):
         # datos para la extraccion
         ano = datetime.datetime.today().year
         mes = datetime.datetime.today().month
-        print(mes)
         # gastos y descuento por mes y ano mas las ganancias por mes visualizacion calculos
         gastos = ComprasEnc.objects.filter(
             fecha_compra__year=ano, fecha_compra__month=mes).aggregate(Sum('gastos_adicionales'))
@@ -89,8 +88,8 @@ class Home(LoginRequiredMixin, TemplateView):
             compra_total.append(compra['total__sum'])
             facturacion_total.append(factura['total__sum'])
         diferencia = [e1 - e2 for e1,
-                      e2 in zip(compra_total, facturacion_total)]
-
+                      e2 in zip(facturacion_total,compra_total)]
+        print(diferencia)
         context["cenc"] = compra_total
         context["fenc"] = facturacion_total
         context["ganancias_mes"] = diferencia
