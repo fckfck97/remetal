@@ -91,10 +91,11 @@ def compras(request,compra_id=None):
             c ={'no_factura': f"RM-C-{cod+1}"}
             form_compras=ComprasEncForm(c)
         enc = ComprasEnc.objects.filter(pk=compra_id).first()
-        print(enc)
+
         if enc:
             det = ComprasDet.objects.filter(compra=enc)
             fecha_compra = datetime.date.isoformat(enc.fecha_compra)
+            print(fecha_compra)
             fecha_factura = datetime.date.isoformat(enc.fecha_factura)
             e = {
                 'fecha_compra':fecha_compra,
