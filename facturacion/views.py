@@ -169,7 +169,9 @@ def facturas(request,id=None):
                     'cliente':enc.cliente,
                     'sub_total':enc.sub_total,
                     'descuento':enc.descuento,
-                    'total':enc.total
+                    'total':enc.total,
+                    'pagado':enc.pagado,
+                    'tipo_pago':enc.tipo_pago
                 }
 
             detalle=FacturaDet.objects.filter(factura=enc,estado=False)

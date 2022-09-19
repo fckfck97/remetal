@@ -21,6 +21,11 @@
         <br /><br />
         <b class="text-center">Comercializadora Remetal, C.A</b><br />
         <small>Reporte de Venta de Materiales.</small><br />
+        {% if enc.pagado %}
+        <small>Factura Pagada</small><br />
+        {%else%}
+        <small>Factura de Presuspuesto</small><br />
+        {%endif%}
       </center>
       <small>
         <br />
@@ -82,6 +87,17 @@
                 <td>Total:</td>
                 <td align="right"><b>{{enc.total}}$</b></td>
               </tr>
+              {% if enc.tipo_pago is not None %}
+              <tr>
+                <td>Metodo de Pago:</td>
+                <td align="right"><b>{{enc.tipo_pago}}</b></td>
+              </tr>
+              {% else %}
+              <tr>
+                <td>Factura sin Valor Fiscal:</td>
+                <td align="right"><b>Presuspuesto Valido por el Dia de {{enc.fc |date:"d/m/Y"}}</b></td>
+              </tr>
+              {% endif %}
             </tbody>
           </table>
         </div>
