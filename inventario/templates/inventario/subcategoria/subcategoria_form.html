@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-md">
     <div class="modal-content">
         {% if obj %}
         <form method="POST" role="form" class="form-inline" action="{% url 'inventario:editar_subcategoria' obj.pk %}" enctype="multipart/form-data" >
@@ -15,7 +15,7 @@
                     <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            {% if obj %} Editar {% else %} Nueva {% endif %} Producto
+                            {% if obj %} Editar {% else %} Nuevo {% endif %} Producto
                         </div>
                         <div class="dropdown-divider"></div>
                         {% csrf_token %}
@@ -23,20 +23,20 @@
                             {#{ form.as_p }#}
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-6">{{form.categoria.label}}</div>
-                                <div class="col-md-6">{{form.categoria}}</div>
+                            <div class="mb-3">
+                                <label for="id_categoria" class="form-label">{{form.categoria.label}}</label>
+                                {{form.categoria}}
                             </div>                   
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-6">{{form.descripcion.label}}</div>
-                                <div class="col-md-6">{{form.descripcion}}</div>
+                            <div class="mb-3">
+                                <label for="id_descripcion" class="form-label">{{form.descripcion.label}}</label>
+                                {{form.descripcion}}
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="col-md-6">{{form.estado.label}}</div>
-                                <div class="col-md-6">{{form.estado}}</div>    
+                            <div class="">
+                                {{form.estado}}  
+                                <label for="id_estado" class="form-label">{{form.estado.label}}</label>
                             </div>                            
                         </div>
 
