@@ -12,7 +12,7 @@ class ProveedorForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class': 'form'
+                'class': 'form-control'
             })
         self.fields['estado'].widget.attrs.update({'class':'form-check-input'})
 

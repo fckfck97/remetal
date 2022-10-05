@@ -14,15 +14,8 @@ class CategoriaForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)
-<<<<<<< HEAD
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class':'form-control'
-            })
-=======
         self.fields['descripcion'].widget.attrs.update({'class':'form-control'})
         self.fields['estado'].widget.attrs.update({'class':'form-check-input'})
->>>>>>> origin/frontend
 
 #formulario para la vista de las subcategorias
 
