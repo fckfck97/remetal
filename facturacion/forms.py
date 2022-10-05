@@ -15,3 +15,4 @@ class ClienteForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form'
             })
+        self.fields['estado'].widget.attrs.update({'class':'form-check-input'})

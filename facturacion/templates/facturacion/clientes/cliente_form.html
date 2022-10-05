@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-md">
     <div class="modal-content">
         {% if obj %}
         <form role="form" id="frmCliente" action="{% url 'facturacion:editar_cliente' obj.pk %}" method="post"  class="form-inline">
@@ -27,15 +27,12 @@
                         <div class="dropdown-divider"></div>
                         <div class="row">
                             <div class="col">
-                                <button type="submit" class="btn btn-danger"><span class="fa fa-save"></span> Guardar</button>
-                                <button type="button" class="btn btn-success" onclick="return cerrar_modal()">
+                                <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
+                                <button type="button" class="btn btn-danger" onclick="return cerrar_modal()">
                                         Cancelar
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
                     </div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@
     <!-- Card Body -->
     <div class="card-body">
       <div class="buttons-toolbar">
-        <a class="btn btn-primary mb-4" onclick="return abrir_modal('{% url 'inventario:nueva_categoria' %}')" href="#"><i class="far fa-calendar-plus"></i> Nuevo</a>
+        <a class="btn btn-primary mb-3" onclick="return abrir_modal('{% url 'inventario:nueva_categoria' %}')" href="#"><i class="fa-solid fa-circle-plus"></i> Nuevo</a>
       </div>
       {% if not obj %}
       <div class="alert alert-info">No hay categorías</div>

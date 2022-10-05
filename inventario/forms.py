@@ -8,16 +8,21 @@ class CategoriaForm(ModelForm):
     class Meta:
         model=Categoria
         fields = ['descripcion','estado']
-        labels = {'descripcion':"Descripción de la Categoría",
+        labels = {'descripcion':"Descripción de categoría",
                "estado":"Estado"}
         widget={'descripcion': forms.TextInput}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)
+<<<<<<< HEAD
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class':'form-control'
             })
+=======
+        self.fields['descripcion'].widget.attrs.update({'class':'form-control'})
+        self.fields['estado'].widget.attrs.update({'class':'form-check-input'})
+>>>>>>> origin/frontend
 
 #formulario para la vista de las subcategorias
 
@@ -35,10 +40,9 @@ class SubCategoriaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class':'form'
-            })
+        self.fields['categoria'].widget.attrs.update({'class':'form-control'})
+        self.fields['descripcion'].widget.attrs.update({'class':'form-control'})
+        self.fields['estado'].widget.attrs.update({'class':'form-check-input'})
         self.fields['categoria'].empty_label =  "Seleccione Categoría"
 
 class ProductoForm(forms.ModelForm):
@@ -54,8 +58,9 @@ class ProductoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class': 'form'
+                'class': 'form-control'
             })
+        self.fields['estado'].widget.attrs.update({'class':'form-check-input'})
         self.fields['ultima_compra'].widget.attrs['readonly'] = True
         self.fields['codigo'].widget.attrs['readonly'] = True
         self.fields['existencia'].widget.attrs['readonly'] = True

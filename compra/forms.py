@@ -14,6 +14,7 @@ class ProveedorForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form'
             })
+        self.fields['estado'].widget.attrs.update({'class':'form-check-input'})
 
     def clean(self):
         try:
