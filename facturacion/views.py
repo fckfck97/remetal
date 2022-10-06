@@ -30,6 +30,7 @@ class VistaBaseCreate(SuccessMessageMixin,SinPrivilegios, \
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
+        form.instance.estado = True
         return super().form_valid(form)
 
 class VistaBaseEdit(SuccessMessageMixin,SinPrivilegios, \
@@ -49,20 +50,6 @@ class ClienteNew(VistaBaseCreate):
     success_url= reverse_lazy("facturacion:lista_clientes")
     permission_required="facturacion.add_cliente"
 
-    def get(self, request, *args, **kwargs):
-        print("sobre escribir get")
-        
-        try:
-            t = request.GET["t"]
-        except:
-            t = None
-
-        print(t)
-        
-        form = self.form_class(initial=self.initial)
-        return render(request, self.template_name, {'form': form, 't':t})
-
-
 class ClienteEdit(VistaBaseEdit):
     model=Cliente
     template_name="facturacion/clientes/cliente_form.html"
@@ -70,23 +57,23 @@ class ClienteEdit(VistaBaseEdit):
     success_url= reverse_lazy("facturacion:lista_clientes")
     permission_required="facturacion.change_cliente"
 
-    def get(self, request, *args, **kwargs):
-        print("sobre escribir get en editar")
+    # def get(self, request, *args, **kwargs):
+    #     print("sobre escribir get en editar")
 
-        print(request)
+    #     print(request)
         
-        try:
-            t = request.GET["t"]
-        except:
-            t = None
+    #     try:
+    #         t = request.GET["t"]
+    #     except:
+    #         t = None
 
-        print(t)
-        self.object = self.get_object()
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        context = self.get_context_data(object=self.object, form=form,t=t)
-        print(form_class,form,context)
-        return self.render_to_response(context)
+    #     print(t)
+    #     self.object = self.get_object()
+    #     form_class = self.get_form_class()
+    #     form = self.get_form(form_class)
+    #     context = self.get_context_data(object=self.object, form=form,t=t)
+    #     print(form_class,form,context)
+    #     return self.render_to_response(context)
 
 
 @login_required(login_url="/login/")

@@ -1,17 +1,36 @@
 from django import forms
 
 from .models import Cliente
+
+
 class ClienteForm(forms.ModelForm):
     class Meta:
-        model=Cliente
-        fields=['tipo','rif','razon_social','domicilio',
-            'celular','estado']
-        exclude = ['um','fm','uc','fc']
+        model = Cliente
+        fields = ['razon_social',
+                  'tipo',
+                  'rif',
+                  'direccion',
+                  'telefono',
+                  'email']
+        exclude = ['um', 'fm', 'uc', 'fc']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
-            })
-        self.fields['estado'].widget.attrs.update({'class':'form-check-input'})
+            })    
+    def clean(self):
+        try:
+            sc = Cliente.objects.get(
+                razon_social=self.cleaned_data["razon_social"].upper()
+            )
+            if not self.instance.pk:
+                print("Registro ya existe")
+                raise forms.ValidationError("Registro Ya Existe")
+            elif self.instance.pk!=sc.pk:
+                print("Cambio no permitido")
+                raise forms.ValidationError("Cambio No Permitido")
+        except Cliente.DoesNotExist:
+            pass
+        return self.cleaned_data

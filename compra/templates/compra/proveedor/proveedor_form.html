@@ -1,9 +1,9 @@
 <div class="modal-dialog modal-md">
     <div class="modal-content">
         {% if obj %}
-        <form role="form" action="{% url 'compra:editar_proveedor' obj.id %}" method="post"  class="form-inline">
+        <form role="form" id='frmProveedor'action="{% url 'compra:editar_proveedor' obj.id %}" method="post"  class="form-inline">
         {% else %}
-        <form role="form" action="{% url 'compra:nuevo_proveedor' %}" method="post"  class="form-inline">
+        <form role="form" id='frmProveedor'action="{% url 'compra:nuevo_proveedor' %}" method="post"  class="form-inline">
         {% endif %}
             <div class="col-xl-12 col-md-12 mb-12">
                 {% if obj %}
@@ -42,31 +42,26 @@
 
 <script>
 $(function() {
-
-    var url = $("form").attr("action");
-    var token = jQuery("[name=csrfmiddlewaretoken]").val();
-
-    $("form").submit(function(e){
-        e.preventDefault();
-        // alert(token);
-        var formData = $("form").serializeArray();
-        // console.log(formData);
+    $("#frmProveedor").submit(function( e ) {
+        var frm = $('#frmProveedor');
+        // alert("{{request.path}}")
         $.ajax({
-            url:url,
-            method:"POST",
-            headers: {'X-CSRFToken': token },
-            data: formData
-        })
-        .done(function(r,textStatus,xhr){
-            if(xhr.status=200){
-                location.reload(true);
-            }
-            else{
-                mensaje(textStatus);
-            }
-        }).fail(function (error) {
-                mensaje(error.responseText);
-        });
+                type: frm.attr('method'),
+                // url: frm.attr('action'),
+                url: "{{request.path}}",
+                data: frm.serialize(),
+                success: function (data) {
+                    // alert(data);
+                    // window.location.reload(true);
+                    $("#id").val(data)
+                    console.log(data)
+                    cerrar_modal()
+                },
+                error: function(data,b,c) {
+                    alert(data);
+                    console.log(c)
+                }
+            });
+            return false;
     });
-});
 </script>

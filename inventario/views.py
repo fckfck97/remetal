@@ -32,6 +32,7 @@ class CategoriaNew(SuccessMessageMixin,SinPrivilegios,CreateView):
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
+        form.instance.estado = True
         return super().form_valid(form)
 
 
@@ -101,6 +102,7 @@ class SubCategoriaNew(SuccessMessageMixin,SinPrivilegios,CreateView):
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
+        form.instance.estado = True
         return super().form_valid(form)
 
 
@@ -164,11 +166,12 @@ class ProductoNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     context_object_name = 'obj'
     form_class=ProductoForm
     success_url= reverse_lazy("inventario:lista_productos")
-    success_message="Producto Creado"
+    success_message="Producto Creado Correctamente"
     permission_required="inventario.add_producto"
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
+        form.instance.estado = True
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
@@ -193,7 +196,7 @@ class ProductoEdit(SuccessMessageMixin,SinPrivilegios,UpdateView):
     context_object_name = 'obj'
     form_class=ProductoForm
     success_url= reverse_lazy("inventario:lista_productos")
-    success_message="Producto Editado"
+    success_message="Producto Editado Correctamente"
     permission_required="inventario.change_producto"
 
     def form_valid(self, form):

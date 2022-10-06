@@ -89,7 +89,7 @@ class Home(LoginRequiredMixin, TemplateView):
             facturacion_total.append(factura['total__sum'])
         diferencia = [e1 - e2 for e1,
                       e2 in zip(facturacion_total,compra_total)]
-        print(diferencia)
+        
         context["cenc"] = compra_total
         context["fenc"] = facturacion_total
         context["ganancias_mes"] = diferencia

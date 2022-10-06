@@ -2,11 +2,15 @@ from django import forms
 from .models import Proveedor, ComprasEnc
 
 class ProveedorForm(forms.ModelForm):
-    email = forms.EmailField(max_length=254)
     class Meta:
         model=Proveedor
         exclude = ['um','fm','uc','fc']
-        widget={'razon_social': forms.TextInput()}
+        fields = ['razon_social',
+                  'tipo',
+                  'rif',
+                  'direccion',
+                  'telefono',
+                  'email']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -14,7 +18,6 @@ class ProveedorForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
-        self.fields['estado'].widget.attrs.update({'class':'form-check-input'})
 
     def clean(self):
         try:

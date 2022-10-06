@@ -8,7 +8,7 @@ from .reportes import imprimir_factura_compra,imprimir_factura_compra_todas
 urlpatterns = [
 
     path('proveedores/',ProveedorView.as_view(), name="lista_proveedores"),
-    path('proveedores/nuevo/',ProveedorNew.as_view(), name="nuevo_proveedor"),
+    path('proveedores/nuevo',ProveedorNew.as_view(), name="nuevo_proveedor"),
     path('proveedores/editar/<pk>',ProveedorEdit.as_view(), name="editar_proveedor"),
     path('proveedores/estado/<int:id>',inhabilitarpro, name="inhabilitar_proveedor"),
     

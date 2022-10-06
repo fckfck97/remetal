@@ -22,30 +22,32 @@ class Cliente(BaseModelo):
         max_length=100,
         unique=True
         )
-
-    domicilio = models.CharField(
-        max_length=100
-    )
-    celular = models.CharField(
-        max_length=11,
-        null=True,
-        blank=True
-    )
     tipo=models.CharField(
         max_length=25,
         choices=TIPO_CLIENTE,
         default=SEL
     )
-    rif = models.CharField(
-        max_length=8,
-        
+    rif=models.CharField(
+        max_length=8
+
+    )
+    direccion=models.CharField(
+        max_length=250,
+        null=True, blank=True
+        )
+    telefono=models.CharField(
+        max_length=11,
+        null=True, blank=True
+    )
+    email=models.EmailField(
+        max_length=255
     )
     def __str__(self):
         return '{}'.format(self.razon_social)
 
     def save(self, *args, **kwargs):
         self.razon_social = self.razon_social.upper()
-        self.domicilio = self.domicilio.upper()
+        
         super(Cliente, self).save( *args, **kwargs)
 
     class Meta:

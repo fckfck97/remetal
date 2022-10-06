@@ -24,12 +24,13 @@ class ProveedorNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     template_name = "compra/proveedor/proveedor_form.html"
     context_object_name = 'obj'
     form_class=ProveedorForm
-    success_message="Proveedor Nuevo"
+    success_message="Proveedor Creado Correctamente"
     success_url= reverse_lazy("compra:lista_proveedores")
     permission_required = "compra.add_proveedor"
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
+        form.instance.estado = True
         return super().form_valid(form)
 
 class ProveedorEdit(SuccessMessageMixin,SinPrivilegios,UpdateView):
@@ -37,7 +38,7 @@ class ProveedorEdit(SuccessMessageMixin,SinPrivilegios,UpdateView):
     template_name="compra/proveedor/proveedor_form.html"
     context_object_name = 'obj'
     form_class=ProveedorForm
-    success_message="Proveedor Editado"
+    success_message="Proveedor Editado Correctamente"
     success_url= reverse_lazy("compra:lista_proveedores")
     permission_required = "compra.change_proveedor"
     

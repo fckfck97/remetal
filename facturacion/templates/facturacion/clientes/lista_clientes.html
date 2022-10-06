@@ -32,7 +32,7 @@
         <th data-sortable="true" data-field="tipo">Tipo</th>
         <th data-sortable="true" data-field="rif">RIF</th>
         <th data-sortable="true" data-field="razon_social">Razon Social.</th>
-        <th data-sortable="true" data-field="domicilio">Domicilio</th>
+        <th data-sortable="true" data-field="domicilio">Direccion</th>
         <th data-field="telefono">Teléfono</th>
         <th data-field="estado">Estado</th>
         <th class="all">Acciones</th>
@@ -44,8 +44,8 @@
           <td>{{item.tipo}}</td>
           <td>{{item.rif}}</td>
           <td>{{ item.razon_social }}</td>
-          <td>{{ item.domicilio }}</td>
-          <td>{{ item.celular }}</td>
+          <td>{{ item.direccion }}</td>
+          <td>{{ item.telefono }}</td>
           <td>
             {#item.estado|yesno:"Activo,Inactivo"#}
             <div onclick="inactivar({{item.id}})">
