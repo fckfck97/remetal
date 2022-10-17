@@ -47,7 +47,7 @@
     data-toolbar=".buttons-toolbar"
     data-locale="es-MX"
     >
-      <thead>
+      <thead align="center">
         <th data-field="no_factura">No. Factura</th>
         <th data-field="fecha_compra">Fecha</th>
         <th data-field="observacion">Observación</th>
@@ -58,7 +58,7 @@
         <th data-field="estado">Estado</th>
         <th class="all">Acciones</th>
       </thead>
-      <tbody>
+      <tbody align="center">
         {% for item in obj%}
         <tr>
           <td>{{ item.no_factura }}</td>
@@ -101,31 +101,32 @@
     data-search="true"
     data-toolbar=".buttons-toolbar"
     data-locale="es-MX"
+    
     >
-      <thead>
+      <thead align="center">
         <th data-field="no_factura">No. Factura</th>
         <th data-field="fecha_factura">F. Factura</th>
         <th data-field="observacion">Observación</th>
-        <th data-field="sub_total">Sub Total</th>
         <th data-field="gastos_adicionales">Gastos Adicionales</th>
         <th data-field="total">Total</th>
-        <th data-field="estado">Estado</th>
-        <th data-field="usuario">Usuario</th>
         <th data-field="metodo">Metodo de Pago.</th>
+        <th data-field="monto">Monto Pagado.</th>
+        <th data-field="usuario">Usuario</th>
+        <th data-field="estado">Estado</th>
         <th class="all">Acciones</th>
       </thead>
-      <tbody>
+      <tbody align="center">
         {% for item in obj2 %}
         <tr>
           <td>{{ item.no_factura }}</td>
           <td>{{ item.fecha_factura }}</td>
           <td>{{item.observacion}}</td>
-          <td>{{ item.sub_total }}$</td>
           <td>{{ item.gastos_adicionales }}$</td>
           <td>{{ item.total }}$</td>
-          <td>{{item.pagado|yesno:"Pagado,No Pagado"}}</td>
-          <td>{{ item.user_cobra }}</td>
           <td>{{ item.tipo_pago }}</td>
+          <td>{{ item.monto }}$</td>
+          <td>{{ item.user_cobra }}</td>
+          <td>{{item.pagado|yesno:"Pagado,No Pagado"}}</td>
           <td>
             <a
               class="btn btn-success btn-circle"
@@ -156,8 +157,9 @@
           text: "Pago",
           btnClass: "btn btn-success",
           action: function () {
-            var metodo = this.$content.find("input#metodo");
-            var data = { metodo: metodo.val() };
+            var metodo = this.$content.find("select#metodo");
+            var monto = this.$content.find("input#monto");
+            var data = { metodo: metodo.val(), monto: monto.val()  };
             console.log(data);
 
             var token = "{{csrf_token}}";

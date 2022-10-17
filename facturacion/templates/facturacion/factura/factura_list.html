@@ -8,21 +8,6 @@
   </div>
   <!-- Card Body -->
   <div class="card-body">
-    {% comment %}
-    <div class="row">
-      <div class="col-md-4">
-        <input type="text" class="form-class" name="f1" id="f1" readonly />
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-class" name="f2" id="f2" readonly />
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-warning" type="button" id="btnPrint">
-          Imprimir
-        </button>
-      </div>
-    </div>
-    {% endcomment %}
     <div class="col-md-4">
       <a class="btn btn-success mb-4" href="{% url 'facturacion:nueva_factura'%}"
         ><i class="fa-solid fa-circle-plus"></i> Nuevo</a
@@ -41,43 +26,51 @@
     data-toolbar=".buttons-toolbar"
     data-locale="es-MX"
     >
-      <thead>
-        <th data-sortable="true" data-field="id">No.</th>
-        <th data-sortable="true" data-field="nombres">Cliente</th>
-        <th data-sortable="true" data-field="apellidos">Total</th>
+      <thead align="center">
+        <th data-field="no_factura">No. Factura</th>
+        <th data-field="cliente">Cliente</th>
+        <th data-field="fecha_factura">F. Factura</th>
+        <th data-field="sub_total">Sub Total</th>
+        <th data-field="descuento">Descuento</th>
+        <th data-field="total">Total</th>
         <th data-field="estado">Estado</th>
         <th class="all">Acciones</th>
       </thead>
-      <tbody>
+      <tbody align="center">
         {% for item in obj%}
         <tr>
           <td>RM-F-{{ item.id }}</td>
           <td>{{ item.cliente.razon_social }}</td>
+          <td>{{ item.fecha }}</td>
+          <td>{{ item.sub_total }}$</td>
+          <td>{{ item.descuento }}$</td>
           <td>{{ item.total }}$</td>
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
             <a
-              href="{% url 'facturacion:editar_factura' item.id %}"
-              class="href btn btn-warning btn-circle"
-              ><i class="fas fa-edit"></i>
-              <a
-                class="btn btn-danger btn-circle"
-                onclick="return abrir_modal('{% url 'facturacion:eliminar_enc' item.id %}')"
-                ><i class="fas fa-trash"></i
-              ></a>
-              <button
-                type="button"
-                class="btn btn-warning btn-circle"
-                onclick="pagar_factura({{ item.id }})"
-              >
-                <i class="fas fa-history"></i>
-              </button>
-            </a>
+              class="btn btn-warning btn-circle"
+              href="{% url 'compra:editar_compra' item.id %}"
+              ><i class="far fa-edit"></i
+            ></a>
+            <a
+              class="btn btn-danger btn-circle"
+              onclick="return abrir_modal('{% url 'compra:eliminar_enc' item.id %}')"
+              target="reportes"
+              ><i class="fas fa-trash"></i
+            ></a>
+            <button
+              type="button"
+              class="btn btn-warning btn-circle"
+              onclick="pagar_factura({{ item.id }})"
+            >
+              <i class="fa-solid fa-money-bill"></i>
+            </button>
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
+        
 
     <div class="row p-1">
       <div class="col-lg-12">
@@ -93,26 +86,32 @@
         data-toolbar=".buttons-toolbar"
         data-locale="es-MX"
         >
-          <thead>
-            <th data-sortable="true" data-field="id">No.</th>
-            <th data-sortable="true" data-field="nombres">Cliente</th>
-            <th data-sortable="true" data-field="apellidos">Total</th>
+          <thead align="center">
+            <th data-field="no_factura">No. Factura</th>
+            <th data-field="nombres">Cliente</th>
+            <th data-field="fecha_factura">F. Factura</th>
+            <th data-field="apellidos">Total</th>
+            <th data-field="metodo_pago">Metodo de Pago</th>
+            <th data-field="monto_pago">Monto Pagado</th>
             <th data-field="estado">Estado</th>
-            <th class="all">Modelo de Pago</th>
+            
             <th class="all">Usuario</th>
             <th class="all">Acciones</th>
           </thead>
-          <tbody>
+          <tbody align="center">
             {% for item in obj2 %}
 
             <tr>
               <td>RM-F-{{ item.id }}</td>
               <td>{{ item.cliente.razon_social }}</td>
+              <td>{{ item.fecha }}</td>
               <td>{{ item.total }}$</td>
+              <td>{{ item.tipo_pago }}</td>
+              <td>{{ item.monto }}</td>
               {% if item.pagado %}
               <td>Pagado</td>
               {% endif %}
-              <td>{{ item.tipo_pago }}</td>
+              
               <td>{{ item.user_cobra }}</td>
               {% if item.total <= 0 %}
               <td>Factura Invalida</td>
@@ -153,8 +152,9 @@
                       text:"Pago",
                       btnClass:"btn btn-success",
                       action: function(){
-                        var metodo = this.$content.find('input#metodo');
-                        var data = {"metodo":metodo.val()};
+                        var metodo = this.$content.find('select#metodo');
+                        var monto = this.$content.find('input#monto');
+                        var data = {"metodo":metodo.val(),"monto":monto.val()};
   	                    console.log(data);
 
                           var token = '{{csrf_token}}';

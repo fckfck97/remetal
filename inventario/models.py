@@ -45,7 +45,6 @@ class Producto(BaseModelo):
         null=True
 
     )
-    codigo_barra = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=200)
     precio = models.FloatField(default=0)
     existencia = models.IntegerField(default=0)

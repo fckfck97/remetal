@@ -1,15 +1,3 @@
-1-) Crear los campos de codigo de producto y codigo de factura
-2-) modificar cliente para que al seleccionar juridico aparezca razon social y no nombres y apellidos
-
-
-
-
-
-
-
-
-
-
 clasificacion del plastico:
 1-Soplado color 
 2-Soplado blanco 

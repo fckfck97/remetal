@@ -92,6 +92,16 @@
                 <td>Metodo de Pago:</td>
                 <td align="right"><b>{{enc.tipo_pago}}</b></td>
               </tr>
+              <tr>
+                <td>Monto Pagado:</td>
+                <td align="right"><b>{{enc.monto}}</b></td>
+              </tr>
+                  {% if cambio > 0 %}
+                    <tr>
+                      <td>Cambio:</td>
+                      <td align="right"><b>{{cambio}}</b></td>
+                    </tr>
+                  {% endif %}
               {% else %}
               <tr>
                 <td>Factura sin Valor Fiscal:</td>

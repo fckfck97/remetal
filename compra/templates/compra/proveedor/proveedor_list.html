@@ -24,18 +24,18 @@
     data-toolbar=".buttons-toolbar"
     data-locale="es-MX"
   >
-      <thead>
-        <th data-sortable='true' data-field='id'>Id</th>        
-        <th data-sortable='true' data-field='razon_social'>Razon Social</th>
+      <thead align="center">
+        <th data-field='id'>Id</th>        
+        <th data-field='razon_social'>Razon Social</th>
         <th data-field='tipo'>Tipo</th>
-        <th data-sortable='true' data-field='rif'>Rif</th>
+        <th data-field='rif'>Rif</th>
         <th data-field='direccion'>Dirección</th>
         <th data-field='telefono'>Teléfono</th>
         <th data-field='email'>E-mail</th>
         <th data-field='estado'>Estado</th>
         <th class="all">Acciones</th>
       </thead>
-      <tbody>
+      <tbody align="center">
         {% for item in obj%}
         <tr>
           <td>{{ item.id }}</td>

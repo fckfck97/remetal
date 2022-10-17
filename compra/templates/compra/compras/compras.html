@@ -274,7 +274,7 @@
         gastos = gastos==="" ? 0 : +gastos;
         gastos = gastos<0 ? 0 : gastos;
 
-        gastos = gastos>(cant * prec) ? 0 : gastos;
+        gastos = gastos>(cant * prec) ? gastos : gastos;
 
         stotal = cant * prec;
         total  = stotal + gastos;

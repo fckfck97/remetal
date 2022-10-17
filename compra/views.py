@@ -95,8 +95,8 @@ def compras(request,compra_id=None):
 
         if enc:
             det = ComprasDet.objects.filter(compra=enc)
+            print(enc.proveedor)
             fecha_compra = datetime.date.isoformat(enc.fecha_compra)
-            print(fecha_compra)
             fecha_factura = datetime.date.isoformat(enc.fecha_factura)
             e = {
                 'fecha_compra':fecha_compra,
@@ -194,12 +194,14 @@ def pago_compra(request, id):
 
     if request.method == "POST":
         metodo = request.POST.get("metodo")
+        monto = request.POST.get("monto")
         enc.observacion = enc.observacion
         enc.no_factura = enc.no_factura
         enc.fecha_factura = enc.fecha_factura
-        enc.total = (-1 * enc.total)
+        enc.total = (enc.total- float(monto))
         enc.pagado = True
         enc.tipo_pago = metodo
+        enc.monto = float(monto)
         enc.user_cobra = request.user.username
         enc.save()
 

@@ -7,11 +7,13 @@ def imprimir_factura_compra(request,id):
 
     enc = ComprasEnc.objects.get(id=id)
     det = ComprasDet.objects.filter(compra__id=id)
-
+    cambio = enc.monto - enc.total
+    print(cambio)
     context={
         'request':request,
         'enc':enc,
-        'detalle':det
+        'detalle':det,
+        'cambio':cambio
     }
     print(enc.fecha_factura)
     return render(request,template_name,context)
@@ -38,6 +40,12 @@ def imprimir_factura_compra_todas(request):
     }
 
     return render(request,template_name,context)
+
+
+
+
+
+
 # def reporte_compras(request):
 #     today = dateformat.format(timezone.now(), 'd-m-Y')
 

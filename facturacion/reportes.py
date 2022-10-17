@@ -9,11 +9,12 @@ def imprimir_factura_recibo(request,id):
 
     enc = FacturaEnc.objects.get(id=id)
     det = FacturaDet.objects.filter(factura=id)
-
+    cambio = enc.monto - enc.total
     context={
         'request':request,
         'enc':enc,
-        'detalle':det
+        'detalle':det,
+        'cambio':cambio
     }
 
     return render(request,template_name,context)

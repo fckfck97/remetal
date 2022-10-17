@@ -61,8 +61,10 @@ class ComprasEnc(BaseModelo):
     fecha_factura=models.DateField()
     sub_total=models.FloatField(default=0)
     gastos_adicionales=models.FloatField(default=0)
+    descripcion_gastos_adicionales = models.CharField(max_length=250, blank=True, null=True)
     total=models.FloatField(default=0)
     pagado=models.BooleanField(default=False)
+    monto = models.FloatField(default=0,null=True, blank=True)
     tipo_pago=models.CharField(max_length=50,null=True, blank=True)
     user_cobra=models.CharField(max_length=50,null=True,blank=True)
 

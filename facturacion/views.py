@@ -276,9 +276,11 @@ def pago_factura(request, id):
 
     if request.method == "POST":
         metodo = request.POST.get("metodo")
+        monto = request.POST.get("monto")
         enc.cliente = enc.cliente
         enc.pagado = True
         enc.tipo_pago = metodo
+        enc.monto = float(monto)
         enc.user_cobra = request.user.username
         enc.save()
         enc = FacturaEnc.objects.get(pk=id)

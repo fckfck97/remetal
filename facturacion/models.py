@@ -61,6 +61,7 @@ class FacturaEnc(BaseModelo2):
     descuento=models.FloatField(default=0)
     total=models.FloatField(default=0)
     pagado=models.BooleanField(default=False)
+    monto = models.FloatField(default=0,null=True, blank=True)
     tipo_pago=models.CharField(max_length=50,null=True, blank=True)
     user_cobra=models.CharField(max_length=50,null=True,blank=True)
 
