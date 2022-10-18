@@ -79,7 +79,8 @@ class Home(LoginRequiredMixin, TemplateView):
         # gastos y descuento por mes y ano mas las ganancias por mes visualizacion calculos
         gastos = Gastos.objects.filter(
             fc__year=ano, fc__month=mes,estado=True).aggregate(Sum('monto_gastos'))
-        
+        if gastos['monto_gastos__sum'] is None:
+                gastos['monto_gastos__sum'] = 0
         # visualizacion de la grafica
         context = super().get_context_data(**kwargs)
         compra_total = []
@@ -90,17 +91,17 @@ class Home(LoginRequiredMixin, TemplateView):
                 fecha_compra__year=ano, fecha_compra__month=n,pagado=True).aggregate(Sum('total'))
             factura = FacturaEnc.objects.filter(
                 fecha__year=ano, fecha__month=n,pagado=True).aggregate(Sum('total'))
-            gastoss = Gastos.objects.filter(
+            monto_gastos = Gastos.objects.filter(
                 fc__year=ano, fc__month=n,estado=True).aggregate(Sum('monto_gastos'))
             if compra['total__sum'] is None:
                 compra['total__sum'] = 0
             if factura['total__sum'] is None:
                 factura['total__sum'] = 0
-            if gastoss['monto_gastos__sum'] is None:
-                gastoss['monto_gastos__sum'] = 0
+            if monto_gastos['monto_gastos__sum'] is None:
+                monto_gastos['monto_gastos__sum'] = 0
             compra_total.append(compra['total__sum'])
             facturacion_total.append(factura['total__sum'])
-            gastos_total.append(gastoss['monto_gastos__sum'])
+            gastos_total.append(monto_gastos['monto_gastos__sum'])
         diferencia = [(e1 - e2) - e3 for e1,
                       e2, e3 in zip(facturacion_total, compra_total,gastos_total)]
 
