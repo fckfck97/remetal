@@ -17,14 +17,14 @@
               <div
                 class="text-xs font-weight-bold text-primary text-uppercase mb-1"
               >
-              {% if total < 0 %}
-              Perdidas del Mes Actual
+              {% if total_neto < 0 %}
+              Perdidas Neta del Mes Actual
               {% else %}
-                Ganancias Mes Actual
+                Ganancias Neta Mes Actual
               {% endif %}
               </div>
               <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ total }}$
+                {{ total_neto }}$
               </div>
             </div>
             <div class="col-auto">
@@ -89,7 +89,32 @@
         </div>
       </div>
     </div>
-
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+              >
+              {% if total < 0 %}
+              Total Perdidas Mes Actual
+              {% else %}
+              Total Ganancias Mes Actual
+              {% endif %}
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ total }}$
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <!-- Begin Page Content -->

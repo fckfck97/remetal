@@ -79,9 +79,7 @@ class Home(LoginRequiredMixin, TemplateView):
         # gastos y descuento por mes y ano mas las ganancias por mes visualizacion calculos
         gastos = Gastos.objects.filter(
             fc__year=ano, fc__month=mes,estado=True).aggregate(Sum('monto_gastos'))
-        descuento = FacturaEnc.objects.filter(
-            fecha__year=ano, fecha__month=mes,pagado=True).aggregate(Sum('descuento'))
-
+        
         # visualizacion de la grafica
         context = super().get_context_data(**kwargs)
         compra_total = []
@@ -103,16 +101,20 @@ class Home(LoginRequiredMixin, TemplateView):
             compra_total.append(compra['total__sum'])
             facturacion_total.append(factura['total__sum'])
             gastos_total.append(gastoss['monto_gastos__sum'])
-        diferencia = [e1 - e2 - e3 for e1,
+        diferencia = [(e1 - e2) - e3 for e1,
                       e2, e3 in zip(facturacion_total, compra_total,gastos_total)]
+
 
         context["cenc"] = compra_total
         context["fenc"] = facturacion_total
         context["ggra"] = gastos_total
         context["ganancias_mes"] = diferencia
-        context["total"] = self.ganancias_mes(mes, ano) - gastos['monto_gastos__sum']
+
+        context["total_neto"] = self.ganancias_mes(mes, ano)
+
         context["total_ano"] = self.ganancias_anuales(ano) - gastos['monto_gastos__sum']
         context["gastos"] = gastos['monto_gastos__sum']
+        context["total"] = self.ganancias_mes(mes, ano) - gastos['monto_gastos__sum']
         return context
 
 
@@ -152,7 +154,7 @@ class GastosNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     form_class=GastosForm
     success_url=reverse_lazy("base:lista_gastos")
     success_message="Nuevo Gasto Registrado Satisfactoriamente"
-    permission_required="inventario.add_subcategoria"
+    permission_required="base.add_gastos"
 
     def form_valid(self, form):
         form.instance.estado = True
@@ -166,7 +168,7 @@ class GastosEdit(SuccessMessageMixin,SinPrivilegios, UpdateView):
     form_class=GastosForm
     success_url=reverse_lazy("base:lista_gastos")
     success_message="Gasto Actualizado Satisfactoriamente"
-    permission_required="inventario.change_subcatetoria"
+    permission_required="base.change_gastos"
 
     def form_valid(self, form):
         form.instance.estado = True
@@ -184,23 +186,5 @@ def inhabilitargasto(request, id):
         return HttpResponse("FAIL")
     
     return HttpResponse("FAIL")
-    '''template_name='inventario/subcategoria/inhabilitar.html'
-    contexto={}
-    
-    obj = SubCategoria.objects.filter(pk=id).first()
-
-    if not obj:
-        return HttpResponse('Categoria no existe ' + str(id))
-
-    if request.method=='GET':
-        contexto={'obj':obj}
-
-    if request.method=='POST':
-        obj.estado=False
-        obj.save()
-        contexto={'obj':'OK'}
-        return HttpResponse('SubCategoria Inactivada')
-
-    return render(request,template_name,contexto)'''
 
 
