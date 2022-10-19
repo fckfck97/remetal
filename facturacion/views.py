@@ -271,7 +271,6 @@ def pago_factura(request, id):
 
     enc = FacturaEnc.objects.get(pk=id)
     if request.method=="GET":
-        enc.save()
         context={"det":enc}
 
     if request.method == "POST":

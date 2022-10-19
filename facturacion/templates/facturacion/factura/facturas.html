@@ -244,15 +244,12 @@
               data-toggle="table"
               data-pagination="true"
               data-search="true"
-              data-show-columns="true"
-              data-show-toggle="true"
-              data-show-fullscreen="true"
               data-locale="es-NI"
             >
-              <thead>
-                <th data-sortable="true" data-field="id">Id.</th>
-                <th data-sortable="true" data-field="codigo">Código</th>
-                <th data-sortable="true" data-field="descripcion">
+              <thead align="center">
+                <th data-field="id">Id.</th>
+                <th data-field="codigo">Código</th>
+                <th data-field="descripcion">
                   Descripción
                 </th>
                 <th data-field="cantidad">Cant</th>
@@ -261,7 +258,7 @@
                 <th data-field="total">Total</th>
                 <th class="all">Acciones</th>
               </thead>
-              <tbody>
+              <tbody align="center">
                 {% for item in det %}
                 <tr>
                   <td>{{ item.id }}</td>
@@ -301,15 +298,12 @@
               data-toggle="table"
               data-pagination="true"
               data-search="true"
-              data-show-columns="true"
-              data-show-toggle="true"
-              data-show-fullscreen="true"
               data-locale="es-NI"
             >
-              <thead>
-                <th data-sortable="true" data-field="id">Id.</th>
-                <th data-sortable="true" data-field="codigo">Código</th>
-                <th data-sortable="true" data-field="descripcion">
+              <thead align="center">
+                <th data-field="id">Id.</th>
+                <th data-field="codigo">Código</th>
+                <th data-field="descripcion">
                   Descripción
                 </th>
                 <th data-field="cantidad">Cant</th>
@@ -319,7 +313,7 @@
                 <th class="all">Usuario .</th>
                 <th class="all">Estado .</th>
               </thead>
-              <tbody>
+              <tbody align="center">
                 {% for item in det2 %} {% if item.cantidad < 0 %}
                 <tr>
                   <td>{{ item.id }}</td>

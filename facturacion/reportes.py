@@ -1,23 +1,28 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import redirect, render
 # from django.utils.dateparse import parse_date
 # from datetime import timedelta
 
 from .models import FacturaEnc,FacturaDet
 
 def imprimir_factura_recibo(request,id):
-    template_name="facturacion/factura/factura_one.html"
+    try:
+        template_name="facturacion/factura/factura_one.html"
 
-    enc = FacturaEnc.objects.get(id=id)
-    det = FacturaDet.objects.filter(factura=id)
-    cambio = enc.monto - enc.total
-    context={
-        'request':request,
-        'enc':enc,
-        'detalle':det,
-        'cambio':cambio
-    }
+        enc = FacturaEnc.objects.get(id=id)
+        det = FacturaDet.objects.filter(factura=id)
+        cambio = enc.monto - enc.total
+        context={
+            'request':request,
+            'enc':enc,
+            'detalle':det,
+            'cambio':cambio
+        }
 
-    return render(request,template_name,context)
+        return render(request,template_name,context)
+    except:
+        messages.error(request,'Factura NO Disponible Intente crear una Nueva')
+        return redirect("facturacion:nueva_factura")
 
 # def imprimir_factura_list(request,f1,f2):
 #     template_name="fac/facturas_print_all.html"

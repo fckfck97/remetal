@@ -17,27 +17,21 @@
                   id="tblProducto"
                   data-pagination="true"
                   data-search="true"
-                  data-show-columns="true"
-                  data-show-fullscreen="true"
                   data-locale="es-NI"
                 >
-                  <thead>
-                    <th data-sortable="true" data-field="id">Id</th>
-                    <th data-sortable="true" data-field="codigo">Código</th>
-                    <th data-sortable="true" data-field="codigo_barra">
-                      Barra
-                    </th>
+                  <thead align="center">
+                    <th data-field="id">Id</th>
+                    <th data-field="codigo">Código</th>
                     <th data-field="descripcion">Descripción</th>
                     <th data-field="existencia">Existencia</th>
                     <th data-field="precio">Precio</th>
                     <th class="all">Acciones</th>
                   </thead>
-                  <tbody>
+                  <tbody align="center">
                     {% for item in obj%}
                     <tr>
                       <td>{{ item.id }}</td>
                       <td>{{ item.codigo }}</td>
-                      <td>{{ item.codigo_barra }}</td>
                       <td>{{item.descripcion}}</td>
                       <td>{{item.existencia}}</td>
                       <td>{{item.precio}}</td>

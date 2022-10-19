@@ -50,14 +50,8 @@
           <td>
             <a
               class="btn btn-warning btn-circle"
-              href="{% url 'compra:editar_compra' item.id %}"
+              href="{% url 'facturacion:editar_factura' item.id %}"
               ><i class="far fa-edit"></i
-            ></a>
-            <a
-              class="btn btn-danger btn-circle"
-              onclick="return abrir_modal('{% url 'compra:eliminar_enc' item.id %}')"
-              target="reportes"
-              ><i class="fas fa-trash"></i
             ></a>
             <button
               type="button"
@@ -109,7 +103,7 @@
               <td>{{ item.fecha }}</td>
               <td>{{ item.total }}$</td>
               <td>{{ item.tipo_pago }}</td>
-              <td>{{ item.monto }}</td>
+              <td>{{ item.monto }}$</td>
               {% if item.pagado %}
               <td>Pagado</td>
               {% endif %}

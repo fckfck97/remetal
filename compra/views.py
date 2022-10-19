@@ -105,7 +105,6 @@ def compras(request,compra_id=None):
                 'no_factura': f"RM-C-{enc.id}",
                 'fecha_factura': fecha_factura,
                 'sub_total': enc.sub_total,
-                'gastos_adicionales': enc.gastos_adicionales,
                 'total':enc.total
             }
             form_compras = ComprasEncForm(e)
@@ -121,7 +120,6 @@ def compras(request,compra_id=None):
         fecha_factura = request.POST.get("fecha_factura")
         proveedor = request.POST.get("proveedor")
         sub_total = 0
-        gastos_adicionales = 0
         total = 0
 
         if not compra_id:
@@ -154,10 +152,6 @@ def compras(request,compra_id=None):
         producto = request.POST.get("id_id_producto")
         cantidad = request.POST.get("id_cantidad_detalle")
         precio = request.POST.get("id_precio_detalle")
-        sub_total_detalle = request.POST.get("id_sub_total_detalle")
-        gastos_adicionales_detalle  = request.POST.get("id_gastos_adicionales_detalle")
-        total_detalle  = request.POST.get("id_total_detalle")
-
         prod = Producto.objects.get(pk=producto)
 
         det = ComprasDet(
@@ -165,18 +159,14 @@ def compras(request,compra_id=None):
             producto=prod,
             cantidad=cantidad,
             precio_prv=precio,
-            gastos_adicionales=gastos_adicionales_detalle,
             costo=0,
             uc = request.user
         )
 
         if det:
             det.save()
-
             sub_total=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('sub_total'))
-            gastos_adicionales=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('gastos_adicionales'))
             enc.sub_total = sub_total["sub_total__sum"]
-            enc.gastos_adicionales=gastos_adicionales["gastos_adicionales__sum"]
             enc.save()
 
         return redirect("compra:editar_compra",compra_id=compra_id)

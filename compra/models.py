@@ -60,8 +60,6 @@ class ComprasEnc(BaseModelo):
     no_factura=models.CharField(max_length=100)
     fecha_factura=models.DateField()
     sub_total=models.FloatField(default=0)
-    gastos_adicionales=models.FloatField(default=0)
-    descripcion_gastos_adicionales = models.CharField(max_length=250, blank=True, null=True)
     total=models.FloatField(default=0)
     pagado=models.BooleanField(default=False)
     monto = models.FloatField(default=0,null=True, blank=True)
@@ -75,11 +73,9 @@ class ComprasEnc(BaseModelo):
 
     def save(self):
         self.observacion = self.observacion.upper()
-        if self.sub_total == None  or self.gastos_adicionales == None:
+        if self.sub_total == None:
             self.sub_total = 0
-            self.gastos_adicionales = 0
-            
-        self.total = self.sub_total + self.gastos_adicionales
+        self.total = self.sub_total 
         super(ComprasEnc,self).save()
 
     class Meta:
@@ -92,7 +88,6 @@ class ComprasDet(BaseModelo):
     cantidad=models.BigIntegerField(default=0)
     precio_prv=models.FloatField(default=0)
     sub_total=models.FloatField(default=0)
-    gastos_adicionales=models.FloatField(default=0)
     total=models.FloatField(default=0)
     costo=models.FloatField(default=0)
 
@@ -101,7 +96,7 @@ class ComprasDet(BaseModelo):
 
     def save(self):
         self.sub_total = float(float(int(self.cantidad)) * float(self.precio_prv))
-        self.total = self.sub_total + float(self.gastos_adicionales)
+        self.total = self.sub_total
         super(ComprasDet, self).save()
     
     class Mega:
@@ -116,9 +111,7 @@ def detalle_compra_borrar(sender,instance, **kwargs):
     enc = ComprasEnc.objects.filter(pk=id_compra).first()
     if enc:
         sub_total = ComprasDet.objects.filter(compra=id_compra).aggregate(Sum('sub_total'))
-        gastos_adicionales = ComprasDet.objects.filter(compra=id_compra).aggregate(Sum('gastos_adicionales'))
         enc.sub_total=sub_total['sub_total__sum']
-        enc.gastos_adicionales=gastos_adicionales['gastos_adicionales__sum']
         enc.save()
     
     prod=Producto.objects.filter(pk=id_producto).first()
