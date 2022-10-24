@@ -49,10 +49,11 @@ class ComprasEncForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
-                'class': 'form'
+                'class': 'form-control'
             })
         self.fields['no_factura'].widget.attrs['readonly'] = True
         self.fields['fecha_compra'].widget.attrs['readonly'] = True
         self.fields['fecha_factura'].widget.attrs['readonly'] = True
         self.fields['sub_total'].widget.attrs['readonly'] = True
         self.fields['total'].widget.attrs['readonly'] = True
+        self.fields['observacion'].widget.attrs.update({'style':'height: calc(1.5em + 0.75rem + 2px);'})
