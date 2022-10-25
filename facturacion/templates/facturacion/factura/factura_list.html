@@ -53,6 +53,7 @@
               href="{% url 'facturacion:editar_factura' item.id %}"
               ><i class="far fa-edit"></i
             ></a>
+
             <button
               type="button"
               class="btn btn-warning btn-circle"
@@ -60,6 +61,13 @@
             >
               <i class="fa-solid fa-money-bill"></i>
             </button>
+            <button
+            type="button"
+            class="btn btn-warning btn-circle"
+            onclick="pagar_factura({{ item.id }})"
+          >
+            <i class="fa-solid fa-money-bill"></i>
+          </button>
           </td>
         </tr>
         {% endfor %}
@@ -177,6 +185,48 @@
                   }
           });
       }
-  
+     function pagar_factura(id)
+      {
+          // mensaje(id);
+          $.confirm({
+              theme:"material",
+              icon:"fas fa-dollar-sign",
+              type:'green',
+              title: "Pago de Factura",
+              content: 'url:/facturacion/factura/pago_factura/' + id,
+              buttons:{
+                  borrar:{
+                      text:"Pago",
+                      btnClass:"btn btn-success",
+                      action: function(){
+                        var metodo = this.$content.find('select#metodo');
+                        var monto = this.$content.find('input#monto');
+                        var data = {"metodo":metodo.val(),"monto":monto.val()};
+  	                    console.log(data);
+
+                          var token = '{{csrf_token}}';
+                          $.ajax({
+                              headers: { "X-CSRFToken": token },
+                              type:"POST",
+                              data:data,
+                              url: '/facturacion/factura/pago_factura/' + id,
+                              success: function(r){
+                                  console.log(r);
+                                  if(r==="ok"){
+                                      location.reload(true);
+                                  }else{
+                                      mensaje(r,'red');
+                                  }
+                              },
+                              error: function(a,b,c){
+                                  mensaje(c);
+                              }
+                          });
+                      }
+                      },
+                  cancelar: function(){}
+                  }
+          });
+      }  
 </script>
 {% endblock %}

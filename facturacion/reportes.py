@@ -7,7 +7,7 @@ from .models import FacturaEnc,FacturaDet
 
 def imprimir_factura_recibo(request,id):
     try:
-        template_name="facturacion/factura/factura_one.html"
+        template_name="facturacion/reporte/factura_one.html"
 
         enc = FacturaEnc.objects.get(id=id)
         det = FacturaDet.objects.filter(factura=id)

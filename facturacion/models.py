@@ -56,7 +56,7 @@ class Cliente(BaseModelo):
 
 class FacturaEnc(BaseModelo2):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    fecha = models.DateTimeField(auto_now_add=True)
+    fecha = models.DateTimeField()
     sub_total=models.FloatField(default=0)
     descuento=models.FloatField(default=0)
     total=models.FloatField(default=0)

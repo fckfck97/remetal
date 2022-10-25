@@ -11,12 +11,6 @@ from django.http import HttpResponse
 from base.views import SinPrivilegios
 import datetime
 
-# Create your views here.
-class ProveedorView(SinPrivilegios,ListView):
-    model = Proveedor
-    template_name = 'compra/proveedor/proveedor_list.html'
-    context_object_name = 'obj'
-    permission_required = "compra.view_proveedor"
 
 class ProveedorNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     
@@ -25,7 +19,7 @@ class ProveedorNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     context_object_name = 'obj'
     form_class=ProveedorForm
     success_message="Proveedor Creado Correctamente"
-    success_url= reverse_lazy("compra:lista_proveedores")
+    success_url= reverse_lazy("compra:nueva_compra")
     permission_required = "compra.add_proveedor"
 
     def form_valid(self, form):
@@ -39,26 +33,13 @@ class ProveedorEdit(SuccessMessageMixin,SinPrivilegios,UpdateView):
     context_object_name = 'obj'
     form_class=ProveedorForm
     success_message="Proveedor Editado Correctamente"
-    success_url= reverse_lazy("compra:lista_proveedores")
+    success_url= reverse_lazy("compra:nueva_compra")
     permission_required = "compra.change_proveedor"
     
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
 
-@login_required(login_url='/login/')
-@permission_required('compra.change_proveedor', login_url='base:sin_privilegios')
-def inhabilitarpro(request, id):
-    proveedor = Proveedor.objects.filter(pk=id).first()
-
-    if request.method=="POST":
-        if proveedor:
-            proveedor.estado = not proveedor.estado
-            proveedor.save()
-            return HttpResponse("OK")
-        return HttpResponse("FAIL")
-    
-    return HttpResponse("FAIL")
 
 class ComprasView(SinPrivilegios, ListView):
     model = ComprasEnc
@@ -83,6 +64,7 @@ def compras(request,compra_id=None):
 
     if request.method=='GET':
         #codigo de facturacion
+        proveedores = Proveedor.objects.filter(estado=True)
         try:
             cod = ComprasEnc.objects.latest('id')
             c ={'no_factura': f"RM-C-{cod.id+1}"}
@@ -95,7 +77,6 @@ def compras(request,compra_id=None):
 
         if enc:
             det = ComprasDet.objects.filter(compra=enc)
-            print(enc.proveedor)
             fecha_compra = datetime.date.isoformat(enc.fecha_compra)
             fecha_factura = datetime.date.isoformat(enc.fecha_factura)
             e = {
@@ -111,14 +92,15 @@ def compras(request,compra_id=None):
         else:
             det=None
         
-        contexto={'productos':prod,'encabezado':enc,'detalle':det,'form_enc':form_compras}
+        contexto={'productos':prod,'encabezado':enc,'detalle':det,'form_enc':form_compras,"proveedores":proveedores}
 
     if request.method=='POST':
         fecha_compra = request.POST.get("fecha_compra")
         observacion = request.POST.get("observacion")
         no_factura = request.POST.get("no_factura")
         fecha_factura = request.POST.get("fecha_factura")
-        proveedor = request.POST.get("proveedor")
+        proveedor = request.POST.get("enc_proveedor")
+        print(proveedor)
         sub_total = 0
         total = 0
 

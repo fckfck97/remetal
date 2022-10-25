@@ -179,60 +179,6 @@
                     >{% endif %}
                   </nav>
                   </div>
-                  <a
-                    class="nav-link collapsed"
-                    href="#"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#pagesCollapseError1"
-                    aria-expanded="false"
-                    aria-controls="pagesCollapseError1"
-                  >
-                  Catálogos de Proveedores
-                    <div class="sb-sidenav-collapse-arrow">
-                      <i class="fas fa-angle-down"></i>
-                    </div>
-                  </a>
-                  <div
-                    class="collapse"
-                    id="pagesCollapseError1"
-                    aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordionPages"
-                  >
-                    <nav class="sb-sidenav-menu-nested nav">
-                      
-                      {% if perms.compra.view_proveedor %}          
-                      <a class="nav-link" href="{% url 'compra:lista_proveedores' %}">Proveedores</a>
-                      {% endif %}
-                      
-                    </nav>
-                  </div>
-
-                  {% comment %} 2 {% endcomment %}
-                  <a
-                    class="nav-link collapsed"
-                    href="#"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#pagesCollapseError"
-                    aria-expanded="false"
-                    aria-controls="pagesCollapseError"
-                  >
-                    Catalago de Clientes
-                    <div class="sb-sidenav-collapse-arrow">
-                      <i class="fas fa-angle-down"></i>
-                    </div>
-                  </a>
-                  <div
-                    class="collapse"
-                    id="pagesCollapseError"
-                    aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordionPages"
-                  >
-                    <nav class="sb-sidenav-menu-nested nav">
-                      {% if perms.facturacion.view_cliente %}            
-                      <a class="nav-link" href="{% url 'facturacion:lista_clientes' %}">Clientes</a>
-                      {% endif %}
-                    </nav>
-                  </div>
                 </nav>
               </div>
               <div class="sb-sidenav-menu-heading">Entradas y Salidas</div>
@@ -253,8 +199,7 @@
             </div>
           </div>
           <div class="sb-sidenav-footer">
-            <div class="small">Has Iniciado con:</div>
-            {{ user.first_name }} {{ user.last_name }}
+            <div class="small">Has Iniciado como: {{ user|upper }}</div>
           </div>
         </nav>
         {% endblock side_bar %}

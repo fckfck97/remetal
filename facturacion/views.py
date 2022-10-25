@@ -1,26 +1,23 @@
 from ast import Delete
 from django.shortcuts import render,redirect
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
-
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from datetime import datetime
 from django.contrib import messages
-
 from django.contrib.auth import authenticate
-
 from base.views import SinPrivilegios
 from .models import Cliente, FacturaEnc, FacturaDet
 from .forms import ClienteForm
 from inventario.views import ProductoView
 from inventario.models import Producto
-class ClienteView(SinPrivilegios, ListView):
-    model = Cliente
-    template_name = "facturacion/clientes/lista_clientes.html"
-    context_object_name = "obj"
-    permission_required="facturacion.view_cliente"
+# class ClienteView(SinPrivilegios, ListView):
+#     model = Cliente
+#     template_name = "facturacion/clientes/lista_clientes.html"
+#     context_object_name = "obj"
+#     permission_required="facturacion.view_cliente"
 
 
 class VistaBaseCreate(SuccessMessageMixin,SinPrivilegios, \
@@ -47,49 +44,15 @@ class ClienteNew(VistaBaseCreate):
     model=Cliente
     template_name="facturacion/clientes/cliente_form.html"
     form_class=ClienteForm
-    success_url= reverse_lazy("facturacion:lista_clientes")
+    success_url= reverse_lazy("facturacion:nueva_factura")
     permission_required="facturacion.add_cliente"
 
 class ClienteEdit(VistaBaseEdit):
     model=Cliente
     template_name="facturacion/clientes/cliente_form.html"
     form_class=ClienteForm
-    success_url= reverse_lazy("facturacion:lista_clientes")
+    success_url= reverse_lazy("facturacion:nueva_factura")
     permission_required="facturacion.change_cliente"
-
-    # def get(self, request, *args, **kwargs):
-    #     print("sobre escribir get en editar")
-
-    #     print(request)
-        
-    #     try:
-    #         t = request.GET["t"]
-    #     except:
-    #         t = None
-
-    #     print(t)
-    #     self.object = self.get_object()
-    #     form_class = self.get_form_class()
-    #     form = self.get_form(form_class)
-    #     context = self.get_context_data(object=self.object, form=form,t=t)
-    #     print(form_class,form,context)
-    #     return self.render_to_response(context)
-
-
-@login_required(login_url="/login/")
-@permission_required("facturacion.change_cliente",login_url="/login/")
-def clienteInactivar(request,id):
-    cliente = Cliente.objects.filter(pk=id).first()
-
-    if request.method=="POST":
-        if cliente:
-            cliente.estado = not cliente.estado
-            cliente.save()
-            return HttpResponse("OK")
-        return HttpResponse("FAIL")
-    
-    return HttpResponse("FAIL")
-
 
 class FacturaView(SinPrivilegios, ListView):
     model = FacturaEnc
@@ -233,7 +196,7 @@ def borrar_detalle_factura(request, id):
         usr = request.POST.get("usuario")
         pas = request.POST.get("pass")
 
-        user =authenticate(username=usr,password=pas)
+        user = authenticate(username=usr,password=pas)
 
         if not user:
             return HttpResponse("Usuario o Clave Incorrecta")

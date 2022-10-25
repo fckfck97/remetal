@@ -4,7 +4,7 @@
       role="form"
       action="{% url 'compra:eliminar_compra' obj.compra.id obj.pk %}"
       method="post"
-      class="form-inline"
+      class="form-control"
     >
       <div class="col-xl-12 col-md-12 mb-12">
         <div class="card border-left-danger shadow h-100 py-2">
@@ -19,11 +19,9 @@
                 <div class="dropdown-divider"></div>
                 {% csrf_token %}
                 <div class="row">
-                  ¿Eliminar {{ obj.producto }} de compra número
-                  <b>{{ obj.compra.id}} </b> ?
+                  ¿Eliminar {{ obj.producto }} de compra número<b>{{ obj.compra.id}} </b> ?
                 </div>
                 <div class="dropdown-divider"></div>
-                <div class="row">
                   <div class="col">
                     <button type="submit" class="btn btn-danger">
                       <span class="fa fa-save"></span> Si, Eliminar
@@ -36,7 +34,6 @@
                       Cancelar
                     </button>
                   </div>
-                </div>
               </div>
               <div class="col-auto">
                 <i class="far fa-calendar-plus fa-2x text-gray-300"></i>

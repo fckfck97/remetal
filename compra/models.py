@@ -55,7 +55,7 @@ class Proveedor(BaseModelo):
         verbose_name_plural = "Proveedores"
 
 class ComprasEnc(BaseModelo):
-    fecha_compra=models.DateField(null=True,blank=True)
+    fecha_compra=models.DateField(blank=True,null=True)
     observacion=models.TextField(blank=True,null=True)
     no_factura=models.CharField(max_length=100)
     fecha_factura=models.DateField()
