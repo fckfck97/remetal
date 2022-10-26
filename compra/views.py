@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Proveedor, ComprasEnc, ComprasDet, Producto
@@ -13,7 +14,6 @@ import datetime
 
 
 class ProveedorNew(SuccessMessageMixin,SinPrivilegios,CreateView):
-    
     model = Proveedor
     template_name = "compra/proveedor/proveedor_form.html"
     context_object_name = 'obj'
@@ -21,6 +21,14 @@ class ProveedorNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     success_message="Proveedor Creado Correctamente"
     success_url= reverse_lazy("compra:nueva_compra")
     permission_required = "compra.add_proveedor"
+    
+    # def post(self, request,*args, **kwargs):
+    #     rif = request.POST.get("rif")
+    #     print(rif)
+    #     sc = Proveedor.objects.filter(rif=rif).exists()
+    #     if sc == True:
+    #         messages.error(request,'No Puedo Continuar No Pude Detectar No. de Factura')    
+    #     return redirect("compra:nueva_compra")
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
@@ -33,6 +41,7 @@ class ProveedorEdit(SuccessMessageMixin,SinPrivilegios,UpdateView):
     context_object_name = 'obj'
     form_class=ProveedorForm
     success_message="Proveedor Editado Correctamente"
+    fail_message="Proveedor existe"
     success_url= reverse_lazy("compra:nueva_compra")
     permission_required = "compra.change_proveedor"
     
@@ -80,11 +89,9 @@ def compras(request,compra_id=None):
             fecha_compra = datetime.date.isoformat(enc.fecha_compra)
             fecha_factura = datetime.date.isoformat(enc.fecha_factura)
             e = {
-                'fecha_compra':fecha_compra,
                 'proveedor': enc.proveedor,
                 'observacion': enc.observacion,
                 'no_factura': f"RM-C-{enc.id}",
-                'fecha_factura': fecha_factura,
                 'sub_total': enc.sub_total,
                 'total':enc.total
             }

@@ -1,4 +1,5 @@
 from django import forms
+from django.shortcuts import HttpResponse
 from .models import Proveedor, ComprasEnc
 
 
@@ -21,21 +22,11 @@ class ProveedorForm(forms.ModelForm):
             })
 
     def clean(self):
-        try:
-            sc = Proveedor.objects.get(
-                razon_social=self.cleaned_data["razon_social"].upper()
-            )
+        rif = self.cleaned_data['rif']
 
-            if not self.instance.pk:
-                print("Registro ya existe")
-                raise forms.ValidationError("Registro Ya Existe")
-            elif self.instance.pk != sc.pk:
-                print("Cambio no permitido")
-                raise forms.ValidationError("Cambio No Permitido")
-        except Proveedor.DoesNotExist:
-            pass
-        return self.cleaned_data
-
+        if Proveedor.objects.filter(rif=rif).exists():
+            raise forms.ValidationError(f'Ya existe el Rif={rif}')
+        return rif
 
 class ComprasEncForm(forms.ModelForm):
     fecha_compra = forms.DateInput()

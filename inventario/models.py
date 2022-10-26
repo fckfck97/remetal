@@ -65,3 +65,19 @@ class Producto(BaseModelo):
     class Meta:
         verbose_name_plural = "Productos"
         unique_together = ('codigo', 'descripcion')
+
+
+
+
+class Gastos(models.Model):
+    descripcion = models.CharField(max_length=250,blank=True,null=True)
+    monto_gastos = models.FloatField(default=0)
+    estado = models.BooleanField(default=True)
+    fc = models.DateTimeField(auto_now_add=True)
+    fm = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    class Mega:
+        verbose_name_plural = "Gastos de Compras"
+        verbose_name="Gastos de Compra"

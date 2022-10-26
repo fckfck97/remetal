@@ -1,4 +1,3 @@
-from ast import Delete
 from django.shortcuts import render,redirect
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin

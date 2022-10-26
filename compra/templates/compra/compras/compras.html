@@ -43,7 +43,7 @@
                                         {% endif %}
                                         <div class="col-md-2 mb-3">
                                           <label for="id_fecha_compra" class="form-label">Fecha de Compra:</label>
-                                          <input type="date" name="fecha_compra" id="fecha_compra" class="form-control"/>
+                                          <input type="date" name="fecha_compra" id="fecha_compra" value="{{encabezado.fecha_compra}}"class="form-control"/>
                                         </div>
                                         <div class="col-md-2 mb-3">
                                           <label for="id_no_factura" class="form-label">No. Factura:</label>
@@ -188,14 +188,6 @@
                 
         </div>
     </form>
-
-
-
-
-
-
-
-
 {% endblock %}
 {% block js_page %}
 <script>
@@ -306,5 +298,7 @@
     }
 
     $("#id_proveedor").focus();
+    $("#fecha_compra").val("{{ encabezado.fecha_compra|date:'Y-m-d' }}");
+    $("#fecha_factura").val("{{ encabezado.fecha_factura|date:'Y-m-d' }}");
 </script>
 {% endblock %}

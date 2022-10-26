@@ -1,9 +1,9 @@
 <div class="modal-dialog modal-md">
     <div class="modal-content">
         {% if obj %}
-        <form method="POST" role="form" class="form-inline" action="{% url 'base:editar_gastos' obj.pk %}" enctype="multipart/form-data" >
+        <form method="POST" role="form" class="form-inline" action="{% url 'inventario:editar_gastos' obj.pk %}" enctype="multipart/form-data" >
         {% else %}
-        <form method="POST" role="form" class="form-inline" action="{% url 'base:nuevo_gastos' %}"  enctype="multipart/form-data" >
+        <form method="POST" role="form" class="form-inline" action="{% url 'inventario:nuevo_gastos' %}"  enctype="multipart/form-data" >
         {% endif %}
             <div class="col-xl-12 col-md-12 mb-12">
                 {% if obj %}

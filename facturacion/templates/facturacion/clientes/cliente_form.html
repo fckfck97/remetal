@@ -46,15 +46,11 @@
 <script>
 $("#frmCliente").submit(function( e ) {
     var frm = $('#frmCliente');
-    // alert("{{request.path}}")
     $.ajax({
             type: frm.attr('method'),
-            // url: frm.attr('action'),
             url: "{{request.path}}",
             data: frm.serialize(),
             success: function (data) {
-                // alert(data);
-                // window.location.reload(true);
                 $("#id").val(data)
                 console.log(data)
                 cerrar_modal()

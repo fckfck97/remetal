@@ -1,9 +1,8 @@
-from decimal import Context
 from django.shortcuts import render
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, CreateView, UpdateView,DeleteView
-from .models import Categoria, SubCategoria, Producto
-from . forms import CategoriaForm, SubCategoriaForm, ProductoForm
+from .models import Categoria, SubCategoria, Producto, Gastos
+from .forms import CategoriaForm, SubCategoriaForm, ProductoForm, GastosForm
 from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
@@ -63,24 +62,6 @@ def inhabilitarcat(request, id):
         return HttpResponse("FAIL")
     
     return HttpResponse("FAIL")
-    '''template_name='inventario/categoria/inhabilitar.html'
-    contexto={}
-    
-    obj = Categoria.objects.filter(pk=id).first()
-
-    if not obj:
-        return HttpResponse('Categoria no existe ' + str(id))
-
-    if request.method=='GET':
-        contexto={'obj':obj}
-
-    if request.method=='POST':
-        obj.estado=False
-        obj.save()
-        contexto={'obj':'OK'}
-        return HttpResponse('Categoria Inactivado')
-
-    return render(request,template_name,contexto)'''
 
 #Vistas de Categoria crear, editar eliminar y ver el listado
 
@@ -132,24 +113,6 @@ def inhabilitarsubcat(request, id):
         return HttpResponse("FAIL")
     
     return HttpResponse("FAIL")
-    '''template_name='inventario/subcategoria/inhabilitar.html'
-    contexto={}
-    
-    obj = SubCategoria.objects.filter(pk=id).first()
-
-    if not obj:
-        return HttpResponse('Categoria no existe ' + str(id))
-
-    if request.method=='GET':
-        contexto={'obj':obj}
-
-    if request.method=='POST':
-        obj.estado=False
-        obj.save()
-        contexto={'obj':'OK'}
-        return HttpResponse('SubCategoria Inactivada')
-
-    return render(request,template_name,contexto)'''
 
 
 
@@ -227,21 +190,52 @@ def inhabilitarproducto(request, id):
         return HttpResponse("FAIL")
     
     return HttpResponse("FAIL")
-    '''template_name='inventario/producto/inhabilitar.html'
-    contexto={}
+
+
+class GastosView(SinPrivilegios,ListView):
+    permission_required = "inventario.view_gastos"
+    model = Gastos
+    template_name = "inventario/gastos/gastos_list.html"
+    context_object_name = 'obj'
+
+class GastosNew(SuccessMessageMixin,SinPrivilegios,CreateView):
+    model=Gastos
+    template_name="inventario/gastos/gastos_form.html"
+    context_object_name = "obj"
+    form_class=GastosForm
+    success_url=reverse_lazy("inventario:lista_gastos")
+    success_message="Nuevo Gasto Registrado Satisfactoriamente"
+    permission_required="inventario.add_gastos"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        form.instance.estado = True
+        return super().form_valid(form)
+
+
+
+class GastosEdit(SuccessMessageMixin,SinPrivilegios, UpdateView):
+    model=Gastos
+    template_name="inventario/gastos/gastos_form.html"
+    context_object_name = "obj"
+    form_class=GastosForm
+    success_url=reverse_lazy("inventario:lista_gastos")
+    success_message="Gasto Actualizado Satisfactoriamente"
+    permission_required="inventario.change_gastos"
+
+    def form_valid(self, form):
+        form.instance.estado = True
+        return super().form_valid(form)
+
+@login_required(login_url='/login/')
+@permission_required('inventario.change_gastos', login_url='base:sin_privilegios')
+def inhabilitargasto(request, id):
+    gastos = Gastos.objects.filter(pk=id).first()
+    if request.method=="POST":
+        if gastos:
+            gastos.estado = not gastos.estado
+            gastos.save()
+            return HttpResponse("OK")
+        return HttpResponse("FAIL")
     
-    obj = Producto.objects.filter(pk=id).first()
-
-    if not obj:
-        return HttpResponse('Producto no existe ' + str(id))
-
-    if request.method=='GET':
-        contexto={'obj':obj}
-
-    if request.method=='POST':
-        obj.estado=False
-        obj.save()
-        contexto={'obj':'OK'}
-        return HttpResponse('Producto Inactivado')
-
-    return render(request,template_name,contexto)'''
+    return HttpResponse("FAIL")

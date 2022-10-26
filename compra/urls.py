@@ -15,7 +15,7 @@ urlpatterns = [
     path('<int:compra_id>/delete/<int:pk>',CompraDetDelete.as_view(), name="eliminar_compra"),
     path('eliminar/<int:pk>',CompraEncDelete.as_view(), name="eliminar_enc"),
 
-    path('compras/listado', imprimir_factura_compra_todas, name='imprimir_factura_compra_todas'),
+    path('listado', imprimir_factura_compra_todas, name='imprimir_factura_compra_todas'),
     path('compras/<int:id>/imprimir', imprimir_factura_compra,name="imprimir_factura_compra"),
     path('pago_compra/<int:id>',pago_compra, name="pago_compra"),
     

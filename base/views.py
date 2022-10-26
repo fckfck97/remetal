@@ -1,19 +1,16 @@
+from unittest import mock
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib import messages
 from django.contrib.auth.models import User, AnonymousUser
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.db.models import Sum
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import ListView, CreateView, UpdateView
-from django.http import HttpResponse
+from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required, permission_required
-from .forms import GastosForm
-from .models import Gastos
 # modelos para la grafica
 from compra.models import ComprasEnc
+from inventario.models import Gastos
 from facturacion.models import FacturaEnc
 # Create your views here.
 import datetime
@@ -142,50 +139,5 @@ class PerfilView(LoginRequiredMixin, ListView):
         return render(request, self.template_name, context)
 
 
-class GastosView(SinPrivilegios,ListView):
-    permission_required = "base.view_gastos"
-    model = Gastos
-    template_name = "gastos/gastos_list.html"
-    context_object_name = 'obj'
-
-class GastosNew(SuccessMessageMixin,SinPrivilegios,CreateView):
-    model=Gastos
-    template_name="gastos/gastos_form.html"
-    context_object_name = "obj"
-    form_class=GastosForm
-    success_url=reverse_lazy("base:lista_gastos")
-    success_message="Nuevo Gasto Registrado Satisfactoriamente"
-    permission_required="base.add_gastos"
-
-    def form_valid(self, form):
-        form.instance.estado = True
-        return super().form_valid(form)
-
-
-class GastosEdit(SuccessMessageMixin,SinPrivilegios, UpdateView):
-    model=Gastos
-    template_name="gastos/gastos_form.html"
-    context_object_name = "obj"
-    form_class=GastosForm
-    success_url=reverse_lazy("base:lista_gastos")
-    success_message="Gasto Actualizado Satisfactoriamente"
-    permission_required="base.change_gastos"
-
-    def form_valid(self, form):
-        form.instance.estado = True
-        return super().form_valid(form)
-
-@login_required(login_url='/login/')
-@permission_required('base.change_gastos', login_url='base:sin_privilegios')
-def inhabilitargasto(request, id):
-    gastos = Gastos.objects.filter(pk=id).first()
-    if request.method=="POST":
-        if gastos:
-            gastos.estado = not gastos.estado
-            gastos.save()
-            return HttpResponse("OK")
-        return HttpResponse("FAIL")
-    
-    return HttpResponse("FAIL")
 
 

@@ -16,12 +16,12 @@
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label class="form-label">No.:</label>
-                <input type="text" name="enc_id" id="enc_id" value="RM-F-{{ enc.id }}" readonly class="form-control" />
+                <input type="text" name="enc_id" id="enc_id" readonly class="form-control" />
               </div>
               {% if enc.cliente %}
               <div class="col-md-4 mb-3">
                 <label class="form-label">Cliente:</label>
-                <input type="text"  name="enc_cliente" id="enc_cliente" value="{{enc.cliente.rif}}-{{enc.cliente}}" readonly class="form-control" />
+                <input type="text" value="{{ enc.cliente.tipo }} {{ enc.cliente.rif }}  {{ enc.cliente.razon_social }}" readonly class="form-control"/>
               </div>
               {% else %}
               <div class="col-md-3 mb-3">
@@ -43,7 +43,7 @@
               {% endif %}
               <div class="col-md-4 mb-3">
                 <label class="form-label">Fecha:</label>
-                <input type="date" name="fecha" id="fecha" class="form-control"/>
+                <input type="date" name="fecha" id="fecha" readonly class="form-control"/>
               </div>
             </div>
             <div class="row">
