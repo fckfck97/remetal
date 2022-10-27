@@ -5,37 +5,18 @@
     class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
   >
     <h6 class="m-0 font-weight-bold text-primary">Listado de Compras</h6>
-    <div class="dropdown no-arrow">
-      <a
-        class="dropdown-toggle btn btn-default"
-        href="#"
-        role="button"
-        id="dropdownMenuLink"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        Menu
-      </a>
-      <div
-        class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-        aria-labelledby="dropdownMenuLink"
-      >
-        <div class="dropdown-header">Acciones:</div>
-        <a class="dropdown-item" href="{% url 'compra:nueva_compra'%}"
-          ><i class="fa-solid fa-circle-plus"></i> Nueva</a
-        >
-        <a
-          class="dropdown-item"
-          href="{% url 'compra:imprimir_factura_compra_todas'%}"
-          target="reportes"
-          ><i class="fa-solid fa-list-ul"></i> Listado</a
-        >
-      </div>
-    </div>
   </div>
   <!-- Card Body -->
   <div class="card-body">
+    <div class="buttons-toolbar">
+      <a class="btn btn-primary mb-3" href="{% url 'compra:nueva_compra'%}">
+        <i class="fa-solid fa-circle-plus"></i> Nueva
+        </a>
+      <a class="btn btn-outline-primary mb-3" href="{% url 'compra:imprimir_factura_compra_todas'%}" target="reportes">
+        <i class="fa-solid fa-list-ul"></i> Listado
+      </a>
+    </div>
+
     {% if not obj %}
     <div class="alert alert-info">No hay compras</div>
     {% else %}
