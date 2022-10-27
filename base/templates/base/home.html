@@ -10,12 +10,12 @@
   <div class="row">
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
+      <div class="card shadow h-100">
+        <div class="card-body px-3 py-2">
+          <div class="row no-gutters">
             <div class="col mr-2">
               <div
-                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                class="text-xs font-weight-bold text-primary text-uppercase"
               >
               {% if total_neto < 0 %}
               Perdidas Neta del Mes Actual
@@ -23,13 +23,15 @@
                 Ganancias Neta Mes Actual
               {% endif %}
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ total_neto }}$
-              </div>
             </div>
             <div class="col-auto">
-              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              <i class="fa-regular fa-calendar fa-2x text-gray-300"></i>
             </div>
+          </div>
+        </div>
+        <div class="card-bottom px-3 py-1">
+          <div class="h5 font-weight-bold text-gray-800">
+            {{ total_neto }}$
           </div>
         </div>
       </div>
@@ -37,53 +39,57 @@
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-success shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
+      <div class="card shadow h-100">
+        <div class="card-body px-3 py-2">
+          <div class="row no-gutters">
+            <div class="col">
               <div
-                class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                class="text-xs font-weight-bold text-primary text-uppercase"
               >
                 Ganancias Anuales
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ total_ano }}$
-              </div>
             </div>
             <div class="col-auto">
-              <i class="fas fa-dollar fa-2x text-gray-300"></i>
+              <i class="fa-solid fa-dollar-sign fa-2x text-gray-300"></i>
             </div>
+          </div>
+        </div>
+        <div class="card-bottom px-3 py-1">
+          <div class="h5 font-weight-bold text-gray-800">
+            {{ total_ano }}$
           </div>
         </div>
       </div>
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-info shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
+      <div class="card shadow h-100">
+        <div class="card-body px-3 py-2">
+          <div class="row no-gutters">
+            <div class="col">
               <div
-                class="text-xs font-weight-bold text-info text-uppercase mb-1"
+                class="text-xs font-weight-bold text-primary text-uppercase"
               >
-                Gastos de la Empresa.
-              </div>
-              <div class="row no-gutters align-items-center">
-                <div class="col-auto">
-                  {% if gastos == None %}
-                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                    0,0$
-                  </div>
-                  {%else%}
-                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                    {{ gastos }}$
-                  </div>
-                  {%endif%}
-                </div>
+                Gastos.
               </div>
             </div>
             <div class="col-auto">
-              <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+              <i class="fa-regular fa-clipboard fa-2x"></i>
+            </div>
+          </div>
+        </div>
+        <div class="card-bottom px-3 py-1">
+          <div class="row no-gutters">
+            <div class="col-auto">
+              {% if gastos == None %}
+              <div class="h5 mr-3 font-weight-bold text-gray-800">
+                0,0$
+              </div>
+              {%else%}
+              <div class="h5 mr-3 font-weight-bold text-gray-800">
+                {{ gastos }}$
+              </div>
+              {%endif%}
             </div>
           </div>
         </div>
@@ -91,12 +97,12 @@
     </div>
     
     <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
+      <div class="card border-left-primary shadow h-100">
+        <div class="card-body px-3 py-2">
+          <div class="row no-gutters">
+            <div class="col">
               <div
-                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                class="text-xs font-weight-bold text-primary text-uppercase"
               >
               {% if total < 0 %}
               Total Perdidas Mes Actual
@@ -104,13 +110,15 @@
               Total Ganancias Mes Actual
               {% endif %}
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                {{ total }}$
-              </div>
             </div>
             <div class="col-auto">
-              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              <i class="fa-solid fa-chart-line fa-2x"></i>
             </div>
+          </div>
+        </div>
+        <div class="card-bottom px-3 py-1">
+          <div class="h5 font-weight-bold text-gray-800">
+            {{ total }}$
           </div>
         </div>
       </div>
