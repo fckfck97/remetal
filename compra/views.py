@@ -107,7 +107,6 @@ def compras(request,compra_id=None):
         no_factura = request.POST.get("no_factura")
         fecha_factura = request.POST.get("fecha_factura")
         proveedor = request.POST.get("enc_proveedor")
-        print(proveedor)
         sub_total = 0
         total = 0
 

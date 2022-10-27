@@ -2,7 +2,8 @@ from django.urls import path
 from .views import CategoriaView, CategoriaNew, CategoriaEdit, inhabilitarcat,\
     SubCategoriaNew, SubCategoriaView, SubCategoriaNew, SubCategoriaEdit, inhabilitarsubcat, \
     ProductoView, ProductoNew, ProductoEdit, inhabilitarproducto,\
-        GastosView, GastosNew, GastosEdit, inhabilitargasto
+        GastosView, GastosNew, GastosEdit, inhabilitargasto,\
+          Categoria_Gastos_View,Categoria_Gastos_Edit,Categoria_Gastos_New, inhabilitarcatgas
 from .reporte import imprimir_inventario
 
 
@@ -40,5 +41,10 @@ urlpatterns = [
     path('gastos/estado/<int:id>', inhabilitargasto,
          name='inhabilitar_gastos'),
 
+     path('categorias/gastos/', Categoria_Gastos_View.as_view(), name="lista_categoria_gastos"),
+     path('categoria/gastos/nueva', Categoria_Gastos_New.as_view(), name='nueva_categoria_gastos'),
+     path('categoria/gastos/editar/<pk>', Categoria_Gastos_Edit.as_view(), name='editar_categoria_gastos'),
+     path('categoria/gastos/estado/<int:id>', inhabilitarcatgas,
+         name='inhabilitar_categoria_gastos'),
 
 ]

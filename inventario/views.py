@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, CreateView, UpdateView,DeleteView
-from .models import Categoria, SubCategoria, Producto, Gastos
-from .forms import CategoriaForm, SubCategoriaForm, ProductoForm, GastosForm
-from django.contrib import messages
+from .models import Categoria, Categoria_Gastos, SubCategoria, Producto, Gastos
+from .forms import CategoriaForm, SubCategoriaForm, ProductoForm, GastosForm, CategoriaGastosForm
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse_lazy
@@ -235,6 +234,57 @@ def inhabilitargasto(request, id):
         if gastos:
             gastos.estado = not gastos.estado
             gastos.save()
+            return HttpResponse("OK")
+        return HttpResponse("FAIL")
+    
+    return HttpResponse("FAIL")
+
+
+#Vistas de Categoria crear, editar eliminar y ver el listadp
+class Categoria_Gastos_View(SinPrivilegios,ListView):
+    permission_required = "inventario.view_categoria"
+    model = Categoria_Gastos
+    template_name = "inventario/categoria_gastos/categoria_list.html"
+    context_object_name = 'obj'
+    
+class Categoria_Gastos_New(SuccessMessageMixin,SinPrivilegios,CreateView):
+    permission_required="inventario.add_categoria"
+    model=Categoria_Gastos
+    template_name="inventario/categoria_gastos/categoria_form.html"
+    context_object_name = "obj"
+    form_class=CategoriaGastosForm
+    success_message="Categoria Creada Satisfactoriamente"
+    success_url=reverse_lazy("inventario:lista_categoria_gastos")
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        form.instance.estado = True
+        return super().form_valid(form)
+
+
+class Categoria_Gastos_Edit(SuccessMessageMixin,SinPrivilegios,UpdateView):
+    permission_required="inventario.change_categoria"
+    model=Categoria_Gastos
+    template_name="inventario/categoria_gastos/categoria_form.html"
+    context_object_name = "obj"
+    form_class=CategoriaGastosForm
+    success_url=reverse_lazy("inventario:lista_categoria_gastos")
+    success_message="Categoria Actualizada Satisfactoriamente"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+
+@login_required(login_url='/login/')
+@permission_required('inventario.change_categoria', login_url='base:sin_privilegios')
+def inhabilitarcatgas(request, id):
+    categoria = Categoria_Gastos.objects.filter(pk=id).first()
+
+    if request.method=="POST":
+        if categoria:
+            categoria.estado = not categoria.estado
+            categoria.save()
             return HttpResponse("OK")
         return HttpResponse("FAIL")
     

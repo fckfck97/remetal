@@ -23,12 +23,16 @@
                             {#{ form.as_p }#}
                         </div>
                         <div class="row">
-                            <div class="row">
+                                <div class="mb-3">
+                                    <label for="id_categoria" class="form-label">{{form.categoria.label}}</label>
+                                    {{form.categoria}}
+                                </div>   
+                                
                                 <div class="mb-3">
                                     <label for="id_descripcion" class="form-label">{{form.descripcion.label}}</label>
                                     {{form.descripcion}}
                                 </div>                        
-                            </div>
+                        
                             <div class="mb-3">
                                 <label for="id_monto_gastos" class="form-label">{{form.monto_gastos.label}}</label>
                                 {{form.monto_gastos}}

@@ -22,11 +22,15 @@ class ClienteForm(forms.ModelForm):
             })    
     def clean(self):
         try:
-            rif = self.cleaned_data['rif']
-
-            if Cliente.objects.filter(rif=rif).exists():
-                raise forms.ValidationError(f'Ya existe el Rif={rif}')
-            return rif
+            sc = Cliente.objects.get(
+                razon_social=self.cleaned_data["razon_social"].upper()
+            )
+            if not self.instance.pk:
+                print("Registro ya existe")
+                raise forms.ValidationError("Registro Ya Existe")
+            elif self.instance.pk!=sc.pk:
+                print("Cambio no permitido")
+                raise forms.ValidationError("Cambio No Permitido")
         except Cliente.DoesNotExist:
             pass
         return self.cleaned_data

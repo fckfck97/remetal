@@ -22,12 +22,19 @@ class ProveedorForm(forms.ModelForm):
             })
 
     def clean(self):
-        rif = self.cleaned_data['rif']
-
-        if Proveedor.objects.filter(rif=rif).exists():
-            raise forms.ValidationError(f'Ya existe el Rif={rif}')
-        return rif
-
+        try:
+            sc = Proveedor.objects.get(
+                razon_social=self.cleaned_data["razon_social"]
+            )
+            if not self.instance.pk:
+                print("Registro ya existe")
+                raise forms.ValidationError("Registro Ya Existe")
+            elif self.instance.pk!=sc.pk:
+                print("Cambio no permitido")
+                raise forms.ValidationError("Cambio No Permitido")
+        except Proveedor.DoesNotExist:
+            pass
+        return self.cleaned_data
 class ComprasEncForm(forms.ModelForm):
     fecha_compra = forms.DateInput()
     fecha_factura = forms.DateInput()

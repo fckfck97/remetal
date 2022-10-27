@@ -21,7 +21,9 @@
               {% if enc.cliente %}
               <div class="col-md-4 mb-3">
                 <label class="form-label">Cliente:</label>
-                <input type="text" value="{{ enc.cliente.tipo }} {{ enc.cliente.rif }}  {{ enc.cliente.razon_social }}" readonly class="form-control"/>
+                <select name="enc_cliente" id="enc_cliente" class="form-select">
+                  <option value="{{enc.cliente.id}}"> {{ enc.cliente.tipo }} {{ enc.cliente.rif }}  {{ enc.cliente.razon_social }}</option>
+                </select>
               </div>
               {% else %}
               <div class="col-md-3 mb-3">
@@ -146,11 +148,11 @@
                 {% for item in det %}
                 <tr>
                   <td>{{ item.id }}</td>
-                  <td>{{ item.producto }}</td>
+                  <td>{{ item.producto.codigo }}</td>
                   <td>{{ item.producto.descripcion }}</td>
                   <td>{{ item.cantidad }}KG</td>
                   <td>{{ item.sub_total }}$</td>
-                  {% if item.descuento < 0 %} <td>Sin Desc.</td>
+                    {% if item.descuento > 0 %} <td>Sin Desc.</td>
                     {% else %}
                     <td>{{ item.descuento }}$</td>
 
@@ -190,11 +192,12 @@
               <tbody align="center">
                 {% for item in det2 %} {% if item.cantidad < 0 %} <tr>
                   <td>{{ item.id }}</td>
-                  <td>{{ item.producto }}</td>
+                  <td>{{ item.producto.codigo }}</td>
                   <td>{{ item.producto.descripcion }}</td>
                   <td>{{ item.cantidad }}</td>
                   <td>{{ item.sub_total }}</td>
-                  {% if item.descuento < 0 %} <td>{{ item.descuento }}</td>
+                  {% if item.descuento > 0  %} 
+                  <td>{{ item.descuento }}$</td>
                     {% else %}
                     <td>Sin Desc.</td>
                     {% endif%}

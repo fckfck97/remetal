@@ -68,6 +68,23 @@ class Producto(BaseModelo):
 
 
 
+class Categoria_Gastos(BaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Descripción de la Categoría',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Categoria_Gastos, self).save()
+
+    class Meta:
+        verbose_name_plural= "Categorias de Gastos"
+
 
 class Gastos(models.Model):
     descripcion = models.CharField(max_length=250,blank=True,null=True)
@@ -75,6 +92,7 @@ class Gastos(models.Model):
     estado = models.BooleanField(default=True)
     fc = models.DateTimeField(auto_now_add=True)
     fm = models.DateTimeField(auto_now=True)
+    categoria = models.ForeignKey(Categoria_Gastos, on_delete=models.CASCADE)
     def __str__(self):
         return '{}'.format(self.descripcion)
 
