@@ -9,7 +9,11 @@
     <!-- Card Body -->
     <div class="card-body">
       <div class="buttons-toolbar">
-        <a class="btn btn-primary mb-3" onclick="return abrir_modal('{% url 'inventario:nuevo_gastos' %}')" href="#"><i class="fa-solid fa-circle-plus"></i> Nuevo</a>
+        <a class="btn btn-primary mb-3" onclick="return abrir_modal('{% url 'inventario:nuevo_gastos' %}')" href="#"><i class="fa-solid fa-circle-plus"></i> Nuevo Gasto</a>
+        <a class="btn btn-primary mb-3" onclick="return abrir_modal('{% url 'inventario:nueva_categoria_gastos' %}')" href="#"><i class="fa-solid fa-circle-plus"></i> Nuevo Cat Gasto</a>
+        <a class="btn btn-outline-primary mb-3" href="{% url 'inventario:reporte_gastos'%}" target="reportes">
+          <i class="fa-solid fa-list-ul"></i> Listado
+        </a>
       </div>
       {% if not obj %}
       <div class="alert alert-info">No hay Gastos Cargados</div>
