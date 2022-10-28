@@ -91,7 +91,7 @@
                                                 <td>{{ item.id }}</td>
                                                 <td>{{ item.descripcion }}</td>
                                                 <td>
-                                                    <button type="button" title="Elegir producto" class="btn btn-primary btn-circle"
+                                                    <button type="button" title="Elegir producto" class="btn btn-sm btn-primary btn-circle"
                                                     onclick="selectProducto({{item.id}},'{{item.descripcion}}')" ><i class="fa-regular fa-circle-check"></i></button>
                                                 </td>
                                                 </tr>
@@ -173,7 +173,7 @@
                                                 <td>{{ item.sub_total }}$</td>
                                                 <td>{{ item.total }}$</td>
                                                 <td>
-                                                    <button class="btn btn-danger btn-circle" onclick="return abrir_modal('{% url 'compra:eliminar_compra' encabezado.pk item.id %}')"><i class="fas fa-trash-alt"></i></button>
+                                                    <button class="btn btn-sm btn-danger btn-circle" title="Eliminar" onclick="return abrir_modal('{% url 'compra:eliminar_compra' encabezado.pk item.id %}')"><i class="fas fa-trash-alt"></i></button>
                                                 </td>
                                                 </tr>
                                                 {% endfor %}

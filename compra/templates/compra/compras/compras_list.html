@@ -50,24 +50,24 @@
           <td>{{ item.total }}$</td>
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
-            <a
-              class="btn btn-warning btn-circle"
-              href="{% url 'compra:editar_compra' item.id %}"
-              ><i class="far fa-edit"></i
-            ></a>
-            <a
-              class="btn btn-danger btn-circle"
-              onclick="return abrir_modal('{% url 'compra:eliminar_enc' item.id %}')"
-              target="reportes"
-              ><i class="fas fa-trash"></i
-            ></a>
             <button
               type="button"
-              class="btn btn-warning btn-circle"
+              class="btn btn-sm btn-success btn-circle" title="Pagar"
               onclick="pagar_factura({{ item.id }})"
             >
               <i class="fa-solid fa-money-bill"></i>
             </button>
+            <a
+              class="btn btn-sm btn-warning btn-circle" title="Editar"
+              href="{% url 'compra:editar_compra' item.id %}"
+              ><i class="far fa-edit"></i
+            ></a>
+            <a
+              class="btn btn-sm btn-danger btn-circle" title="Eliminar"
+              onclick="return abrir_modal('{% url 'compra:eliminar_enc' item.id %}')"
+              target="reportes"
+              ><i class="fas fa-trash"></i
+            ></a>
           </td>
         </tr>
         {% endfor %}

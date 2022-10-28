@@ -41,18 +41,18 @@
                 <td>{{ item.categoria }}</td>
                 <td>{{ item.descripcion }}</td>
                 <td >{#item.estado|yesno:"Activo,Inactivo"#}
-                  <div onclick="inactivar({{item.id}})">
+                  <div class="cursor-pointer" onclick="inactivar({{item.id}})">
                       {% if item.estado %}
-                      <i class="far fa-thumbs-up text-primary"></i>
+                      <i class="fa fa-circle-check text-success"></i>
                     {% else %}
-                      <i class="far fa-thumbs-down text-danger"></i>
+                      <i class="fa fa-circle-xmark text-danger"></i>
                     {% endif %}
                   </div>
                 </td>
                 <td>{{ item.fc|date:"d/m/Y H:i:s" }}</td>
                 <td>{{ item.fm|date:"d/m/Y H:i:s" }}</td>
                 <td>
-                  <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inventario:editar_subcategoria' item.id %}')">
+                  <button class="btn btn-sm btn-warning btn-circle" title="Editar" onclick="return abrir_modal('{% url 'inventario:editar_subcategoria' item.id %}')">
                     <i class="far fa-edit"></i></button>
                 </td>
             </tr>
