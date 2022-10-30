@@ -8,6 +8,18 @@
   </div>
   <!-- Card Body -->
   <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <input type="date" class="form-control" name="f1" id="f1">
+      </div>
+      <div class="col-md-4">
+        <input type="date" class="form-control" name="f2" id="f2">
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-warning" type="button" id="btnPrint">Imprimir</button>
+      </div>
+    </div>
+    <hr>
     <div class="col-md-4">
       <a class="btn btn-primary mb-3" href="{% url 'facturacion:nueva_factura'%}"
         ><i class="fa-solid fa-circle-plus"></i> Nuevo</a
@@ -42,7 +54,7 @@
         <tr>
           <td>RM-F-{{ item.id }}</td>
           <td>{{ item.cliente.razon_social }}</td>
-          <td>{{ item.fecha }}</td>
+          <td>{{ item.fecha|date:"d/m/Y" }}</td>
           <td>{{ item.sub_total }}$</td>
           <td>{{ item.descuento }}$</td>
           <td>{{ item.total }}$</td>
@@ -97,7 +109,7 @@
             <tr>
               <td>RM-F-{{ item.id }}</td>
               <td>{{ item.cliente.razon_social }}</td>
-              <td>{{ item.fecha }}</td>
+              <td>{{ item.fecha|date:"d/m/Y"  }}</td>
               <td>{{ item.total }}$</td>
               <td>{{ item.tipo_pago }}</td>
               <td>{{ item.monto }}$</td>
@@ -131,6 +143,24 @@
 
 {% endblock %} {% block js_page %}
 <script>
+      $("#btnPrint").click(function(e){
+        e.preventDefault();
+        var f1,f2;
+        f1 = $("#f1").val();
+        f2 = $("#f2").val();
+        if(f1=="" || f1==null){
+          f1="2019-06-01";
+        }
+        if(f2=="" || f2==null){
+          var d = new Date();
+          var f2 = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+        }
+        
+        var url = "imprimir-todas/" + f1 + "/" + f2;
+
+        window.open(url,'facturas');
+        
+      });
     function pagar_factura(id)
       {
           // mensaje(id);
@@ -174,48 +204,6 @@
                   }
           });
       }
-     function pagar_factura(id)
-      {
-          // mensaje(id);
-          $.confirm({
-              theme:"material",
-              icon:"fas fa-dollar-sign",
-              type:'green',
-              title: "Pago de Factura",
-              content: 'url:/facturacion/factura/pago_factura/' + id,
-              buttons:{
-                  borrar:{
-                      text:"Pago",
-                      btnClass:"btn btn-success",
-                      action: function(){
-                        var metodo = this.$content.find('select#metodo');
-                        var monto = this.$content.find('input#monto');
-                        var data = {"metodo":metodo.val(),"monto":monto.val()};
-  	                    console.log(data);
-
-                          var token = '{{csrf_token}}';
-                          $.ajax({
-                              headers: { "X-CSRFToken": token },
-                              type:"POST",
-                              data:data,
-                              url: '/facturacion/factura/pago_factura/' + id,
-                              success: function(r){
-                                  console.log(r);
-                                  if(r==="ok"){
-                                      location.reload(true);
-                                  }else{
-                                      mensaje(r,'red');
-                                  }
-                              },
-                              error: function(a,b,c){
-                                  mensaje(c);
-                              }
-                          });
-                      }
-                      },
-                  cancelar: function(){}
-                  }
-          });
-      }  
+     
 </script>
 {% endblock %}

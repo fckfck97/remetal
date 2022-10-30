@@ -49,8 +49,8 @@
                     {% endif %}
                   </div>
                 </td>
-                <td>{{ item.fc|date:"d/m/Y H:i:s" }}</td>
-                <td>{{ item.fm|date:"d/m/Y H:i:s" }}</td>
+                <td>{{ item.fc|date:"d/m/Y" }}</td>
+                <td>{{ item.fm|date:"d/m/Y" }}</td>
                 <td>
                   <button class="btn btn-sm btn-warning btn-circle" title="Editar" onclick="return abrir_modal('{% url 'inventario:editar_subcategoria' item.id %}')">
                     <i class="far fa-edit"></i></button>

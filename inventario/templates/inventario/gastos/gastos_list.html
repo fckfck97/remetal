@@ -8,12 +8,21 @@
     </div>
     <!-- Card Body -->
     <div class="card-body">
+      <div class="row">
+        <div class="col-md-4">
+          <input type="date" class="form-control" name="f1" id="f1">
+        </div>
+        <div class="col-md-4">
+          <input type="date" class="form-control" name="f2" id="f2">
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-warning" type="button" id="btnPrint">Imprimir</button>
+        </div>
+      </div>
+      <hr>
       <div class="buttons-toolbar">
         <a class="btn btn-primary mb-3" onclick="return abrir_modal('{% url 'inventario:nuevo_gastos' %}')" href="#"><i class="fa-solid fa-circle-plus"></i> Nuevo Gasto</a>
         <a class="btn btn-primary mb-3" onclick="return abrir_modal('{% url 'inventario:nueva_categoria_gastos' %}')" href="#"><i class="fa-solid fa-circle-plus"></i> Nuevo Cat Gasto</a>
-        <a class="btn btn-outline-primary mb-3" href="{% url 'inventario:reporte_gastos'%}" target="reportes">
-          <i class="fa-solid fa-list-ul"></i> Listado
-        </a>
       </div>
       {% if not obj %}
       <div class="alert alert-info">No hay Gastos Cargados</div>
@@ -56,8 +65,8 @@
                     {% endif %}
                   </div>
                 </td>
-                <td>{{ item.fc|date:"d/m/Y H:i:s" }}</td>
-                <td>{{ item.fm|date:"d/m/Y H:i:s" }}</td>
+                <td>{{ item.fc|date:"d/m/Y" }}</td>
+                <td>{{ item.fm|date:"d/m/Y" }}</td>
                 <td>
                   <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inventario:editar_gastos' item.id %}')">
                     <i class="far fa-edit"></i></button>
@@ -73,6 +82,24 @@
 
 {% block js_page %}
 <script>
+  $("#btnPrint").click(function(e){
+    e.preventDefault();
+    var f1,f2;
+    f1 = $("#f1").val();
+    f2 = $("#f2").val();
+    if(f1=="" || f1==null){
+      f1="2019-06-01";
+    }
+    if(f2=="" || f2==null){
+      var d = new Date();
+      var f2 = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+    }
+    
+    var url = "imprimir-todas/" + f1 + "/" + f2;
+
+    window.open(url,'gastos');
+    
+  });
   function inactivar(id)
   {
     var data = {id:id};

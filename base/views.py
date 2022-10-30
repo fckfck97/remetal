@@ -99,17 +99,12 @@ class Home(LoginRequiredMixin, TemplateView):
             compra_total.append(compra['total__sum'])
             facturacion_total.append(factura['total__sum'])
             gastos_total.append(monto_gastos['monto_gastos__sum'])
-        diferencia = [(e1 - e2) - e3 for e1,
-                      e2, e3 in zip(facturacion_total, compra_total,gastos_total)]
 
 
         context["cenc"] = compra_total
         context["fenc"] = facturacion_total
         context["ggra"] = gastos_total
-        context["ganancias_mes"] = diferencia
-
         context["total_neto"] = self.ganancias_mes(mes, ano)
-
         context["total_ano"] = self.ganancias_anuales(ano) - gastos['monto_gastos__sum']
         context["gastos"] = gastos['monto_gastos__sum']
         context["total"] = self.ganancias_mes(mes, ano) - gastos['monto_gastos__sum']
