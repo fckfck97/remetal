@@ -28,7 +28,7 @@
                         <td>{{ item.precio }}</td>
                         <td>
                           {% if item.existencia > 0 and item.estado %}
-                            <button class="btn btn-warning btn-circle" id="btnSelect" onclick="seleccionarProducto({{ item.id }},'{{ item.codigo }}','{{ item.descripcion }}',{{ item.precio }},{{ item.existencia }})"><i class="far fa-hand-pointer"></i></button>
+                            <button class="btn btn-sm btn-primary btn-circle" title="Elegir producto" id="btnSelect" onclick="seleccionarProducto({{ item.id }},'{{ item.codigo }}','{{ item.descripcion }}',{{ item.precio }},{{ item.existencia }})"><i class="fa fa-circle-check"></i></button>
                           {% endif %}
                         </td>
                       </tr>
@@ -46,9 +46,6 @@
                   </button>
                 </div>
               </div>
-            </div>
-            <div class="col-auto">
-              <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
             </div>
           </div>
         </div>
