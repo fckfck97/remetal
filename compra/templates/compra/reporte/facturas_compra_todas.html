@@ -48,6 +48,9 @@
         list-style: none;
         font-size: 1.1em;
     }
+    .suma-total > h3 {
+        text-align: right;
+    }
     </style>
 </head>
 <body>
@@ -56,6 +59,7 @@
             <div class="card-header">
                 <center>
                     <h4>Comercializadora Remetal, C.A</b><br />
+                        <small>RIF: J-31131248-0</small><br />
                         <small>Reporte de Venta de Materiales.</h4>
                     <h3>Reporte de Facturas<br><small>Período: {{f1 | date:"d/m/Y"}} - {{f2 | date:"d/m/Y"}}</small></h3>
                 </center>
@@ -64,9 +68,9 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Fecha</th>
                         <th>No. Factura</th>
                         <th>Observacion</th>
-                        <th>Fecha</th>
                         <th>Proveedor</th>
                         <th>Total</th>
                     </tr>
@@ -74,16 +78,18 @@
                 <tbody>
                     {% for item in enc %}
                     <tr>
+                        <td>{{ item.fecha_factura | date:"d/m/Y" }}</td>
                         <td>{{ item.no_factura }}</td>
                         <td>{{ item.observacion }}</td>
-                        <td>{{ item.fecha_factura | date:"d/m/Y"  }}</td>
                         <td>{{ item.proveedor }}</td>
                         <td>{{ item.total }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            {{total}}
+            <div class="suma-total">
+              <h3><b>Total comprado:</b> {{total}}</h3>
+            </div>
         </div>
     </div>
 </body>
