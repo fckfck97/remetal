@@ -56,6 +56,7 @@
             <div class="card-header">
                 <center>
                     <h4>Comercializadora Remetal, C.A</b><br />
+                        <small>RIF: J-31131248-0</small><br />
                         <small>Reporte de Venta de Materiales.</h4>
                     <h3>Reporte de Facturas<br><small>Período: {{f1 | date:"d/m/Y"}} - {{f2 | date:"d/m/Y"}}</small></h3>
                 </center>
@@ -64,8 +65,8 @@
             <table class="table">
                 <thead>
                     <tr>
+                      <th>Fecha</th>
                         <th>No. Factura</th>
-                        <th>Fecha</th>
                         <th>Cliente</th>
                         <th>Total</th>
                     </tr>
@@ -73,8 +74,8 @@
                 <tbody>
                     {% for item in enc %}
                     <tr>
-                        <td>{{ item.id }}</td>
                         <td>{{ item.fecha | date:"d/m/Y"  }}</td>
+                        <td>{{ item.id }}</td>
                         <td>{{ item.cliente }}</td>
                         <td>{{ item.total }}</td>
                     </tr>

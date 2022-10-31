@@ -1,49 +1,38 @@
-{% extends 'padre/base.html' %} 
+h{% extends 'padre/base.html' %} 
 {% if user.is_authenticated %}
 {% block page_content %} 
     
     <div class="row d-flex justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title text-center">
+                <h1 class="card-title text-center">
                     Perfil
-                </h4>
+                </h1>
               </div>
               <div class="card-body">
-                <div class="pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <h2 class="nombre">{{ nombre }} {{ apellido }}
+                    </h2>
+                  </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="{{ form.name }}">Numero de Registro:</label>
-                        {{ id }}
-                    </div>
-                    <div class="form-group">
-                      <label for="{{ form.name }}">E-mail::</label>
-                        {{ email }}
-                    </div>
+                  <div class="col-md-12 mb-3">
+                      <h4><b>ID:</b> {{ id }}</h4>
                   </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="{{ form.name }}">Nombre:</label>
-                      {{ nombre }}
-                        
-                      </div>
-                    <div class="form-group">
-                      <label for="{{ form.name }}">Ultima Conexion:</label>
-                        {{ uc |date:"d/m/Y H:i:s" }}
-                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <h4><b>E-mail:</b> {{ email }}</h4>
                   </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="{{ form.name }}">Apellido:</label>
-                        {{ apellido }}
-                      </div>
-                    <div class="form-group">
-                      <label for="{{ form.name }}">Fecha de Registro:</label>
-                      {{ dj|date:"d/m/Y H:i:s" }}
-                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5><b>Fecha de Registro:</b> {{ dj|date:"d/m/Y H:i:s" }}</h5>
+                  </div>
+                  <div class="col-md-6">
+                    <h5><b>Ultima Conexion:</b> {{ uc |date:"d/m/Y H:i:s" }}</h5>
                   </div>
                 </div>
               </div>
