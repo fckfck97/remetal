@@ -76,9 +76,9 @@
                     <tr>
                         <td>{{ item.codigo }}</td>
                         <td>{{ item.descripcion}}</td>
-                        <td>{{ item.precio }}</td>
+                        <td>{{ item.precio }}$</td>
                         <td>{{ item.existencia }}</td>
-                        <td>{{ item.ultima_compra }}</td>
+                        <td>{{ item.ultima_compra | date:"d/m/Y" }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

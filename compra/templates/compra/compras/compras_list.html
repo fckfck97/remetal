@@ -59,6 +59,8 @@
           <td>{{ item.total }}$</td>
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
+            {% if item.total == 0 %}
+            {% else %}
             <button
               type="button"
               class="btn btn-sm btn-success btn-circle" title="Pagar"
@@ -66,6 +68,7 @@
             >
               <i class="fa-solid fa-money-bill"></i>
             </button>
+            {% endif %}
             <a
               class="btn btn-sm btn-warning btn-circle" title="Editar"
               href="{% url 'compra:editar_compra' item.id %}"
@@ -117,7 +120,7 @@
           <td>{{item.pagado|yesno:"Pagado,No Pagado"}}</td>
           <td>
             <a
-              class="btn btn-success btn-circle"
+              class="btn btn-sm btn-success btn-circle"
               href="{% url 'compra:imprimir_factura_compra' item.id%}"
               target="reportes"
               ><i class="fas fa-print"></i
@@ -153,11 +156,11 @@
   function pagar_factura(id) {
     // mensaje(id);
     $.confirm({
-      theme: "modern",
+      theme: "material",
       icon: "fas fa-dollar-sign",
       type: "green",
       title: "Pago de Factura",
-      content: "url:/compra/pago_compra/" + id,
+      content: "url:/compra/factura/pago_compra/" + id,
       buttons: {
         borrar: {
           text: "Pago",
@@ -173,7 +176,7 @@
               headers: { "X-CSRFToken": token },
               type: "POST",
               data: data,
-              url: "/compra/pago_compra/" + id,
+              url: "/compra/factura/pago_compra/" + id,
               success: function (r) {
                 console.log(r);
                 if (r === "ok") {
