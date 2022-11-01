@@ -22,7 +22,9 @@
       <hr>
       <div class="buttons-toolbar">
         <a class="btn btn-primary mb-3" onclick="return abrir_modal('{% url 'inventario:nuevo_gastos' %}')" href="#"><i class="fa-solid fa-circle-plus"></i> Nuevo Gasto</a>
-        <a class="btn btn-primary mb-3" onclick="return abrir_modal('{% url 'inventario:nueva_categoria_gastos' %}')" href="#"><i class="fa-solid fa-circle-plus"></i> Nuevo Cat Gasto</a>
+        <a class="btn btn-primary mb-3" href="{% url 'inventario:lista_categoria_gastos'%}"
+        >Lista Cat-Gastos</a
+      >
       </div>
       {% if not obj %}
       <div class="alert alert-info">No hay Gastos Cargados</div>
@@ -57,18 +59,18 @@
                 <td>{{ item.descripcion }}</td>
                 <td>{{ item.monto_gastos }}$</td>
                 <td >{#item.estado|yesno:"Activo,Inactivo"#}
-                  <div onclick="inactivar({{item.id}})">
+                  <div class="cursor-pointer" onclick="inactivar({{item.id}})">
                       {% if item.estado %}
-                      <i class="far fa-thumbs-up text-primary"></i>
+                      <i class="fa fa-circle-check text-success"></i>
                     {% else %}
-                      <i class="far fa-thumbs-down text-danger"></i>
+                      <i class="fa fa-circle-xmark text-danger"></i>
                     {% endif %}
                   </div>
                 </td>
                 <td>{{ item.fc|date:"d/m/Y" }}</td>
                 <td>{{ item.fm|date:"d/m/Y" }}</td>
                 <td>
-                  <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inventario:editar_gastos' item.id %}')">
+                  <button class="btn btn-sm btn-warning btn-circle" title="Editar" onclick="return abrir_modal('{% url 'inventario:editar_gastos' item.id %}')">
                     <i class="far fa-edit"></i></button>
                 </td>
             </tr>
