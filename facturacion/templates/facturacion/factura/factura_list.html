@@ -60,13 +60,16 @@
           <td>{{ item.total }}$</td>
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
+            {% if item.total == 0 %}
+            {% else %}
             <button
-            type="button"
-            class="btn btn-sm btn-success btn-circle" title="Pagar"
-            onclick="pagar_factura({{ item.id }})"
-          >
-            <i class="fa-solid fa-money-bill"></i>
-          </button>
+              type="button"
+              class="btn btn-sm btn-success btn-circle" title="Pagar"
+              onclick="pagar_factura({{ item.id }})"
+            >
+              <i class="fa-solid fa-money-bill"></i>
+            </button>
+            {% endif %}
             <a
               class="btn btn-sm btn-warning btn-circle" title="Editar"
               href="{% url 'facturacion:editar_factura' item.id %}"
@@ -149,7 +152,7 @@
         f1 = $("#f1").val();
         f2 = $("#f2").val();
         if(f1=="" || f1==null){
-          f1="2019-06-01";
+          f1="2021-01-01";
         }
         if(f2=="" || f2==null){
           var d = new Date();

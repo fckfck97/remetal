@@ -48,6 +48,9 @@
         list-style: none;
         font-size: 1.1em;
     }
+    .suma-total > h3 {
+        text-align: right;
+    }
     </style>
 </head>
 <body>
@@ -56,8 +59,9 @@
             <div class="card-header">
                 <center>
                     <h4>Comercializadora Remetal, C.A</b><br />
-                        <small>Reporte del Inventario de Materiales.</h4>
-                    <h3>Reporte de Gastos<br><small>Período: {{f1 | date:"d/m/Y"}} - {{f2 | date:"d/m/Y"}}</small></h3>
+                        <small>RIF: J-31131248-0</small><br />
+                        <small>Reporte de Gastos en la Compra de Materiales y de la Empresa.</h4>
+                    <h3>Reporte<br><small>Período: {{f1 | date:"d/m/Y"}} - {{f2 | date:"d/m/Y"}}</small></h3>
                 </center>
             </div>
 
@@ -65,25 +69,28 @@
                 <thead>
                     <tr>
                         <th>Numero</th>
-                        <th>Descripcion</th>
-                        <th>Monto</th>
-                        <th>Fecha</th>
                         <th>Categoria</th>
+                        <th>Descripcion</th>
+                        <th>Fecha</th>
+                        <th>Monto</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in enc %}
                     <tr>
                         <td>{{ item.id }}</td>
-                        <td>{{ item.descripcion}}</td>
-                        <td>{{ item.monto_gastos }}</td>
-                        <td>{{ item.fc|date:'d-m-Y' }}</td>
                         <td>{{ item.categoria }}</td>
+                        <td>{{ item.descripcion}}</td>
+                        <td>{{ item.fc|date:'d-m-Y' }}</td>
+                        <td>{{ item.monto_gastos }}$</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        Total: {{total}}
+            <div class="suma-total">
+                <h3><b>Total Gastado:</b> {{total}}$</h3>
+              </div>
+        
         </div>
     </div>
 </body>

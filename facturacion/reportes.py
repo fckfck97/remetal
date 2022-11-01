@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.utils.dateparse import parse_date
 from datetime import timedelta
+from django.db.models import Sum
 # from django.utils.dateparse import parse_date
 # from datetime import timedelta
 
@@ -33,14 +34,16 @@ def imprimir_factura_list(request,f1,f2):
         f2=parse_date(f2)
         f2=f2 + timedelta(days=1)
 
-        enc = FacturaEnc.objects.filter(fecha__gte=f1,fecha__lt=f2)
+        enc = FacturaEnc.objects.filter(fecha__gte=f1,fecha__lt=f2,pagado=True)
+        total = FacturaEnc.objects.filter(fecha__gte=f1,fecha__lt=f2).aggregate(Sum('total'))
         f2=f2 - timedelta(days=1)
         
         context = {
             'request':request,
             'f1':f1,
             'f2':f2,
-            'enc':enc
+            'enc':enc,
+            'total':total['total__sum']
         }
 
         return render(request,template_name,context)
