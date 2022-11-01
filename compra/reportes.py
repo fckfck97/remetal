@@ -32,7 +32,7 @@ def imprimir_factura_list(request,f1,f2):
 
         enc = ComprasEnc.objects.filter(fecha_factura__gte=f1,fecha_factura__lt=f2,pagado=True)
 
-        total = ComprasEnc.objects.filter(fecha_factura__gte=f1,fecha_factura__lt=f2).aggregate(Sum('total'))
+        total = ComprasEnc.objects.filter(fecha_factura__gte=f1,fecha_factura__lt=f2,pagado=True).aggregate(Sum('total'))
         f2=f2 - timedelta(days=1)
         
         context = {
