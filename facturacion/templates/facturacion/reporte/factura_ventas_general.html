@@ -48,6 +48,9 @@
         list-style: none;
         font-size: 1.1em;
     }
+    .suma-total > h3 {
+        text-align: right;
+    }
     </style>
 </head>
 <body>
@@ -65,23 +68,26 @@
             <table class="table">
                 <thead>
                     <tr>
-                      <th>Fecha</th>
                         <th>No. Factura</th>
                         <th>Cliente</th>
+                        <th>Fecha</th>
                         <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in enc %}
                     <tr>
-                        <td>{{ item.fecha | date:"d/m/Y"  }}</td>
-                        <td>{{ item.id }}</td>
+                        <td>RM-F-{{ item.id }}</td>
                         <td>{{ item.cliente }}</td>
-                        <td>{{ item.total }}</td>
+                        <td>{{ item.fecha | date:"d/m/Y"  }}</td>
+                        <td>{{ item.total }}$</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            <div class="suma-total">
+                <h3><b>Total Vendido:</b> {{total}}$</h3>
+            </div>
         </div>
     </div>
 </body>

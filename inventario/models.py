@@ -94,8 +94,11 @@ class Gastos(models.Model):
     fm = models.DateTimeField(auto_now=True)
     categoria = models.ForeignKey(Categoria_Gastos, on_delete=models.CASCADE)
     def __str__(self):
-        self.descripcion = self.descripcion.upper()
         return '{}'.format(self.descripcion)
+    
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Gastos, self).save()
 
     class Mega:
         verbose_name_plural = "Gastos de Compras"
