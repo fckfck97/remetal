@@ -317,7 +317,7 @@
     $("#btnBuscar").click(function (e) {
       if ($("#enc_cliente").val() === "0") {
         mensaje("Cliente No Seleccionado", 'red');
-        return false;
+        return false; 
       }
       abrir_modal("{% url 'facturacion:factura_producto' %}");
     });
@@ -377,7 +377,7 @@
               return false;
             }
 
-            var data = { "usuario": usuario.val(), "pass": pass.val() };
+            var data = {"usuario": usuario.val(), "pass": pass.val() };
             console.log(data);
 
             var token = '{{csrf_token}}';
@@ -406,8 +406,8 @@
   }
 
 $("form").submit(function (e) {
-    var existencia = ("#existencia").val();
-    var cantidad = ("#cantidad").val();
+    var existencia = +$("#existencia").val();
+    var cantidad = +$("#cantidad").val();
 
     if (cantidad > existencia) {
       mensaje("No hay existencia suficiente");
