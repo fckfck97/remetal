@@ -28,7 +28,7 @@
               {% else %}
               <div class="col-md-3 mb-3">
                 <label class="form-label">Cliente:</label>
-                <select name="enc_cliente" id="enc_cliente" class="form-select">
+                <select name="enc_cliente" id="enc_cliente" class="form-select" required>
                   <option value="0">Seleccione Cliente</option>
                   {% for item in clientes %}
                   <option value="{{item.id}}">
@@ -71,7 +71,7 @@
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label class="form-label">Cod</label>
-                <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Cód. Producto"/>
+                <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Cód. Producto" required/>
               </div>
               <div class="col-md-3 mb-3">
                 <label class="form-label">Descripcion</label>
@@ -85,7 +85,7 @@
               </div>
               <div class="col-md-4">
                 <label class="form-label">Cant</label>
-                <input type="number" class="form-control" name="cantidad" id="cantidad" placeholder="Cantidad"/>
+                <input type="number" class="form-control" name="cantidad" id="cantidad" placeholder="Cantidad" required/>
               </div>
             </div>
             <div class="row">
