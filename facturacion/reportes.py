@@ -35,7 +35,7 @@ def imprimir_factura_list(request,f1,f2):
         f2=f2 + timedelta(days=1)
 
         enc = FacturaEnc.objects.filter(fecha__gte=f1,fecha__lt=f2,pagado=True)
-        total = FacturaEnc.objects.filter(fecha__gte=f1,fecha__lt=f2).aggregate(Sum('total'))
+        total = FacturaEnc.objects.filter(fecha__gte=f1,fecha__lt=f2,pagado=True).aggregate(Sum('total'))
         f2=f2 - timedelta(days=1)
         
         context = {

@@ -22,14 +22,6 @@ class ProveedorNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     success_url= reverse_lazy("compra:nueva_compra")
     permission_required = "compra.add_proveedor"
     
-    # def post(self, request,*args, **kwargs):
-    #     rif = request.POST.get("rif")
-    #     print(rif)
-    #     sc = Proveedor.objects.filter(rif=rif).exists()
-    #     if sc == True:
-    #         messages.error(request,'No Puedo Continuar No Pude Detectar No. de Factura')    
-    #     return redirect("compra:nueva_compra")
-
     def form_valid(self, form):
         form.instance.uc = self.request.user
         form.instance.estado = True
@@ -54,7 +46,7 @@ class ComprasView(SinPrivilegios, ListView):
     model = ComprasEnc
     template_name = "compra/compras/compras_list.html"
     context_object_name = "obj"
-    permission_required="compra.view_Encabezado_Compra"
+    permission_required="compra.view_comprasenc"
     
     def get(self,request):
         enc2 = ComprasEnc.objects.filter(pagado=True)
@@ -64,13 +56,12 @@ class ComprasView(SinPrivilegios, ListView):
 
 
 @login_required(login_url='/login/')
-@permission_required('compra.view_Encabezado_Compra', login_url='bases:sin_privilegios')
+@permission_required('compra.view_comprasenc', login_url='bases:sin_privilegios')
 def compras(request,compra_id=None):
     template_name="compra/compras/compras.html"
     prod=Producto.objects.filter(estado=True)
     form_compras={}
     contexto={}
-
     if request.method=='GET':
         #codigo de facturacion
         proveedores = Proveedor.objects.filter(estado=True)
@@ -83,7 +74,6 @@ def compras(request,compra_id=None):
             c ={'no_factura': f"RM-C-{cod+1}"}
             form_compras=ComprasEncForm(c)
         enc = ComprasEnc.objects.filter(pk=compra_id).first()
-
         if enc:
             det = ComprasDet.objects.filter(compra=enc)
             fecha_compra = datetime.date.isoformat(enc.fecha_compra)
@@ -98,7 +88,6 @@ def compras(request,compra_id=None):
             form_compras = ComprasEncForm(e)
         else:
             det=None
-        
         contexto={'productos':prod,'encabezado':enc,'detalle':det,'form_enc':form_compras,"proveedores":proveedores}
 
     if request.method=='POST':
@@ -109,10 +98,8 @@ def compras(request,compra_id=None):
         proveedor = request.POST.get("enc_proveedor")
         sub_total = 0
         total = 0
-
         if not compra_id:
             prov=Proveedor.objects.get(pk=proveedor)
-
             enc = ComprasEnc(
                 fecha_compra=fecha_compra,
                 observacion=observacion,
@@ -133,7 +120,6 @@ def compras(request,compra_id=None):
                 enc.fecha_factura=fecha_factura
                 enc.um=request.user.id
                 enc.save()
-
         if not compra_id:
             return redirect("compra:lista_compras")
         
@@ -141,7 +127,6 @@ def compras(request,compra_id=None):
         cantidad = request.POST.get("id_cantidad_detalle")
         precio = request.POST.get("id_precio_detalle")
         prod = Producto.objects.get(pk=producto)
-
         det = ComprasDet(
             compra=enc,
             producto=prod,
@@ -150,26 +135,23 @@ def compras(request,compra_id=None):
             costo=0,
             uc = request.user
         )
-
         if det:
             det.save()
             sub_total=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('sub_total'))
             enc.sub_total = sub_total["sub_total__sum"]
             enc.save()
-
         return redirect("compra:editar_compra",compra_id=compra_id)
 
 
     return render(request, template_name, contexto)
 
+@login_required(login_url='/login/')
+@permission_required('compra.add_comprasenc', login_url='bases:sin_privilegios')
 def pago_compra(request, id):
     template_name = "compra/compras/pagar_compra.html"
-
     enc = ComprasEnc.objects.get(pk=id)
     if request.method=="GET":
-
         context={"det":enc}
-
     if request.method == "POST":
         metodo = request.POST.get("metodo")
         monto = request.POST.get("monto")
@@ -203,7 +185,7 @@ class CompraDetDelete(SinPrivilegios, DeleteView):
 
 
 class CompraEncDelete(SinPrivilegios, DeleteView):
-    permission_required = "compra.delete_Encabezado_Compra"
+    permission_required = "compra.delete_comprasenc"
     model = ComprasEnc
     template_name = "compra/compras/eliminar_enc.html"
     context_object_name = 'obj'

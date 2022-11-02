@@ -173,7 +173,7 @@
                     <a class="nav-link {% if s_cat_url in request.path %} active {% endif %}" href="{{s_cat_url}}"
                       >Sub Cat Materiales.</a
                     >{% endif %}
-                    {% if perms.inventario.view_productos %}
+                    {% if perms.inventario.view_producto %}
                       <a class="nav-link {% if prod_url in request.path %} active {% endif %}" href="{{prod_url}}"
                       >Productos.</a
                     >{% endif %}
@@ -182,20 +182,26 @@
                 </nav>
               </div>
               <div class="sb-sidenav-menu-heading">Entradas y Salidas</div>
+              {% if perms.compra.view_comprasenc %}
               <a class="nav-link" href="{% url 'compra:lista_compras' %}">
                 <div class="sb-nav-link-icon">
                   <i class="fa-solid fa-cart-shopping"></i>
                 </div>
                 Facturacion de Compras
               </a>
+              {% endif %}
+              {% if perms.facturacion.view_facturaenc %}
               <a class="nav-link" href="{% url 'facturacion:lista_factura' %}">
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-cash-register"></i></div>
                 Facturacion de Ventas
               </a>
+              {% endif %}
+              {% if perms.inventario.view_gastos %}
               <a class="nav-link" href="{% url 'inventario:lista_gastos' %}">
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-cash-register"></i></div>
                 Gastos Generales
               </a>
+              {% endif %}
             </div>
           </div>
           <div class="sb-sidenav-footer">
