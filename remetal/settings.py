@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'facturacion',
     'django_userforeignkey',
     'rest_framework',
+    'import_export',
 ]
 
 MIDDLEWARE = [
