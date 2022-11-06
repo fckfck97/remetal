@@ -189,22 +189,22 @@
   const datos_compras = {
       label: "Compras por mes",
       data: [{% for item in cenc %}{{ item |pprint}},{% endfor %}], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-      backgroundColor: 'rgba(54, 162, 235, 0.2)', // Color de fondo
-      borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
+      backgroundColor: 'rgba(65, 161, 226, 0.2)', // Color de fondo
+      borderColor: 'rgba(65, 161, 226, 1)', // Color del borde
       borderWidth: 1,// Ancho del borde
   };
   const datos_ventas = {
       label: "Ventas por mes",
       data: [{% for item in fenc %}{{ item|pprint}},{% endfor %}], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-      backgroundColor: 'rgba(255, 159, 64, 0.2)',// Color de fondo
-      borderColor: 'rgba(255, 159, 64, 1)',// Color del borde
+      backgroundColor: 'rgba(94, 238, 75, 0.2)',// Color de fondo
+      borderColor: 'rgba(94, 238, 75, 1)',// Color del borde
       borderWidth: 1,// Ancho del borde
   };
   const gastos_mensuales = {
     label: "Gastos por mes",
     data: [{% for item in ggra %}{{ item|pprint}},{% endfor %}], // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-    backgroundColor: 'red',// Color de fondo
-    borderColor: 'rgba(255, 159, 64, 1)',// Color del borde
+    backgroundColor: 'rgba(207, 63, 63, 0.2)',// Color de fondo
+    borderColor: 'rgba(207, 63, 63, 1)',// Color del borde
     borderWidth: 1,// Ancho del borde
 };
 
