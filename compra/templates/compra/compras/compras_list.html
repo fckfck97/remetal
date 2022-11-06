@@ -20,11 +20,9 @@
       </div>
     </div>
     <hr>
-    <div class="buttons-toolbar">
-      <a class="btn btn-primary mb-3" href="{% url 'compra:nueva_compra'%}">
-        <i class="fa-solid fa-circle-plus"></i> Nueva
-        </a>
-    </div>
+    <a class="btn btn-primary mb-2" href="{% url 'compra:nueva_compra'%}">
+      <i class="fa-solid fa-circle-plus"></i> Nueva
+    </a>
 
     {% if not obj %}
     <div class="alert alert-info">No hay compras pendientes por pagar</div>
@@ -121,6 +119,7 @@
           <td>
             <a
               class="btn btn-sm btn-success btn-circle"
+              title="imprimir"
               href="{% url 'compra:imprimir_factura_compra' item.id%}"
               target="reportes"
               ><i class="fas fa-print"></i
