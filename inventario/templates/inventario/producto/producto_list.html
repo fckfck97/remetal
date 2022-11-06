@@ -38,10 +38,9 @@
     data-sort-order="desc"
   >
       <thead align="center">
-        <th data-field='id'>Id</th>
-        <th data-field='subcategoria'>Sub.Cat.</th>        
         <th data-field='codigo'>Código</th>
         <th data-field='descripcion'>Descripción</th>
+        <th data-field='subcategoria'>Sub.Cat.</th>        
         <th data-field='precio'>Precio</th>
         <th data-field='existencia' >Existencia</th>
         <th data-field='estado'>Estado</th>
@@ -50,10 +49,9 @@
       <tbody align="center">
         {% for item in obj%}
         <tr>
-          <td>{{ item.id }}</td>
-          <td>{{ item.subcategoria }}</td>
           <td>{{ item.codigo }}</td>
           <td>{{ item.descripcion }}</td>
+          <td>{{ item.subcategoria }}</td>
           <td>{{ item.precio }}$</td>
           <td>{{ item.existencia }}</td>
           <td >{#item.estado|yesno:"Activo,Inactivo"#}
