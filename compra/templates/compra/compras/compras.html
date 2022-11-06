@@ -248,6 +248,14 @@
                         content:'No ha agregado producto'
                         })
             }
+            if($('#enc_proveedor').val()==0 ){
+              e.preventDefault();
+              $.alert({
+                      type:'red',
+                      title:'',
+                      content:'No ha agregado proveedor'
+                      })
+           }
         });
         /*Fin Validar Envío de Detalle */
 

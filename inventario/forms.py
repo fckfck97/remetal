@@ -52,6 +52,7 @@ class ProductoForm(forms.ModelForm):
         self.fields['ultima_compra'].widget.attrs['readonly'] = True
         self.fields['codigo'].widget.attrs['readonly'] = True
         self.fields['existencia'].widget.attrs['readonly'] = True
+        self.fields['precio'].widget.attrs['min'] = 0
 
 
 class CategoriaGastosForm(forms.ModelForm):

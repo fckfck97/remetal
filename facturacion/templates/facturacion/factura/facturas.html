@@ -28,7 +28,7 @@
               {% else %}
               <div class="col-md-3 mb-3">
                 <label class="form-label">Cliente:</label>
-                <select name="enc_cliente" id="enc_cliente" class="form-select">
+                <select name="enc_cliente" id="enc_cliente" class="form-select" required>
                   <option value="0">Seleccione Cliente</option>
                   {% for item in clientes %}
                   <option value="{{item.id}}">
@@ -71,7 +71,7 @@
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label class="form-label">Cod</label>
-                <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Cód. Producto"/>
+                <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Cód. Producto" required/>
               </div>
               <div class="col-md-3 mb-3">
                 <label class="form-label">Descripcion</label>
@@ -85,13 +85,13 @@
               </div>
               <div class="col-md-4">
                 <label class="form-label">Cant</label>
-                <input type="number" class="form-control" name="cantidad" id="cantidad" placeholder="Cantidad"/>
+                <input type="number" class="form-control" name="cantidad" id="cantidad" placeholder="Cantidad" required/>
               </div>
             </div>
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label class="form-label">En Stock</label>
-                <input type="hidden" class="form-control" name="existencia" id="existencia"/>
+                <input type="text" class="form-control" name="existencia" id="existencia" readonly/>
               </div>
               <div class="col-md-4 mb-3">
                 <label class="form-label">Precio</label>
@@ -152,12 +152,13 @@
                   <td>{{ item.producto.descripcion }}</td>
                   <td>{{ item.cantidad }}KG</td>
                   <td>{{ item.sub_total }}$</td>
-                    {% if item.descuento > 0 %} <td>Sin Desc.</td>
+                  {% if item.descuento > 0  %} 
+                  <td>{{ item.descuento }}$</td>
                     {% else %}
-                    <td>{{ item.descuento }}$</td>
-
+                    <td>Sin Desc.</td>
                     {% endif%}
                     <td>{{ item.total }}</td>
+                    
                     <td>
                       <button type="button" class="btn btn-sm btn-warning btn-circle" title="Eliminar producto" onclick="borrar_detalle({{ item.id }})">
                         <i class="fa-regular fa-circle-xmark"></i>
@@ -190,8 +191,10 @@
                 <th class="all">Estado .</th>
               </thead>
               <tbody align="center">
-                {% for item in det2 %} {% if item.cantidad < 0 %} <tr>
-                  <td>{{ item.id }}</td>
+                {% for item in det2 %} 
+                {% if item.cantidad < 0 %} 
+                <tr>
+                  <td>{{ item.id }}{{det2.producto.codigo}}</td>
                   <td>{{ item.producto.codigo }}</td>
                   <td>{{ item.producto.descripcion }}</td>
                   <td>{{ item.cantidad }}</td>
@@ -317,7 +320,7 @@
     $("#btnBuscar").click(function (e) {
       if ($("#enc_cliente").val() === "0") {
         mensaje("Cliente No Seleccionado", 'red');
-        return false;
+        return false; 
       }
       abrir_modal("{% url 'facturacion:factura_producto' %}");
     });
@@ -377,7 +380,7 @@
               return false;
             }
 
-            var data = { "usuario": usuario.val(), "pass": pass.val() };
+            var data = {"usuario": usuario.val(), "pass": pass.val() };
             console.log(data);
 
             var token = '{{csrf_token}}';
@@ -406,8 +409,8 @@
   }
 
 $("form").submit(function (e) {
-    var existencia = ("#existencia").val();
-    var cantidad = ("#cantidad").val();
+    var existencia = +$("#existencia").val();
+    var cantidad = +$("#cantidad").val();
 
     if (cantidad > existencia) {
       mensaje("No hay existencia suficiente");

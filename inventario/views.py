@@ -93,7 +93,7 @@ class SubCategoriaEdit(SuccessMessageMixin,SinPrivilegios, UpdateView):
     form_class=SubCategoriaForm
     success_url=reverse_lazy("inventario:lista_subcategoria")
     success_message="Sub Categoría Actualizada Satisfactoriamente"
-    permission_required="inventario.change_subcatetoria"
+    permission_required="inventario.change_subcategoria"
 
     def form_valid(self, form):
         form.instance.um = self.request.user.id
@@ -242,13 +242,13 @@ def inhabilitargasto(request, id):
 
 #Vistas de Categoria crear, editar eliminar y ver el listadp
 class Categoria_Gastos_View(SinPrivilegios,ListView):
-    permission_required = "inventario.view_categoria"
+    permission_required = "inventario.view_categoria_gastos"
     model = Categoria_Gastos
     template_name = "inventario/categoria_gastos/categoria_list.html"
     context_object_name = 'obj'
     
 class Categoria_Gastos_New(SuccessMessageMixin,SinPrivilegios,CreateView):
-    permission_required="inventario.add_categoria"
+    permission_required="inventario.add_categoria_gastos"
     model=Categoria_Gastos
     template_name="inventario/categoria_gastos/categoria_form.html"
     context_object_name = "obj"
@@ -263,7 +263,7 @@ class Categoria_Gastos_New(SuccessMessageMixin,SinPrivilegios,CreateView):
 
 
 class Categoria_Gastos_Edit(SuccessMessageMixin,SinPrivilegios,UpdateView):
-    permission_required="inventario.change_categoria"
+    permission_required="inventario.change_categoria_gastos"
     model=Categoria_Gastos
     template_name="inventario/categoria_gastos/categoria_form.html"
     context_object_name = "obj"
@@ -277,7 +277,7 @@ class Categoria_Gastos_Edit(SuccessMessageMixin,SinPrivilegios,UpdateView):
 
 
 @login_required(login_url='/login/')
-@permission_required('inventario.change_categoria', login_url='base:sin_privilegios')
+@permission_required('inventario.change_categoria_gastos', login_url='base:sin_privilegios')
 def inhabilitarcatgas(request, id):
     categoria = Categoria_Gastos.objects.filter(pk=id).first()
 
