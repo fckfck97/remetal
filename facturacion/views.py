@@ -47,6 +47,22 @@ class ClienteNew(VistaBaseCreate):
     success_url = reverse_lazy("facturacion:nueva_factura")
     permission_required = "facturacion.add_cliente"
 
+    def post(self, request, *args, **kwargs):
+        form = self.form_class()
+        form_data = request.POST or None
+        form_post = self.form_class(form_data)
+        if request.method == 'POST':
+            if 'rif' in request.POST:
+                rif = request.POST['rif'].upper()
+                desc = Cliente.objects.filter(rif=rif).exists()
+                if desc ==  True:
+                    messages.error(request,'Ya Existe un Cliente Registrado con Ese Rif.')
+                    return redirect("facturacion:nueva_factura")
+                else:
+                    self.form_valid(form_post)
+                    return redirect("facturacion:nueva_factura")
+            return render(request, self.template_name, {'form': form})
+    
 
 class ClienteEdit(VistaBaseEdit):
     model = Cliente

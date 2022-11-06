@@ -22,6 +22,22 @@ class ProveedorNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     success_url= reverse_lazy("compra:nueva_compra")
     permission_required = "compra.add_proveedor"
     
+    def post(self, request, *args, **kwargs):
+        form = self.form_class()
+        form_data = request.POST or None
+        form_post = self.form_class(form_data)
+        if request.method == 'POST':
+            if 'rif' in request.POST:
+                rif = request.POST['rif'].upper()
+                desc = Proveedor.objects.filter(rif=rif).exists()
+                if desc ==  True:
+                    messages.error(request,'Ya Existe un Proveedor Registrado con Ese Rif.')
+                    return redirect("compra:nueva_compra")
+                else:
+                    self.form_valid(form_post)
+                    return redirect("compra:nueva_compra")
+            return render(request, self.template_name, {'form': form})
+            
     def form_valid(self, form):
         form.instance.uc = self.request.user
         form.instance.estado = True

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, CreateView, UpdateView,DeleteView
 from .models import Categoria, Categoria_Gastos, SubCategoria, Producto, Gastos
@@ -7,10 +7,8 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse_lazy
 from base.views import SinPrivilegios
-#generador de codigo aleatorio
+from django.contrib import messages
 
-import random
-# Create your views here.
 
 #Vistas de Categoria crear, editar eliminar y ver el listadp
 class CategoriaView(SinPrivilegios,ListView):
@@ -27,7 +25,24 @@ class CategoriaNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     form_class=CategoriaForm
     success_message="Categoria Creada Satisfactoriamente"
     success_url=reverse_lazy("inventario:lista_categoria")
-
+    permission_required="inventario.add_categoria"
+    
+    def post(self, request, *args, **kwargs):
+        form = self.form_class()
+        form_data = request.POST or None
+        form_post = self.form_class(form_data)
+        if request.method == 'POST':
+            if 'descripcion' in request.POST:
+                descripcion = request.POST['descripcion'].upper()
+                desc = Categoria.objects.filter(descripcion=descripcion).exists()
+                if desc ==  True:
+                    messages.error(request,'Ya Existe una Categoria con la Misma Descripcion.')
+                    return redirect("inventario:lista_categoria")
+                else:
+                    self.form_valid(form_post)
+                    return redirect("inventario:lista_categoria")
+            return render(request, self.template_name, {'form': form})
+    
     def form_valid(self, form):
         form.instance.uc = self.request.user
         form.instance.estado = True
@@ -42,6 +57,20 @@ class CategoriaEdit(SuccessMessageMixin,SinPrivilegios,UpdateView):
     form_class=CategoriaForm
     success_url=reverse_lazy("inventario:lista_categoria")
     success_message="Categoria Actualizada Satisfactoriamente"
+
+    # def post(self, request, *args, **kwargs):
+    #     form = self.form_class()
+    #     if request.method == 'POST':
+    #         if 'descripcion' in request.POST:
+    #             descripcion = request.POST['descripcion'].upper()
+    #             desc = Categoria.objects.filter(descripcion=descripcion).exists()
+    #             if desc ==  True:
+    #                 messages.error(request,'Ya Existe una Categoria con la Misma Descripcion.')
+    #                 return redirect("inventario:lista_categoria")
+    #             else:
+    #                 self.form_valid(form)
+    #                 return redirect("inventario:lista_categoria")
+    #         return render(request, self.template_name, {'form': form})
 
     def form_valid(self, form):
         form.instance.um = self.request.user.id
@@ -79,6 +108,22 @@ class SubCategoriaNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     success_url=reverse_lazy("inventario:lista_subcategoria")
     success_message="Sub Categoría Creada Satisfactoriamente"
     permission_required="inventario.add_subcategoria"
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class()
+        form_data = request.POST or None
+        form_post = self.form_class(form_data)
+        if request.method == 'POST':
+            if 'descripcion' in request.POST:
+                descripcion = request.POST['descripcion'].upper()
+                desc = SubCategoria.objects.filter(descripcion=descripcion).exists()
+                if desc ==  True:
+                    messages.error(request,'Ya Existe una Sub-Categoria con la Misma Descripcion.')
+                    return redirect("inventario:lista_subcategoria")
+                else:
+                    self.form_valid(form_post)
+                    return redirect("inventario:lista_subcategoria")
+            return render(request, self.template_name, {'form': form})
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
@@ -130,7 +175,7 @@ class ProductoNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     success_url= reverse_lazy("inventario:lista_productos")
     success_message="Producto Creado Correctamente"
     permission_required="inventario.add_producto"
-
+    
     def form_valid(self, form):
         form.instance.uc = self.request.user
         form.instance.estado = True
@@ -206,6 +251,22 @@ class GastosNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     success_message="Nuevo Gasto Registrado Satisfactoriamente"
     permission_required="inventario.add_gastos"
 
+    def post(self, request, *args, **kwargs):
+        form = self.form_class()
+        form_data = request.POST or None
+        form_post = self.form_class(form_data)
+        if request.method == 'POST':
+            if 'descripcion' in request.POST:
+                descripcion = request.POST['descripcion'].upper()
+                desc = Gastos.objects.filter(descripcion=descripcion).exists()
+                if desc ==  True:
+                    messages.error(request,'Ya Existe un Gasto Registrado con la Misma Descripcion.')
+                    return redirect("inventario:lista_gastos")
+                else:
+                    self.form_valid(form_post)
+                    return redirect("inventario:lista_gastos")
+            return render(request, self.template_name, {'form': form})
+
     def form_valid(self, form):
         form.instance.uc = self.request.user
         form.instance.estado = True
@@ -255,6 +316,22 @@ class Categoria_Gastos_New(SuccessMessageMixin,SinPrivilegios,CreateView):
     form_class=CategoriaGastosForm
     success_message="Categoria Creada Satisfactoriamente"
     success_url=reverse_lazy("inventario:lista_categoria_gastos")
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class()
+        form_data = request.POST or None
+        form_post = self.form_class(form_data)
+        if request.method == 'POST':
+            if 'descripcion' in request.POST:
+                descripcion = request.POST['descripcion'].upper()
+                desc = Categoria_Gastos.objects.filter(descripcion=descripcion).exists()
+                if desc ==  True:
+                    messages.error(request,'Ya Existe una Categoria de Gastos Registrado con la Misma Descripcion.')
+                    return redirect("inventario:lista_categoria_gastos")
+                else:
+                    self.form_valid(form_post)
+                    return redirect("inventario:lista_categoria_gastos")
+            return render(request, self.template_name, {'form': form})
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
