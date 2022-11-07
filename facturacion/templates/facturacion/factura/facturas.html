@@ -198,13 +198,13 @@
                   <td>{{ item.producto.codigo }}</td>
                   <td>{{ item.producto.descripcion }}</td>
                   <td>{{ item.cantidad }}</td>
-                  <td>{{ item.sub_total }}</td>
+                  <td>{{ item.sub_total }}$</td>
                   {% if item.descuento > 0  %} 
                   <td>{{ item.descuento }}$</td>
                     {% else %}
                     <td>Sin Desc.</td>
                     {% endif%}
-                    <td>{{ item.total }}</td>
+                    <td>{{ item.total }}$</td>
                     <td>{{ item.user_borra}}</td>
                     {% if item.estado %}
                     <td>Anulado</td>
