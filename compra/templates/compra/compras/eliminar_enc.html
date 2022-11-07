@@ -19,8 +19,7 @@
                 <div class="dropdown-divider"></div>
                 {% csrf_token %}
                 <div class="row">
-                  ¿Eliminar {{ obj.observacion }} de compra número
-                  <b>{{ obj.id }} </b> ?
+                  ¿Eliminar {{ obj.observacion }} de compra número {{ obj.id }}?
                 </div>
                 <div class="dropdown-divider"></div>
                 <div class="row">
@@ -37,9 +36,6 @@
                     </button>
                   </div>
                 </div>
-              </div>
-              <div class="col-auto">
-                <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
               </div>
             </div>
           </div>
