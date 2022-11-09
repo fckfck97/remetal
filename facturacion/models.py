@@ -1,6 +1,7 @@
 from django.db import models
 from base.models import BaseModelo, BaseModelo2
 from inventario.models import Producto
+
 #Para los signals
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
