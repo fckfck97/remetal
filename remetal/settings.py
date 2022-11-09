@@ -133,3 +133,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+
+SESSION_COOKIE_AGE = 100 # 600 segundos = 10 minutos
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
