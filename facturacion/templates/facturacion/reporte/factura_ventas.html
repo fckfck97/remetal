@@ -56,10 +56,10 @@
           <tr>
             <td>{{obj.producto.id}}</td>
             <td>{{obj.cantidad}} KG</td>
-            <td>{{obj.precio}}$</td>
-            <td>{{obj.sub_total}}$</td>
-            <td>{{obj.descuento}}$</td>
-            <td>{{obj.total}}$</td>
+            <td>{{obj.precio|floatformat:2}}$</td>
+            <td>{{obj.sub_total|floatformat:2}}$</td>
+            <td>{{obj.descuento|floatformat:2}}$</td>
+            <td>{{obj.total|floatformat:2}}$</td>
           </tr>
           <tr>
             <td colspan="5">{{obj.producto}}</td>
@@ -77,15 +77,15 @@
             <tbody>
               <tr>
                 <td>Sub Total:</td>
-                <td align="right">{{enc.sub_total}}$</td>
+                <td align="right">{{enc.sub_total|floatformat:2}}$</td>
               </tr>
               <tr>
                 <td>Descuento:</td>
-                <td align="right">{{enc.descuento}}$</td>
+                <td align="right">{{enc.descuento|floatformat:2}}$</td>
               </tr>
               <tr>
                 <td>Total:</td>
-                <td align="right"><b>{{enc.total}}$</b></td>
+                <td align="right"><b>{{enc.total|floatformat:2}}$</b></td>
               </tr>
               {% if enc.tipo_pago is not None %}
               <tr>
@@ -94,12 +94,12 @@
               </tr>
               <tr>
                 <td>Monto Pagado:</td>
-                <td align="right"><b>{{enc.monto}}</b></td>
+                <td align="right"><b>{{enc.monto|floatformat:2}}$</b></td>
               </tr>
                   {% if cambio > 0 %}
                     <tr>
                       <td>Cambio:</td>
-                      <td align="right"><b>{{cambio}}</b></td>
+                      <td align="right"><b>{{cambio|floatformat:2}}$</b></td>
                     </tr>
                   {% endif %}
               {% else %}

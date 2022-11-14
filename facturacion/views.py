@@ -260,6 +260,10 @@ def pago_factura(request, id):
     if request.method == "POST":
         metodo = request.POST.get("metodo")
         monto = request.POST.get("monto")
+        if metodo == "":
+            return HttpResponse('No ha Seleccionado el Metodo de Pago.')
+        if float(monto) < enc.total:
+            return HttpResponse(f'El monto agregado para el pago es menor al total {enc.total}$')
         enc.cliente = enc.cliente
         enc.pagado = True
         enc.tipo_pago = metodo

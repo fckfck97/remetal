@@ -115,21 +115,21 @@
                                         </div>
                                         <div class="col-md-4 mb-3">
                                           <label for="id_cantidad_detalle" class="form-label">Cant.:</label>
-                                          <input type="number" class="form-control" name="id_cantidad_detalle" id="id_cantidad_detalle" value="00" required>
+                                          <input type="number" class="form-control" name="id_cantidad_detalle" id="id_cantidad_detalle" value="0" min="0" required>
                                         </div>
                                       </div>
                                       <div class="row">
                                         <div class="col-md-4 mb-3">
                                           <label for="id_precio_detalle" class="form-label">Precio:</label>
-                                          <input type="number" class="form-control" name="id_precio_detalle" id="id_precio_detalle" value="00" required>
+                                          <input type="number" class="form-control" name="id_precio_detalle" id="id_precio_detalle" value="0" min="0"step="0.01"required>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                           <label for="id_sub_total_detalle" class="form-label">S. Total:</label>
-                                          <input type="text" readonly class="form-control-plaintext" name="id_sub_total_detalle" id="id_sub_total_detalle" value="00">
+                                          <input type="text" readonly class="form-control-plaintext" name="id_sub_total_detalle" id="id_sub_total_detalle" value="0">
                                         </div>
                                         <div class="col-md-4 mb-3">
                                           <label for="id_total_detalle" class="form-label">Total:</label>
-                                          <input type="text" readonly class="form-control-plaintext" name="id_total_detalle" id="id_total_detalle" value="00">
+                                          <input type="text" readonly class="form-control-plaintext" name="id_total_detalle" id="id_total_detalle" value="0">
                                         </div>
                                       </div>
                                     </div>
@@ -238,7 +238,7 @@
                 return false;
             }
 
-            if($('#id_total_detalle').val()==0 || $('#id_id_producto').val()==0 ){
+            if($('#id_total_detalle').val()==0 || $('#id_id_producto').val()=="" ){
                 e.preventDefault();
                 $.alert({
                         type:'red',

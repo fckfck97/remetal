@@ -57,7 +57,7 @@
             <tr>
                 <td>{{ item.id }}</td>
                 <td>{{ item.descripcion }}</td>
-                <td>{{ item.monto_gastos }}$</td>
+                <td>{{ item.monto_gastos|floatformat:2 }}$</td>
                 <td >{#item.estado|yesno:"Activo,Inactivo"#}
                   <div class="cursor-pointer" onclick="inactivar({{item.id}})">
                       {% if item.estado %}
