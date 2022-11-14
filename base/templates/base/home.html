@@ -31,7 +31,7 @@
         </div>
         <div class="card-bottom px-3 py-1">
           <div class="h5 font-weight-bold text-gray-800">
-            {{ total_neto }}$
+            {{ total_neto|floatformat:2 }}$
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
         </div>
         <div class="card-bottom px-3 py-1">
           <div class="h5 font-weight-bold text-gray-800">
-            {{ total_ano }}$
+            {{ total_ano|floatformat:2 }}$
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@
               </div>
               {%else%}
               <div class="h5 mr-3 font-weight-bold text-gray-800">
-                {{ gastos }}$
+                {{ gastos|floatformat:2 }}$
               </div>
               {%endif%}
             </div>
@@ -118,7 +118,7 @@
         </div>
         <div class="card-bottom px-3 py-1">
           <div class="h5 font-weight-bold text-gray-800">
-            {{ total }}$
+            {{ total|floatformat:2 }}$
           </div>
         </div>
       </div>

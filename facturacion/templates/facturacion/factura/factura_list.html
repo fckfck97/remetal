@@ -55,9 +55,9 @@
           <td>RM-F-{{ item.id }}</td>
           <td>{{ item.cliente.razon_social }}</td>
           <td>{{ item.fecha|date:"d/m/Y" }}</td>
-          <td>{{ item.sub_total }}$</td>
-          <td>{{ item.descuento }}$</td>
-          <td>{{ item.total }}$</td>
+          <td>{{ item.sub_total|floatformat:2 }}$</td>
+          <td>{{ item.descuento|floatformat:2 }}$</td>
+          <td>{{ item.total|floatformat:2 }}$</td>
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
             {% if item.total == 0 %}
@@ -113,9 +113,9 @@
               <td>RM-F-{{ item.id }}</td>
               <td>{{ item.cliente.razon_social }}</td>
               <td>{{ item.fecha|date:"d/m/Y"  }}</td>
-              <td>{{ item.total }}$</td>
+              <td>{{ item.total|floatformat:2 }}$</td>
               <td>{{ item.tipo_pago }}</td>
-              <td>{{ item.monto }}$</td>
+              <td>{{ item.monto|floatformat:2 }}$</td>
               {% if item.pagado %}
               <td>Pagado</td>
               {% endif %}
