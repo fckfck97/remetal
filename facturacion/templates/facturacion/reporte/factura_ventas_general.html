@@ -80,13 +80,13 @@
                         <td>RM-F-{{ item.id }}</td>
                         <td>{{ item.cliente }}</td>
                         <td>{{ item.fecha | date:"d/m/Y"  }}</td>
-                        <td>{{ item.total }}$</td>
+                        <td>{{ item.total|floatformat:2 }}$</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <div class="suma-total">
-                <h3><b>Total Vendido:</b> {{total}}$</h3>
+                <h3><b>Total Vendido:</b> {{total|floatformat:2}}$</h3>
             </div>
         </div>
     </div>

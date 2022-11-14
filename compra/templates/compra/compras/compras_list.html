@@ -53,8 +53,8 @@
           <td>{{ item.fecha_compra|date:"d/m/Y"  }}</td>
           <td>{{item.observacion}}</td>
           <td>{{ item.fecha_factura|date:"d/m/Y"  }}</td>
-          <td>{{ item.sub_total }}$</td>
-          <td>{{ item.total }}$</td>
+          <td>{{ item.sub_total|floatformat:2 }}$</td>
+          <td>{{ item.total|floatformat:2 }}$</td>
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
             {% if item.total == 0 %}
@@ -111,9 +111,9 @@
           <td>{{ item.no_factura }}</td>
           <td>{{ item.fecha_factura|date:"d/m/Y"  }}</td>
           <td>{{item.observacion}}</td>
-          <td>{{ item.total }}$</td>
+          <td>{{ item.total|floatformat:2 }}$</td>
           <td>{{ item.tipo_pago }}</td>
-          <td>{{ item.monto }}$</td>
+          <td>{{ item.monto|floatformat:2 }}$</td>
           <td>{{ item.user_cobra }}</td>
           <td>{{item.pagado|yesno:"Pagado,No Pagado"}}</td>
           <td>
@@ -167,8 +167,10 @@
           action: function () {
             var metodo = this.$content.find("select#metodo");
             var monto = this.$content.find("input#monto");
+            if (metodo === "") {
+              mensaje(r, "red");
+            }
             var data = { metodo: metodo.val(), monto: monto.val()  };
-            console.log(data);
 
             var token = "{{csrf_token}}";
             $.ajax({

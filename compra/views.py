@@ -140,6 +140,10 @@ def compras(request,compra_id=None):
             return redirect("compra:lista_compras")
         
         producto = request.POST.get("id_id_producto")
+        if producto == "":
+            messages.error(request,'No ha Agregado Producto.')
+            return redirect("compra:editar_compra",compra_id=compra_id)
+
         cantidad = request.POST.get("id_cantidad_detalle")
         precio = request.POST.get("id_precio_detalle")
         prod = Producto.objects.get(pk=producto)
@@ -171,6 +175,11 @@ def pago_compra(request, id):
     if request.method == "POST":
         metodo = request.POST.get("metodo")
         monto = request.POST.get("monto")
+        if metodo == "":
+            return HttpResponse('No ha Seleccionado el Metodo de Pago.')
+        if float(monto) < enc.total:
+            return HttpResponse(f'El monto agregado para el pago es menor al total {enc.total}$')
+        
         enc.observacion = enc.observacion
         enc.no_factura = enc.no_factura
         enc.fecha_factura = enc.fecha_factura

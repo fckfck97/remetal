@@ -95,7 +95,7 @@
               </div>
               <div class="col-md-4 mb-3">
                 <label class="form-label">Precio</label>
-                <input type="number" class="form-control" name="precio" id="precio" placeholder="Precio" readonly />
+                <input type="number" class="form-control" name="precio" id="precio" placeholder="Precio" min="0" step="0.00" readonly />
               </div>
               <div class="col-md-4 mb-3">
                 <label class="form-label">Descuento</label>
@@ -151,13 +151,13 @@
                   <td>{{ item.producto.codigo }}</td>
                   <td>{{ item.producto.descripcion }}</td>
                   <td>{{ item.cantidad }}KG</td>
-                  <td>{{ item.sub_total }}$</td>
+                  <td>{{ item.sub_total |floatformat:2}}$</td>
                   {% if item.descuento > 0  %} 
-                  <td>{{ item.descuento }}$</td>
+                  <td>{{ item.descuento |floatformat:2}}$</td>
                     {% else %}
                     <td>Sin Desc.</td>
                     {% endif%}
-                    <td>{{ item.total }}</td>
+                    <td>{{ item.total|floatformat:2 }}$</td>
                     
                     <td>
                       <button type="button" class="btn btn-sm btn-warning btn-circle" title="Eliminar producto" onclick="borrar_detalle({{ item.id }})">
@@ -198,13 +198,13 @@
                   <td>{{ item.producto.codigo }}</td>
                   <td>{{ item.producto.descripcion }}</td>
                   <td>{{ item.cantidad }}</td>
-                  <td>{{ item.sub_total }}$</td>
+                  <td>{{ item.sub_total|floatformat:2 }}$</td>
                   {% if item.descuento > 0  %} 
-                  <td>{{ item.descuento }}$</td>
+                  <td>{{ item.descuento|floatformat:2}}$</td>
                     {% else %}
                     <td>Sin Desc.</td>
                     {% endif%}
-                    <td>{{ item.total }}$</td>
+                    <td>{{ item.total|floatformat:2}}$</td>
                     <td>{{ item.user_borra}}</td>
                     {% if item.estado %}
                     <td>Anulado</td>

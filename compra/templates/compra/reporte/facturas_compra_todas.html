@@ -82,13 +82,13 @@
                         <td>{{ item.proveedor }}</td>
                         <td>{{ item.observacion }}</td>
                         <td>{{ item.fecha_factura | date:"d/m/Y" }}</td>
-                        <td>{{ item.total }}</td>
+                        <td>{{ item.total|floatformat:2 }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <div class="suma-total">
-              <h3><b>Total comprado:</b> {{total}}$</h3>
+              <h3><b>Total comprado:</b> {{total|floatformat:2}}$</h3>
             </div>
         </div>
     </div>
