@@ -147,7 +147,6 @@ def facturas(request, id=None):
 
             detalle = FacturaDet.objects.filter(factura=enc, estado=False)
             detalle2 = FacturaDet.objects.filter(factura=enc, estado=True)
-            cod = FacturaDet.objects.latest('id')
 
             contexto = {"enc": encabezado, "det": detalle,
                         "clientes": clientes, "det2": detalle2}
