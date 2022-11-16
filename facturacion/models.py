@@ -28,7 +28,7 @@ class Cliente(BaseModelo):
         default=SEL
     )
     rif=models.CharField(
-        max_length=8
+        max_length=15
 
     )
     direccion=models.CharField(
@@ -40,7 +40,8 @@ class Cliente(BaseModelo):
         null=True, blank=True
     )
     email=models.EmailField(
-        max_length=255
+        max_length=255,
+        null=True, blank=True
     )
     def __str__(self):
         return '{}'.format(self.razon_social)
