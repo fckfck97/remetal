@@ -49,7 +49,7 @@
                 <input type="number" class="form-control text-right" value="0.00" readonly name="sub_total" id="sub_total" />
               </div>
               <div class="col-md-4 mb-3">
-                <div class="form-label">Descuento:</div>
+                <div class="form-label">Gastos Adicionales:</div>
                 <input type="number" class="form-control text-right" value="0.00" disabled name="descuento" id="descuento" />
               </div>
               <div class="col-md-4 mb-3">
@@ -97,9 +97,9 @@
                 <input type="number" class="form-control" name="precio" id="precio" placeholder="Precio" min="0" step="0.00" readonly />
               </div>
               <div class="col-md-4 mb-3">
-                <label class="form-label">Descuento</label>
+                <label class="form-label">Gastos Adicionales</label>
                 <input type="number" class="form-control" name="descuento_detalle" id="descuento_detalle"
-                  placeholder="descuento" />
+                  placeholder="Gastos Adicionales" />
               </div>
             </div>
             <div class="row">
@@ -142,7 +142,7 @@
                 </th>
                 <th data-field="cantidad">Cant</th>
                 <th data-field="subtotal">S. Total</th>
-                <th data-field="descuento">Desc.</th>
+                <th data-field="descuento">Gastos Adic.</th>
                 <th data-field="total">Total</th>
                 <th class="all">Acciones</th>
               </thead>
@@ -157,7 +157,7 @@
                   {% if item.descuento > 0  %} 
                   <td>{{ item.descuento |floatformat:2}}$</td>
                     {% else %}
-                    <td>Sin Desc.</td>
+                    <td>Sin Gastos A.</td>
                     {% endif%}
                     <td>{{ item.total|floatformat:2 }}$</td>
                     
@@ -187,7 +187,7 @@
                 </th>
                 <th data-field="cantidad">Cant</th>
                 <th data-field="subtotal">S. Total</th>
-                <th data-field="descuento">Desc.</th>
+                <th data-field="descuento">Gastos Adic.</th>
                 <th data-field="total">Total</th>
                 <th class="all">Usuario .</th>
                 <th class="all">Estado .</th>
@@ -204,7 +204,7 @@
                   {% if item.descuento > 0  %} 
                   <td>{{ item.descuento|floatformat:2}}$</td>
                     {% else %}
-                    <td>Sin Desc.</td>
+                    <td>Sin Gastos A.</td>
                     {% endif%}
                     <td>{{ item.total|floatformat:2}}$</td>
                     <td>{{ item.user_borra}}</td>
@@ -243,7 +243,7 @@
     desc = desc > (cant * prec) ? 0 : desc;
 
     stotal = cant * prec;
-    total = stotal - desc;
+    total = stotal + desc;
 
     $('#cantidad').val(cant);
     $('#precio').val(prec);

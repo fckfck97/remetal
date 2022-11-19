@@ -64,6 +64,10 @@
                                           {{ form_enc.sub_total }}
                                         </div>
                                         <div class="col-md-2">
+                                          <label for="Gastos Adicionales" class="form-label">Gastos Adic:</label>
+                                          {{ form_enc.descuento }}
+                                        </div>
+                                        <div class="col-md-2">
                                           <label for="total" class="form-label">Total:</label>
                                           {{ form_enc.total }}
                                         </div>
@@ -123,6 +127,10 @@
                                         <div class="col-md-4 mb-3">
                                           <label for="id_precio_detalle" class="form-label">Precio:</label>
                                           <input type="number" class="form-control" name="id_precio_detalle" id="id_precio_detalle" value="0" min="0"step="0.01"required>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                          <label for="id_descuento_detalle" class="form-label">Gastos Adic:</label>
+                                          <input type="number" class="form-control" name="id_descuento_detalle" id="id_descuento_detalle" value="0" min="0"step="0.01"required>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                           <label for="id_sub_total_detalle" class="form-label">S. Total:</label>
@@ -191,7 +199,7 @@
 {% block js_page %}
 <script>
     $(function () {
-        $('#id_cantidad_detalle,#id_precio_detalle').change(function(){
+        $('#id_cantidad_detalle,#id_precio_detalle,#id_descuento_detalle').change(function(){
             calcular_detalle();
         });
         $("#btnEditProveedor").click(function(e){
@@ -265,6 +273,7 @@
         $("#id_cantidad_detalle").val(0);
         $('#id_precio_detalle').val(0);
         $('#id_sub_total_detalle').val(0);
+        $('#id_descuento_detalle').val(0);
         $('#id_total_detalle').val(0);
         $("#id_id_producto").val(+id);
         $('#id_descripcion_producto').val(descripcion);
@@ -283,11 +292,18 @@
         prec =$('#id_precio_detalle').val();
         prec = prec==="" ? 0 : +prec;
         prec = prec<0 ? 0 : prec;
+        desc = $('#id_descuento_detalle').val();
+        desc = desc==="" ? 0 : +desc;
+        desc = desc<0 ? 0 : desc;
+
+        desc = desc>(cant * prec) ? 0 : desc;
+
         stotal = cant * prec;
-        total  = stotal 
+        total  = stotal + desc;
 
         $('#id_cantidad_detalle').val(cant);
         $('#id_precio_detalle').val(prec);
+        $('#id_descuento_detalle').val(desc);
         $('#id_sub_total_detalle').val(stotal);
         $('#id_total_detalle').val(total);
 
@@ -297,6 +313,7 @@
         $('#id_cantidad_detalle').val(0);
         $('#id_precio_detalle').val(0);
         $('#id_sub_total_detalle').val(0);
+        $('#id_descuento_detalle').val(0);
         $('#id_total_detalle').val(0);
         $('#id_id_producto').val('');
         $('#id_descripcion_producto').val('');

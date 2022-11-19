@@ -99,6 +99,7 @@ def compras(request,compra_id=None):
                 'observacion': enc.observacion,
                 'no_factura': f"RM-C-{enc.id}",
                 'sub_total': enc.sub_total,
+                'descuento': enc.descuento,
                 'total':enc.total
             }
             form_compras = ComprasEncForm(e)
@@ -113,6 +114,7 @@ def compras(request,compra_id=None):
         fecha_factura = request.POST.get("fecha_factura")
         proveedor = request.POST.get("enc_proveedor")
         sub_total = 0
+        descuento = 0
         total = 0
         if not compra_id:
             prov=Proveedor.objects.get(pk=proveedor)
@@ -146,19 +148,23 @@ def compras(request,compra_id=None):
 
         cantidad = request.POST.get("id_cantidad_detalle")
         precio = request.POST.get("id_precio_detalle")
+        descuento_detalle  = request.POST.get("id_descuento_detalle")
         prod = Producto.objects.get(pk=producto)
         det = ComprasDet(
             compra=enc,
             producto=prod,
             cantidad=cantidad,
             precio_prv=precio,
+            descuento=descuento_detalle,
             costo=0,
             uc = request.user
         )
         if det:
             det.save()
             sub_total=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('sub_total'))
+            descuento=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('descuento'))
             enc.sub_total = sub_total["sub_total__sum"]
+            enc.descuento=descuento["descuento__sum"]
             enc.save()
         return redirect("compra:editar_compra",compra_id=compra_id)
 

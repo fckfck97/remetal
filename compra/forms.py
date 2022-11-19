@@ -44,7 +44,7 @@ class ComprasEncForm(forms.ModelForm):
     class Meta:
         model = ComprasEnc
         fields = ['proveedor', 'observacion',
-                  'no_factura', 'sub_total',
+                  'no_factura', 'sub_total','descuento',
                   'total']
 
     def __init__(self, *args, **kwargs):
@@ -55,6 +55,7 @@ class ComprasEncForm(forms.ModelForm):
             })
         self.fields['no_factura'].widget.attrs['readonly'] = True
         self.fields['sub_total'].widget.attrs['readonly'] = True
+        self.fields['descuento'].widget.attrs['readonly'] = True
         self.fields['total'].widget.attrs['readonly'] = True
         self.fields['observacion'].widget.attrs.update(
             {'style': 'height: calc(1.5em + 0.75rem + 2px);'})
