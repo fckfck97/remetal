@@ -10,16 +10,20 @@ class ClienteForm(forms.ModelForm):
                   'tipo',
                   'rif',
                   'direccion',
+                  'direccion2',
                   'telefono',
                   'email']
         exclude = ['um', 'fm', 'uc', 'fc']
+        labels = {'direccion': "Direccion Principal", 'direccion2': "Direccion Secundaria(Opcional)",
+                  'telefono': "Numero Telefonico", 'email': "Correo Electronico"}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
-            })    
+            })
+
     def clean(self):
         try:
             sc = Cliente.objects.get(
@@ -28,7 +32,7 @@ class ClienteForm(forms.ModelForm):
             if not self.instance.pk:
                 print("Registro ya existe")
                 raise forms.ValidationError("Registro Ya Existe")
-            elif self.instance.pk!=sc.pk:
+            elif self.instance.pk != sc.pk:
                 print("Cambio no permitido")
                 raise forms.ValidationError("Cambio No Permitido")
         except Cliente.DoesNotExist:

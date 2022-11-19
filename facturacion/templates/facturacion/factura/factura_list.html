@@ -62,6 +62,13 @@
           <td>
             {% if item.total == 0 %}
             {% else %}
+                <a
+                  class="btn btn-sm btn-success btn-circle"
+                  title="Imprimir"
+                  href="{% url 'facturacion:factura_imprimir_one' item.id%}"
+                  target="reportes"
+                  ><i class="fas fa-print"></i
+                ></a>
             <button
               type="button"
               class="btn btn-sm btn-success btn-circle" title="Pagar"

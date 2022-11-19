@@ -105,24 +105,20 @@ class FacturaView(SinPrivilegios, ListView):
 def facturas(request, id=None):
     try:
         template_name = 'facturacion/factura/facturas.html'
-
         detalle = {}
         clientes = Cliente.objects.filter(estado=True)
-
         if request.method == "GET":
             enc = FacturaEnc.objects.filter(pk=id).first()
             if id:
                 if not enc:
                     messages.error(request, 'Factura No Existe')
                     return redirect("facturacion:lista_factura")
-
                 usr = request.user
                 if not usr.is_superuser:
                     if enc.uc != usr:
                         messages.error(
                             request, 'Factura no fue creada por usuario')
                         return redirect("facturacion:lista_factura")
-
             if not enc:
                 encabezado = {
                     'id': 0,
@@ -130,7 +126,8 @@ def facturas(request, id=None):
                     'cliente': 0,
                     'sub_total': 0.00,
                     'descuento': 0.00,
-                    'total': 0.00
+                    'total': 0.00,
+                    'guia': ""
                 }
                 detalle = None
             else:
@@ -141,6 +138,7 @@ def facturas(request, id=None):
                     'sub_total': enc.sub_total,
                     'descuento': enc.descuento,
                     'total': enc.total,
+                    'guia': enc.guia,
                     'pagado': enc.pagado,
                     'tipo_pago': enc.tipo_pago
                 }
@@ -156,12 +154,14 @@ def facturas(request, id=None):
 
             cliente = request.POST.get("enc_cliente")
             fecha = request.POST.get("fecha")
+            guia = request.POST.get("guia")
             cli = Cliente.objects.get(pk=cliente)
-
+            print(guia)
             if not id:
                 enc = FacturaEnc(
                     cliente=cli,
-                    fecha=fecha
+                    fecha=fecha,
+                    guia=guia
                 )
                 if enc:
                     enc.save()
@@ -170,6 +170,7 @@ def facturas(request, id=None):
                 enc = FacturaEnc.objects.filter(pk=id).first()
                 if enc:
                     enc.cliente = cli
+                    enc.guia = guia
                     enc.save()
 
             if not id:
