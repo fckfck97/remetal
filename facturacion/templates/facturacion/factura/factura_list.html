@@ -44,7 +44,7 @@
         <th data-field="cliente">Cliente</th>
         <th data-field="fecha_factura">F. Factura</th>
         <th data-field="sub_total">Sub Total</th>
-        <th data-field="descuento">Descuento</th>
+        <th data-field="descuento">Gastos Adic.</th>
         <th data-field="total">Total</th>
         <th data-field="estado">Estado</th>
         <th class="all">Acciones</th>
@@ -56,7 +56,11 @@
           <td>{{ item.cliente.razon_social }}</td>
           <td>{{ item.fecha|date:"d/m/Y" }}</td>
           <td>{{ item.sub_total|floatformat:2 }}$</td>
-          <td>{{ item.descuento|floatformat:2 }}$</td>
+          {% if item.descuento > 0  %} 
+          <td>{{ item.descuento|floatformat:2}}$</td>
+            {% else %}
+            <td>Sin Gastos A.</td>
+            {% endif%}
           <td>{{ item.total|floatformat:2 }}$</td>
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
