@@ -35,6 +35,10 @@ class Cliente(BaseModelo):
         max_length=250,
         null=True, blank=True
         )
+    direccion2=models.CharField(
+        max_length=250,
+        null=True, blank=True
+        )
     telefono=models.CharField(
         max_length=11,
         null=True, blank=True
@@ -63,6 +67,7 @@ class FacturaEnc(BaseModelo2):
     total=models.FloatField(default=0)
     pagado=models.BooleanField(default=False)
     monto = models.FloatField(default=0,null=True, blank=True)
+    guia=models.CharField(max_length=150,null=True, blank=True)
     tipo_pago=models.CharField(max_length=50,null=True, blank=True)
     user_cobra=models.CharField(max_length=50,null=True,blank=True)
 

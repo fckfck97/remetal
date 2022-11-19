@@ -11,9 +11,11 @@ class ProveedorForm(forms.ModelForm):
                   'tipo',
                   'rif',
                   'direccion',
+                  'direccion2',
                   'telefono',
                   'email']
-
+        labels = {'direccion': "Direccion Principal", 'direccion2': "Direccion Secundaria(Opcional)",
+                  'telefono': "Numero Telefonico", 'email': "Correo Electronico"}
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):

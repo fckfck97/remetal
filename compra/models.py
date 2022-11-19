@@ -35,6 +35,10 @@ class Proveedor(BaseModelo):
         max_length=250,
         null=True, blank=True
         )
+    direccion2=models.CharField(
+        max_length=250,
+        null=True, blank=True
+        )
     telefono=models.CharField(
         max_length=11,
         null=True, blank=True
