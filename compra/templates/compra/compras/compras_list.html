@@ -39,7 +39,6 @@
       <thead align="center">
         <th data-field="no_factura">No. Factura</th>
         <th data-field="proveedor">Proveedor</th>
-        <th data-field="fecha_compra">F. Compra</th>
         <th data-field="observacion">Observación</th>
         <th data-field="fecha_factura">F. Factura</th>
         <th data-field="sub_total">Sub Total</th>
@@ -52,7 +51,6 @@
         <tr>
           <td>{{ item.no_factura }}</td>
           <td>{{ item.proveedor }}</td>
-          <td>{{ item.fecha_compra|date:"d/m/Y"}}</td>
           <td>{{item.observacion}}</td>
           <td>{{ item.fecha_factura|date:"d/m/Y"}}</td>
           <td>{{ item.sub_total|floatformat:2 }}$</td>
