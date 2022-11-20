@@ -10,7 +10,7 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-4 mb-3">
-                <label class="form-label">No.:</label>
+                <label class="form-label">Codigo de Factura:</label>
                 <input type="text" name="enc_id" id="enc_id" readonly class="form-control" />
               </div>
               {% if enc.cliente %}
@@ -57,8 +57,12 @@
                 <input type="number" class="form-control text-right" value="0.00" disabled name="total" id="total" />
               </div>
               <div class="col-md-4 mb-3">
-                <div class="form-label">Num Guia:</div>
+                <div class="form-label">Numero de Guia:</div>
                 <input type="text" class="form-control text-right" placeholder="Numero de Guia" id="guia" name="guia"/>
+              </div>
+              <div class="col-md-4 mb-3">
+                <div class="form-label">Numero de Venta:</div>
+                <input type="text" class="form-control text-right" placeholder="Numero de Venta" id="numventa" name="numventa"/>
               </div>
             </div>
             <hr class="mb-4">
@@ -345,6 +349,7 @@
     $("#descuento").val("{{ enc.descuento}}");
     $("#total").val({{ enc.total }});
     $("#guia").val("{{ enc.guia }}");
+    $("#numventa").val("{{ enc.numventa }}");
     $("#enc_cliente").data('select2').trigger('select', {
     data: { "id": 0 }
   });
