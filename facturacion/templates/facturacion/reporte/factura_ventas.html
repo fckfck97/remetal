@@ -48,7 +48,6 @@
           <th align="right">Cant.</th>
           <th align="right">P. Unit.</th>
           <th align="right">Sub Total</th>
-          <th align="right">Descuento</th>
           <th align="right">Total</th>
         </thead>
         <tbody>
@@ -58,7 +57,6 @@
             <td>{{obj.cantidad}} KG</td>
             <td>{{obj.precio|floatformat:2}}$</td>
             <td>{{obj.sub_total|floatformat:2}}$</td>
-            <td>{{obj.descuento|floatformat:2}}$</td>
             <td>{{obj.total|floatformat:2}}$</td>
           </tr>
           <tr>
@@ -67,20 +65,17 @@
           {% endfor %}
         </tbody>
       </table>
-      <div class="col-xs-1"></div>
       <div class="col-xs-11">
         <div class="pull-right">
           <table class="table-responsive dt-responsive nowrap">
-            <thead>
-              <th colspan="2">Total</th>
-            </thead>
+            <br />
             <tbody>
               <tr>
                 <td>Sub Total:</td>
                 <td align="right">{{enc.sub_total|floatformat:2}}$</td>
               </tr>
               <tr>
-                <td>Descuento:</td>
+                <td>Gastos Adic:</td>
                 <td align="right">{{enc.descuento|floatformat:2}}$</td>
               </tr>
               <tr>
@@ -104,7 +99,7 @@
                   {% endif %}
               {% else %}
               <tr>
-                <td>Factura sin Valor Fiscal:</td>
+                <td>Factura No Fiscal:</td>
                 <td align="right"><b>Presuspuesto Valido por el Dia de {{enc.fc |date:"d/m/Y"}}</b></td>
               </tr>
               {% endif %}
