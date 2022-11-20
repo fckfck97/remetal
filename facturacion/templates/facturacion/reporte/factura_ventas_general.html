@@ -71,6 +71,7 @@
                         <th>No. Factura</th>
                         <th>Cliente</th>
                         <th>Fecha</th>
+                        <th>Gastos Adic</th>
                         <th>Total</th>
                     </tr>
                 </thead>
@@ -80,6 +81,7 @@
                         <td>RM-F-{{ item.id }}</td>
                         <td>{{ item.cliente }}</td>
                         <td>{{ item.fecha | date:"d/m/Y"  }}</td>
+                        <td>{{ item.descuento|floatformat:2 }}$</td>
                         <td>{{ item.total|floatformat:2 }}$</td>
                     </tr>
                     {% endfor %}
