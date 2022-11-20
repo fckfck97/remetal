@@ -127,7 +127,8 @@ def facturas(request, id=None):
                     'sub_total': 0.00,
                     'descuento': 0.00,
                     'total': 0.00,
-                    'guia': ""
+                    'guia': "",
+                    'numventa':""
                 }
                 detalle = None
             else:
@@ -139,6 +140,7 @@ def facturas(request, id=None):
                     'descuento': enc.descuento,
                     'total': enc.total,
                     'guia': enc.guia,
+                    'numventa': enc.numventa,
                     'pagado': enc.pagado,
                     'tipo_pago': enc.tipo_pago
                 }
@@ -155,13 +157,15 @@ def facturas(request, id=None):
             cliente = request.POST.get("enc_cliente")
             fecha = request.POST.get("fecha")
             guia = request.POST.get("guia")
+            numventa = request.POST.get("numventa")
             cli = Cliente.objects.get(pk=cliente)
-            print(guia)
+
             if not id:
                 enc = FacturaEnc(
                     cliente=cli,
                     fecha=fecha,
-                    guia=guia
+                    guia=guia,
+                    numventa=numventa
                 )
                 if enc:
                     enc.save()
@@ -171,6 +175,7 @@ def facturas(request, id=None):
                 if enc:
                     enc.cliente = cli
                     enc.guia = guia
+                    enc.numventa = numventa
                     enc.save()
 
             if not id:
