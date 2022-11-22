@@ -83,7 +83,7 @@ class ComprasEnc(BaseModelo):
             self.sub_total = 0
             self.descuento = 0
             
-        self.total = self.sub_total + self.descuento
+        self.total = self.sub_total - self.descuento
         super(ComprasEnc,self).save()
 
     class Meta:
@@ -105,7 +105,7 @@ class ComprasDet(BaseModelo):
 
     def save(self):
         self.sub_total = float(float(self.cantidad) * float(self.precio_prv))
-        self.total = self.sub_total + float(self.descuento)
+        self.total = self.sub_total - float(self.descuento)
         super(ComprasDet, self).save()
     
     class Mega:
