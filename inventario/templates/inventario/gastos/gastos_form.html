@@ -26,6 +26,10 @@
                                 <div class="mb-3">
                                     <label for="id_categoria" class="form-label">{{form.categoria.label}}</label>
                                     {{form.categoria}}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_fc" class="form-label">{{form.fc.label}}</label>
+                                    {{form.fc}}
                                 </div>   
                                 
                                 <div class="mb-3">
@@ -57,3 +61,11 @@
     </div>
 </div>
 
+<script>
+    $(function () {
+        $("#id_fc").datetimepicker({
+            format: 'Y-m-d',
+            timepicker:false
+        });
+    });
+</script>

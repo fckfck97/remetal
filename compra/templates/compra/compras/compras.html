@@ -126,7 +126,7 @@
                                       <div class="row">
                                         <div class="col-md-4 mb-3">
                                           <label for="id_precio_detalle" class="form-label">Precio:</label>
-                                          <input type="number" class="form-control" name="id_precio_detalle" id="id_precio_detalle" value="0" min="0"step="0.01"required>
+                                          <input type="number" class="form-control" name="id_precio_detalle" id="id_precio_detalle" value="0" min="0"step="0.001"required>
                                         </div>
                                         <div class="col-md-4 mb-3">
                                           <label for="id_descuento_detalle" class="form-label">Gastos Adic:</label>
@@ -299,6 +299,7 @@
         desc = desc>(cant * prec) ? 0 : desc;
 
         stotal = cant * prec;
+
         total  = stotal + desc;
 
         $('#id_cantidad_detalle').val(cant);

@@ -90,7 +90,7 @@ class Gastos(models.Model):
     descripcion = models.CharField(max_length=250,blank=True,null=True)
     monto_gastos = models.FloatField(default=0)
     estado = models.BooleanField(default=True)
-    fc = models.DateTimeField(auto_now_add=True)
+    fc = models.DateTimeField()
     fm = models.DateTimeField(auto_now=True)
     categoria = models.ForeignKey(Categoria_Gastos, on_delete=models.CASCADE)
     def __str__(self):
