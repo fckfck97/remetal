@@ -118,13 +118,13 @@
             </div>
             <div class="row">
               <div class="col-md-12 mb-3 d-flex justify-content-center">
-                  <button type="submit" title="Cargar producto" class="btn btn-success" id="btnGuardar">
-                    <i class="fa fa-plus"></i> Cargar producto
+                  <button type="submit" title="Cargar producto" class="btn btn-primary" id="btnGuardar">
+                    <i class="fa fa-plus"></i> Agregar
                   </button>
+                  <a href="{% url 'facturacion:lista_factura' %}" class="btn btn-success mx-2">
+                    <i class="fa-solid fa-save"></i> Guardar
+                  </a>
               </div>
-              <a href="{% url 'facturacion:lista_factura' %}" class="btn btn-danger mx-2">
-                <i class="fa-solid fa-ban"></i> Guardar Venta
-              </a>
             </div>
           </div>
           <!-- Fin Sección Bottom -->
