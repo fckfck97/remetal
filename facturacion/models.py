@@ -90,7 +90,7 @@ class FacturaEnc(BaseModelo2):
 class FacturaDet(BaseModelo2):
     factura = models.ForeignKey(FacturaEnc,on_delete=models.CASCADE)
     producto=models.ForeignKey(Producto,on_delete=models.CASCADE)
-    cantidad=models.BigIntegerField(default=0)
+    cantidad=models.FloatField(default=0)
     precio=models.FloatField(default=0)
     sub_total=models.FloatField(default=0)
     descuento=models.FloatField(default=0)
@@ -102,7 +102,7 @@ class FacturaDet(BaseModelo2):
         return '{}'.format(self.producto)
 
     def save(self):
-        self.sub_total = float(float(int(self.cantidad)) * float(self.precio))
+        self.sub_total = float(float((self.cantidad)) * float(self.precio))
         self.total = self.sub_total + float(self.descuento)
         super(FacturaDet, self).save()
     
@@ -138,6 +138,6 @@ def detalle_fac_guardar(sender,instance,**kwargs):
 
     prod=Producto.objects.filter(pk=producto_id).first()
     if prod:
-        cantidad = int(prod.existencia) - int(instance.cantidad)
+        cantidad = float(prod.existencia) - float(instance.cantidad)
         prod.existencia = cantidad
         prod.save()
