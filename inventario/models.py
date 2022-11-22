@@ -47,7 +47,7 @@ class Producto(BaseModelo):
     )
     descripcion = models.CharField(max_length=200)
     precio = models.FloatField(default=0)
-    existencia = models.IntegerField(default=0)
+    existencia = models.FloatField(default=0)
     ultima_compra = models.DateField(null=True, blank=True)
 
     subcategoria = models.ForeignKey(SubCategoria, on_delete=models.CASCADE)
