@@ -64,13 +64,13 @@ class ComprasEnc(BaseModelo):
     observacion=models.TextField(blank=True,null=True)
     no_factura=models.CharField(max_length=100)
     fecha_factura=models.DateField()
-    sub_total=models.FloatField(default=0.00)
-    total=models.FloatField(default=0.00)
+    sub_total=models.FloatField(default=0)
+    total=models.FloatField(default=0)
     pagado=models.BooleanField(default=False)
-    monto = models.FloatField(default=0.00,null=True, blank=True)
+    monto = models.FloatField(default=0,null=True, blank=True)
     tipo_pago=models.CharField(max_length=50,null=True, blank=True)
     user_cobra=models.CharField(max_length=50,null=True,blank=True)
-    descuento=models.FloatField(default=0.00)
+    descuento=models.FloatField(default=0)
     proveedor=models.ForeignKey(Proveedor,on_delete=models.CASCADE)
     
     def __str__(self):
@@ -93,12 +93,12 @@ class ComprasEnc(BaseModelo):
 class ComprasDet(BaseModelo):
     compra=models.ForeignKey(ComprasEnc,on_delete=models.CASCADE)
     producto=models.ForeignKey(Producto,on_delete=models.CASCADE)
-    cantidad=models.FloatField(default=0.00)
-    precio_prv=models.FloatField(default=0.00)
-    sub_total=models.FloatField(default=0.00)
-    total=models.FloatField(default=0.00)
-    costo=models.FloatField(default=0.00)
-    descuento=models.FloatField(default=0.00)
+    cantidad=models.FloatField(default=0)
+    precio_prv=models.FloatField(default=0)
+    sub_total=models.FloatField(default=0)
+    total=models.FloatField(default=0)
+    costo=models.FloatField(default=0)
+    descuento=models.FloatField(default=0)
 
     def __str__(self):
         return '{}'.format(self.producto)
