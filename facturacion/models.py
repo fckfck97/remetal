@@ -76,7 +76,7 @@ class FacturaEnc(BaseModelo2):
         return '{}'.format(self.id)
 
     def save(self):
-        self.total = self.sub_total + self.descuento
+        self.total = self.sub_total - self.descuento
         super(FacturaEnc,self).save()
 
     class Meta:
@@ -103,7 +103,7 @@ class FacturaDet(BaseModelo2):
 
     def save(self):
         self.sub_total = float(float((self.cantidad)) * float(self.precio))
-        self.total = self.sub_total + float(self.descuento)
+        self.total = self.sub_total - float(self.descuento)
         super(FacturaDet, self).save()
     
     class Meta:
