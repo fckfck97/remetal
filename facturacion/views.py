@@ -12,11 +12,27 @@ from .models import Cliente, FacturaEnc, FacturaDet
 from .forms import ClienteForm
 from inventario.views import ProductoView
 from inventario.models import Producto
-# class ClienteView(SinPrivilegios, ListView):
-#     model = Cliente
-#     template_name = "facturacion/clientes/lista_clientes.html"
-#     context_object_name = "obj"
-#     permission_required="facturacion.view_cliente"
+
+
+class PerfilView(SinPrivilegios, ListView):
+    permission_required="facturacion.view_cliente"
+    model = Cliente
+    template_name = "facturacion/clientes/perfil_cliente.html"
+
+    def get(self, request,id, *args, **kwargs):
+        cliente = Cliente.objects.filter(id=id)
+        enc = FacturaEnc.objects.filter(cliente=id)
+        context = {
+            'cliente':cliente,
+            'enc':enc,
+        }
+        return render(request, self.template_name, context)
+
+class ClienteView(SinPrivilegios, ListView):
+    model = Cliente
+    template_name = "facturacion/clientes/cliente_list.html"
+    context_object_name = "obj"
+    permission_required="facturacion.view_cliente"
 
 
 class VistaBaseCreate(SuccessMessageMixin, SinPrivilegios,

@@ -12,6 +12,26 @@ from django.http import HttpResponse
 from base.views import SinPrivilegios
 import datetime
 
+class PerfilView(SinPrivilegios, ListView):
+    permission_required="facturacion.view_cliente"
+    model = Proveedor
+    template_name = "compra/proveedor/perfil_proveedor.html"
+
+    def get(self, request,id, *args, **kwargs):
+        proveedor = Proveedor.objects.filter(id=id)
+        enc = ComprasEnc.objects.filter(proveedor=id)
+        context = {
+            'proveedor':proveedor,
+            'enc':enc,
+        }
+        return render(request, self.template_name, context)
+
+
+class ProveedorView(SinPrivilegios, ListView):
+    model = Proveedor
+    template_name = "compra/proveedor/proveedor_list.html"
+    context_object_name = "obj"
+    permission_required="compra.view_proveedor"
 
 class ProveedorNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     model = Proveedor
