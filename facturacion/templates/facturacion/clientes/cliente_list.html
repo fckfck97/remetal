@@ -1,0 +1,49 @@
+{% extends 'padre/base.html' %}
+
+{% block page_content %}
+  <div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <h6 class="m-0 font-weight-bold text-primary">Listado de Clientes</h6>
+    </div>
+    <!-- Card Body -->
+    <div class="card-body">
+      {% if not obj %}
+        <div class="alert alert-info">No hay Clientes Registrados</div>
+      {% endif %}
+      <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-toolbar=".buttons-toolbar" data-locale="es-MX" data-sort-order="desc">
+        <thead align="center">
+          <th>Id</th>
+          <th>Razon Social</th>
+          <th>Rif</th>
+          <th>Dirección</th>
+          <th>Teléfono</th>
+          <th>EMail</th>
+          <th>Estado</th>
+          <th class="all">Acciones</th>
+        </thead>
+        <tbody align="center">
+          {% for item in obj %}
+            <tr>
+              <td>{{ item.id }}</td>
+              <td>{{ item.razon_social}}</td>
+              <td>{{ item.rif }}</td>
+              <td>{{ item.direccion }}</td>
+              <td>{{ item.telefono }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.estado|yesno:'Activo,Inactivo' }}</td>
+              <td>
+                <a
+                  class="btn btn-sm btn-success btn-circle"
+                  title="Imprimir"
+                  href="{% url 'facturacion:perfil_cliente' item.id%}"
+                  ><i class="fas fa-print"></i
+                ></a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

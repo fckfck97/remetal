@@ -47,3 +47,21 @@ def imprimir_factura_list(request,f1,f2):
     except:
         messages.error(request,'Factura NO Disponible Intente crear una Nueva')
         return redirect("facturacion:lista_compras")
+
+
+def imprimir_reporte_proveedor(request,id):
+    try:
+        template_name="compra/reporte/factura_proveedor_general.html"
+        enc = ComprasEnc.objects.filter(proveedor=id)
+        det = ComprasDet.objects.filter(compra__id=id)
+
+        context={
+            'request':request,
+            'enc':enc,
+            'det':det,
+        }
+
+        return render(request,template_name,context)
+    except:
+        messages.error(request,'Factura NO Disponible Intente crear una Nueva')
+        return redirect("facturacion:lista_proveeedor")
