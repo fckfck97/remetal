@@ -1,12 +1,10 @@
 {% extends 'padre/base.html' %} 
 {% block page_content %} 
     
-<div class="container mt-4 mb-4 p-3 d-flex justify-content-center"> 
+<div class="container mt-10 mb-6 p-4 d-flex justify-content-center">
   <div class="card p-4"> 
     <div class=" image d-flex flex-column justify-content-center align-items-center"> 
-      <button class="btn btn-secondary"> 
         <img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100" />
-      </button>
        {% for item in cliente %}
       <span class="name mt-3">Razon Social:{{ item.razon_social }}</span> 
       <span class="idd">Rif:{{ item.rif }}</span> 
@@ -16,18 +14,8 @@
       <div class="d-flex flex-row justify-content-center align-items-center gap-2"> 
         <span class="idd1">Direccion Secundaria:{{ item.direccion2 }}</span> 
       </div>  
-      <div class="d-flex flex-row justify-content-center align-items-center mt-3"> 
-        <span class="number">Imprimir Compras de Materiales</span> 
-      </div> 
-      <div class=" d-flex mt-2"> 
-                <a
-                  class="btn btn-sm btn-success btn-circle"
-                  title="Imprimir"
-                  href="{% url 'facturacion:imprimir_reporte_cliente' item.id%}"
-                  target="reportes"
-                  ><i class="fas fa-print"></i
-                ></a> 
-      </div> 
+      <div class=" px-2 rounded mt-4 date "> <span class="join">Registrado:{{ item.fc|date:"d/m/Y" }}</span> 
+      </div>
       <div class="text mt-3"> 
         <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-toolbar=".buttons-toolbar" data-locale="es-MX" data-sort-order="desc">
           <thead align="center">
@@ -38,6 +26,7 @@
                   <th>Gastos Adic</th>
                   <th>Total</th>
                   <th>Pagado</th>
+                  <th>Imprimir</th>
               </tr>
           </thead>
           <tbody align="center">
@@ -53,12 +42,18 @@
                   {% else %}
                     <i class="fa fa-circle-xmark text-danger"></i>
                   {% endif %}</td>
+                  <td><a
+                    class="btn btn-sm btn-success btn-circle"
+                    title="Imprimir"
+                    href="{% url 'facturacion:factura_imprimir_one' item2.id%}"
+                    target="reportes"
+                    ><i class="fas fa-print"></i
+                  ></a></td>
               </tr>
               {% endfor %}
           </tbody>
       </table>
-          <div class=" px-2 rounded mt-4 date "> <span class="join">Registrado:{{ item.fc|date:"d/m/Y" }}</span> 
-          </div>
+          
           {% endfor %}
         </div> 
       </div>

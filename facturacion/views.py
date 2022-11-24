@@ -21,7 +21,7 @@ class PerfilView(SinPrivilegios, ListView):
 
     def get(self, request,id, *args, **kwargs):
         cliente = Cliente.objects.filter(id=id)
-        enc = FacturaEnc.objects.filter(cliente=id)
+        enc = FacturaEnc.objects.filter(cliente=id,pagado=True)
         context = {
             'cliente':cliente,
             'enc':enc,

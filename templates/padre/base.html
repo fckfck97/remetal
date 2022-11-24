@@ -112,7 +112,9 @@
               {% url 'inventario:lista_categoria' as cat_url %}
               {% url 'inventario:lista_subcategoria' as s_cat_url %}
               {% url 'inventario:lista_productos' as prod_url %}
-              <li class="nav-item {% if cat_url in request.path or s_cat_url in request.path  %} active {% endif %}">
+              {% url 'facturacion:lista_cliente' as cliente_url %}
+              {% url 'compra:lista_proveedor' as proveedor_url %}
+              <li class="nav-item {% if cat_url in request.path or s_cat_url in request.path or prod_url in request.path or cliente_url in request.path or proveedor_url in request.path  %} active {% endif %}">
          </a>
          {% comment %} Catalago de categorias {% endcomment %}
               <a
@@ -155,6 +157,7 @@
                       <i class="fas fa-angle-down"></i>
                     </div>
                   </a>
+                  
                   <div
                     class="collapse"
                     id="pagesCollapseAuth"
@@ -176,6 +179,41 @@
                     >{% endif %}
                   </nav>
                   </div>
+
+
+                  <a
+                    class="nav-link collapsed"
+                    href="#"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#pagesCollapseAuth"
+                    aria-expanded="false"
+                    aria-controls="pagesCollapseAuth"
+                  >
+                  Perfiles de Clientes y Proveedores
+                    <div class="sb-sidenav-collapse-arrow">
+                      <i class="fas fa-angle-down"></i>
+                    </div>
+                  </a>
+                  
+                  <div
+                    class="collapse"
+                    id="pagesCollapseAuth"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#sidenavAccordionPages"
+                  >
+                  <nav class="sb-sidenav-menu-nested nav">
+                    {% if perms.facturacion.view_cliente %}
+                    <a class="nav-link {% if cliente_url in request.path %} active {% endif %}" href="{{cliente_url}}"
+                      >Clientes.</a
+                    >{% endif %}
+                    {% if perms.compra.view_proveedor %}       
+                    <a class="nav-link {% if proveedor_url in request.path %} active {% endif %}" href="{{proveedor_url}}"
+                      >Proveedor</a
+                    >{% endif %}
+                   
+                  </nav>
+                  </div>
+                  
                 </nav>
               </div>
               <div class="sb-sidenav-menu-heading">Entradas y Salidas</div>

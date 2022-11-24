@@ -18,9 +18,9 @@
           <th>Rif</th>
           <th>Dirección</th>
           <th>Teléfono</th>
-          <th>EMail</th>
+          <th>Email</th>
           <th>Estado</th>
-          <th class="all">Acciones</th>
+          <th class="all">Ver Perfil</th>
         </thead>
         <tbody align="center">
           {% for item in obj %}
@@ -35,10 +35,9 @@
               <td>
                 <a
                 class="btn btn-sm btn-success btn-circle"
-                title="Imprimir"
+                title="Perfil"
                 href="{% url 'compra:perfil_proveedor' item.id%}"
-                ><i class="fas fa-print"></i
-              ></a>
+                ><i class="fas fa-user"></i></a>
               </td>
             </tr>
           {% endfor %}

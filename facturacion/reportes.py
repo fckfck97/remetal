@@ -52,18 +52,3 @@ def imprimir_factura_list(request,f1,f2):
         return redirect("facturacion:lista_factura")
 
 
-
-
-def imprimir_reporte_cliente(request,id):
-    try:
-        template_name="facturacion/reporte/factura_cliente_general.html"
-        enc = FacturaEnc.objects.filter(cliente=id)
-        context={
-            'request':request,
-            'enc':enc,
-        }
-
-        return render(request,template_name,context)
-    except:
-        messages.error(request,'Factura NO Disponible Intente crear una Nueva')
-        return redirect("facturacion:lista_cliente")

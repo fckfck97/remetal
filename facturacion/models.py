@@ -76,6 +76,9 @@ class FacturaEnc(BaseModelo2):
         return '{}'.format(self.id)
 
     def save(self):
+        if self.sub_total == None  or self.descuento == None:
+            self.sub_total = 0
+            self.descuento = 0
         self.total = self.sub_total - self.descuento
         super(FacturaEnc,self).save()
 
@@ -114,6 +117,25 @@ class FacturaDet(BaseModelo2):
         ]
 
 
+
+
+
+@receiver(post_delete, sender=FacturaDet)
+def detalle_factura_borrar(sender,instance, **kwargs):
+    factura_id = instance.factura.id
+    producto_id = instance.producto.id
+
+    enc = FacturaEnc.objects.filter(pk=factura_id).first()
+    if enc:
+        sub_total = FacturaDet.objects.filter(factura=factura_id).aggregate(Sum('sub_total'))
+        enc.sub_total=sub_total['sub_total__sum']
+        enc.save()
+    
+    prod=Producto.objects.filter(pk=producto_id).first()
+    if prod:
+        cantidad = float(prod.existencia) + float(instance.cantidad)
+        prod.existencia = cantidad
+        prod.save()
 
 @receiver(post_save, sender=FacturaDet)
 def detalle_fac_guardar(sender,instance,**kwargs):
