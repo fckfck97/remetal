@@ -124,7 +124,11 @@
           <td>{{ item.tipo_pago }}</td>
           <td>{{ item.monto|floatformat:2 }}$</td>
           <td>{{ item.user_cobra }}</td>
-          <td>{{item.pagado|yesno:"Pagado,No Pagado"}}</td>
+          <td>{% if item.pagado %}
+            <i class="fa fa-circle-check text-success"></i>
+          {% else %}
+            <i class="fa fa-circle-xmark text-danger"></i>
+          {% endif %}</td>
           <td>
             <a
               class="btn btn-sm btn-success btn-circle"

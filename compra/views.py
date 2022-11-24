@@ -19,7 +19,7 @@ class PerfilView(SinPrivilegios, ListView):
 
     def get(self, request,id, *args, **kwargs):
         proveedor = Proveedor.objects.filter(id=id)
-        enc = ComprasEnc.objects.filter(proveedor=id)
+        enc = ComprasEnc.objects.filter(proveedor=id,pagado=True)
         context = {
             'proveedor':proveedor,
             'enc':enc,
