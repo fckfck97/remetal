@@ -86,12 +86,12 @@ class GastosForm(forms.ModelForm):
         labels = {'descripcion': "Descripcion", 'monto_gastos': 'Monto',
                   'categoria': 'Categoria', 'fc': 'Fecha'}
         widget = {'Descripción': forms.TextInput,
-                  'monto_gastos': forms.TextInput}
+                  'monto_gastos': forms.NumberInput}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['monto_gastos'].widget.attrs.update(
-            {'class': 'form-control', 'min': '0'})
+            {'class': 'form-control', 'min': '0','step': '0.01'})
         self.fields['descripcion'].widget.attrs.update(
             {'class': 'form-control'})
         self.fields['categoria'].widget.attrs.update(

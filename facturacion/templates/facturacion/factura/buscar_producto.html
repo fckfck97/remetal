@@ -28,7 +28,7 @@
                         <td>{{ item.precio }}$</td>
                         <td>
                           {% if item.existencia > 0 and item.estado %}
-                            <button class="btn btn-sm btn-primary btn-circle" title="Elegir producto" id="btnSelect" onclick="seleccionarProducto('{{ item.codigo }}','{{ item.descripcion }}',{{ item.existencia }},{{ item.precio }})"><i class="fa fa-circle-check"></i></button>
+                            <button class="btn btn-sm btn-primary btn-circle" title="Elegir producto" id="btnSelect" onclick="seleccionarProducto('{{ item.codigo }}','{{ item.descripcion }}','{{ item.existencia }}','{{ item.precio }}')"><i class="fa fa-circle-check"></i></button>
                           {% endif %}
                         </td>
                       </tr>
