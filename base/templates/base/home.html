@@ -5,6 +5,15 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
   </div>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <a
+         class="btn btn-sm btn-success btn-circle"
+        title="Imprimir"
+        href="{% url 'base:imprimir_general_empresa' %}"
+        target="reportes"
+        ><i class="fas fa-print"></i
+        ></a>  
+  </div>
 
   <!-- Content Row -->
   <div class="row">
@@ -46,7 +55,12 @@
               <div
                 class="text-xs font-weight-bold text-primary text-uppercase"
               >
-                Ganancias Anuales
+              {% if total_ano < 0 %}
+              Perdidas que va en el Ano
+              {% else %}
+              Ganancias Anuales
+              {% endif %}
+                
               </div>
             </div>
             <div class="col-auto">
@@ -81,7 +95,7 @@
         <div class="card-bottom px-3 py-1">
           <div class="row no-gutters">
             <div class="col-auto">
-              {% if gastos == None %}
+              {% if gastos < 0  %}
               <div class="h5 mr-3 font-weight-bold text-gray-800">
                 0,0$
               </div>

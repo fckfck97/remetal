@@ -2,7 +2,7 @@ from django.urls import path, include
 
 from .views import  PerfilView,ProveedorView,ProveedorNew, ProveedorEdit,\
     ComprasView, compras, CompraDetDelete, CompraEncDelete, pago_compra
-from .reportes import imprimir_factura_compra,imprimir_factura_list
+from .reportes import imprimir_factura_compra,imprimir_factura_list,imprimir_general_proveedor
 
 
 urlpatterns = [
@@ -10,7 +10,7 @@ urlpatterns = [
     path('proveedores/perfil/<int:id>',PerfilView.as_view(), name="perfil_proveedor"),
     path('proveedores/nuevo',ProveedorNew.as_view(), name="nuevo_proveedor"),
     path('proveedores/edit/<pk>',ProveedorEdit.as_view(), name="editar_proveedor"),
- 
+    path('proveedores/general/<int:id>/imprimir', imprimir_general_proveedor,name="imprimir_general_proveedor"),
 
     path('factura/',ComprasView.as_view(), name="lista_compras"),
     path('factura/new/',compras, name="nueva_compra"),

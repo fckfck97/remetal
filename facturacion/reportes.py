@@ -52,3 +52,20 @@ def imprimir_factura_list(request,f1,f2):
         return redirect("facturacion:lista_factura")
 
 
+def imprimir_general_cliente(request,id):
+    try:
+        template_name="facturacion/reporte/general_cliente.html"
+        enc = FacturaEnc.objects.filter(cliente=id)
+        total = FacturaEnc.objects.filter(cliente=id,pagado=True).aggregate(Sum('total'))
+
+        context={
+            'request':request,
+            'enc':enc,
+            'total':total['total__sum']
+        }
+        return render(request,template_name,context)
+    except:
+        messages.error(request,'Factura NO Disponible Actualmente')
+        return redirect("facturacion:perfil_cliente",id=id)
+
+
