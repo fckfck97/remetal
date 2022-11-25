@@ -2,12 +2,11 @@ from unittest import mock
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.db.models import Sum
 from django.views.generic import ListView
-from django.contrib.auth.decorators import login_required, permission_required
 # modelos para la grafica
 from compra.models import ComprasEnc
 from inventario.models import Gastos

@@ -16,7 +16,14 @@
       <div class="d-flex flex-row justify-content-center align-items-center gap-2"> 
         <span class="idd1">Direccion Secundaria:{{ item.direccion2 }}</span> 
       </div>
-      {% endif %}  
+      {% endif %}
+      <a
+         class="btn btn-sm btn-success btn-circle"
+        title="Imprimir"
+        href="{% url 'compra:imprimir_general_proveedor' item.id%}"
+        target="reportes"
+        ><i class="fas fa-print"></i
+        ></a>  
       <div class=" px-2 rounded mt-4 date "> <span class="join">Registrado:{{ item.fc|date:"d/m/Y" }}</span> 
       </div>
       <div class="text mt-3"> 

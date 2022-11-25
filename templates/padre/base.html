@@ -204,11 +204,11 @@
                   <nav class="sb-sidenav-menu-nested nav">
                     {% if perms.facturacion.view_cliente %}
                     <a class="nav-link {% if cliente_url in request.path %} active {% endif %}" href="{{cliente_url}}"
-                      >Clientes.</a
+                      >Clientes</a
                     >{% endif %}
                     {% if perms.compra.view_proveedor %}       
                     <a class="nav-link {% if proveedor_url in request.path %} active {% endif %}" href="{{proveedor_url}}"
-                      >Proveedor</a
+                      >Proveedores</a
                     >{% endif %}
                   </nav>
                   </div>

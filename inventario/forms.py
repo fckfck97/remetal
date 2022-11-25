@@ -99,7 +99,7 @@ class GastosForm(forms.ModelForm):
         self.fields['fc'].widget.attrs.update(
             {'class': 'form-control'})
 
-        self.fields['fc'].widget.attrs[''] = True
+        self.fields['descripcion'].widget.attrs["required"] = "required"
 
     def clean(self):
         try:

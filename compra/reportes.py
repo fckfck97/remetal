@@ -48,3 +48,18 @@ def imprimir_factura_list(request,f1,f2):
         messages.error(request,'Factura NO Disponible Intente crear una Nueva')
         return redirect("facturacion:lista_compras")
 
+
+def imprimir_general_proveedor(request,id):
+    try:
+        template_name="compra/reporte/general_proveedor.html"
+        enc = ComprasEnc.objects.filter(proveedor=id)
+        total = ComprasEnc.objects.filter(proveedor=id,pagado=True).aggregate(Sum('total'))
+        context={
+            'request':request,
+            'enc':enc,
+            'total':total['total__sum']
+        }
+        return render(request,template_name,context)
+    except:
+        messages.error(request,'Factura de Compra no Disponible')
+        return redirect("compra:perfil_proveedor",id=id)

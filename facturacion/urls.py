@@ -1,13 +1,14 @@
 from django.urls import path
 from .views import  PerfilView ,ClienteView, ClienteNew, ClienteEdit,\
     FacturaView, facturas, ProductoView, borrar_detalle_factura, FacturaEncDelete, pago_factura
-from .reportes import imprimir_factura_recibo,imprimir_factura_list
+from .reportes import imprimir_factura_recibo,imprimir_factura_list,imprimir_general_cliente
 
 urlpatterns = [
     path('clientes/',ClienteView.as_view(), name="lista_cliente"),
     path('clientes/perfil/<int:id>',PerfilView.as_view(), name="perfil_cliente"),
     path('clientes/new',ClienteNew.as_view(), name="nuevo_cliente"),
     path('clientes/edit/<int:pk>',ClienteEdit.as_view(), name="editar_cliente"),
+    path('clientes/imprimir/<int:id>',imprimir_general_cliente, name="imprimir_general_cliente"),
 
     path('factura/',FacturaView.as_view(), name="lista_factura"),
     path('factura/new',facturas, name="nueva_factura"),
