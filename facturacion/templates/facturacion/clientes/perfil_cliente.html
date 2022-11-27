@@ -1,72 +1,90 @@
 {% extends 'padre/base.html' %} 
 {% block page_content %} 
     
-<div class="container mt-10 mb-6 p-4 d-flex justify-content-center">
-  <div class="card p-4"> 
-    <div class=" image d-flex flex-column justify-content-center align-items-center"> 
-        <img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100" />
-       {% for item in cliente %}
-      <span class="name mt-3">Razon Social:{{ item.razon_social }}</span> 
-      <span class="idd">Rif:{{ item.rif }}</span> 
-      <div class="d-flex flex-row justify-content-center align-items-center gap-2"> 
-        <span class="idd1">Direccion Principal:{{ item.direccion }}</span> 
-      </div>
-      {% if item.direccion2 == None %}
-      {% else %}
-      <div class="d-flex flex-row justify-content-center align-items-center gap-2"> 
-        <span class="idd1">Direccion Secundaria:{{ item.direccion2 }}</span> 
-      </div>
-      {% endif %}
-      <a
-         class="btn btn-sm btn-success btn-circle"
-        title="Imprimir"
-        href="{% url 'facturacion:imprimir_general_cliente' item.id %}"
-        target="reportes"
-        ><i class="fas fa-print"></i
-        ></a>  
-      <div class=" px-2 rounded mt-4 date "> <span class="join">Registrado:{{ item.fc|date:"d/m/Y" }}</span> 
-      </div>
-      <div class="text mt-3"> 
-        <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-toolbar=".buttons-toolbar" data-locale="es-MX" data-sort-order="desc">
-          <thead align="center">
-              <tr>
-                  <th>No. Factura</th>
-                  <th>Cliente</th>
-                  <th>Fecha</th>
-                  <th>Gastos Adic</th>
-                  <th>Total</th>
-                  <th>Pagado</th>
-                  <th>Imprimir</th>
-              </tr>
-          </thead>
-          <tbody align="center">
-              {% for item2 in enc %}
-              <tr>
-                  <td>RM-F-{{ item2.id }}</td>
-                  <td>{{ item2.cliente }}</td>
-                  <td>{{ item2.fecha | date:"d/m/Y"  }}</td>
-                  <td>{{ item2.descuento|floatformat:2 }}$</td>
-                  <td>{{ item2.total|floatformat:2 }}$</td>
-                  <td>{% if item2.pagado %}
-                    <i class="fa fa-circle-check text-success"></i>
-                  {% else %}
-                    <i class="fa fa-circle-xmark text-danger"></i>
-                  {% endif %}</td>
-                  <td><a
-                    class="btn btn-sm btn-success btn-circle"
-                    title="Imprimir"
-                    href="{% url 'facturacion:factura_imprimir_one' item2.id%}"
-                    target="reportes"
-                    ><i class="fas fa-print"></i
-                  ></a></td>
-              </tr>
-              {% endfor %}
-          </tbody>
-      </table>
-          
-          {% endfor %}
-        </div> 
-      </div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card py-4 px-3"> 
+      <div class="">
+        {% for item in cliente %}
+        <div class="row">
+          <div class="col-md-12 mb-2">
+            <span class="name fs-4">Razon Social: {{ item.razon_social }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-2">
+            <span class="idd fs-5">RIF / C.I.: {{ item.rif }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-2">
+            <span class="idd1 fs-5">Direccion Principal: {{ item.direccion }}</span> 
+          </div>
+        </div>
+        {% if item.direccion2 == None %}
+        {% else %}
+        <div class="row">
+          <div class="col-md-12 mb-2">
+            <span class="idd1 fs-5">Direccion Secundaria: {{ item.direccion2 }}</span> 
+          </div>
+        </div>
+        {% endif %}
+        <div class="row">
+          <div class="col-md-12">
+            <div class="date fs-5"> <span class="join">Registrado: {{ item.fc|date:"d/m/Y" }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mt-4">
+            <a class="btn btn-primary btn-circle" title="Imprimir historial" href="{% url 'facturacion:imprimir_general_cliente' item.id %}" target="reportes">
+              <i class="fas fa-print"></i> Imprimir historial</a>  
+          </div>
+        </div>
+         
+        </div>
+        <div class="text mt-3"> 
+          <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-toolbar=".buttons-toolbar" data-locale="es-MX" data-sort-order="desc">
+            <thead align="center">
+                <tr>
+                    <th>No. Factura</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Gastos Adic</th>
+                    <th>Total</th>
+                    <th>Pagado</th>
+                    <th>Imprimir</th>
+                </tr>
+            </thead>
+            <tbody align="center">
+                {% for item2 in enc %}
+                <tr>
+                    <td>RM-F-{{ item2.id }}</td>
+                    <td>{{ item2.cliente }}</td>
+                    <td>{{ item2.fecha | date:"d/m/Y"  }}</td>
+                    <td>{{ item2.descuento|floatformat:2 }}$</td>
+                    <td>{{ item2.total|floatformat:2 }}$</td>
+                    <td>{% if item2.pagado %}
+                      <i class="fa fa-circle-check text-success"></i>
+                    {% else %}
+                      <i class="fa fa-circle-xmark text-danger"></i>
+                    {% endif %}</td>
+                    <td><a
+                      class="btn btn-sm btn-success btn-circle"
+                      title="Imprimir"
+                      href="{% url 'facturacion:factura_imprimir_one' item2.id%}"
+                      target="reportes"
+                      ><i class="fas fa-print"></i
+                    ></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            
+            {% endfor %}
+          </div> 
+        </div>
+    </div>
+  </div>
 </div>
           
  {% endblock %}
