@@ -43,23 +43,22 @@
       data-sort-order="desc"
     >
           <thead align="center">
-              <th data-field='id'>Id</th>
+              <th data-field='codigo'>Codigo</th>
               <th data-field='descripcion'>Descripción</th>
               <th data-field='categoria'>Monto</th>
               <th data-field='estado'>Estado</th>
               <th data-field='fc'>F. Creado</th>
-              <th data-field='fm'>F. Modif.</th>
               <th class="all">Acciones</th>
           </thead>
           <tbody 
           <thead align="center">
             {% for item in obj %}
             <tr>
-                <td>{{ item.id }}</td>
+                <td>RM-G-{{ item.id }}</td>
                 <td>{{ item.descripcion }}</td>
                 <td>{{ item.monto_gastos|floatformat:2 }}$</td>
                 <td >{#item.estado|yesno:"Activo,Inactivo"#}
-                  <div class="cursor-pointer" onclick="inactivar({{item.id}})">
+                  <div class="cursor-pointer">
                       {% if item.estado %}
                       <i class="fa fa-circle-check text-success"></i>
                     {% else %}
@@ -68,7 +67,6 @@
                   </div>
                 </td>
                 <td>{{ item.fc|date:"d/m/Y" }}</td>
-                <td>{{ item.fm|date:"d/m/Y" }}</td>
                 <td>
                   <button class="btn btn-sm btn-warning btn-circle" title="Editar" onclick="return abrir_modal('{% url 'inventario:editar_gastos' item.id %}')">
                     <i class="far fa-edit"></i></button>

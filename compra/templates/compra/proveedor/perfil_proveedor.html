@@ -44,7 +44,7 @@
         
         <div class="text mt-3"> 
           <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-toolbar=".buttons-toolbar" data-locale="es-MX" data-sort-order="desc">
-            <thead>
+            <thead align="center">
                 <tr>
                     <th>No. Factura</th>
                     <th>Proveedor</th>
@@ -56,7 +56,7 @@
                     <th>Imprimir</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody align="center">
                 {% for item2 in enc %}
                 <tr>
                     <td>{{ item2.no_factura }}</td>
