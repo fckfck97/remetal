@@ -5,15 +5,6 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
   </div>
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <a
-         class="btn btn-sm btn-success btn-circle"
-        title="Imprimir"
-        href="{% url 'base:imprimir_general_empresa' %}"
-        target="reportes"
-        ><i class="fas fa-print"></i
-        ></a>  
-  </div>
 
   <!-- Content Row -->
   <div class="row">
@@ -161,6 +152,11 @@
       </div>
       
     </div>
+  </div>
+  <div class="my-4">
+    <a class="btn btn-primary btn-circle" title="Imprimir" href="{% url 'base:imprimir_general_empresa' %}" target="reportes">
+      <i class="fas fa-print"></i > Generar reporte
+    </a>  
   </div>
 </div>
 
