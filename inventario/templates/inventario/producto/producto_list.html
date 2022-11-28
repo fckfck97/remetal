@@ -44,6 +44,7 @@
         <th data-field='precio'>Precio</th>
         <th data-field='existencia' >Existencia</th>
         <th data-field='estado'>Estado</th>
+        <th data-field='UC'>Ultima Compra</th>
         <th class="all">Acciones</th>
       </thead>
       <tbody align="center">
@@ -55,7 +56,8 @@
           <td>{{ item.precio }}$</td>
           <td>{{ item.existencia }}</td>
           <td >{#item.estado|yesno:"Activo,Inactivo"#}
-            <div class="cursor-pointer" onclick="inactivar({{item.id}})">
+            <div class="cursor-pointer">
+              {% comment %} <div class="cursor-pointer" onclick="inactivar({{item.id}})"> {% endcomment %}
                 {% if item.estado %}
                 <i class="fa fa-circle-check text-success"></i>
               {% else %}
@@ -63,6 +65,7 @@
               {% endif %}
             </div>
           </td>
+          <td>{{ item.ultima_compra|date:"d/m/Y" }}</td>
           <td>
             <button class="btn btn-sm btn-warning btn-circle" title="Editar" onclick="return abrir_modal('{% url 'inventario:editar_productos' item.id %}')">
                 <i class="far fa-edit"></i>

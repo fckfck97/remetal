@@ -68,7 +68,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Numero</th>
+                        <th>Codigo</th>
                         <th>Categoria</th>
                         <th>Descripcion</th>
                         <th>Fecha</th>
@@ -78,7 +78,7 @@
                 <tbody>
                     {% for item in enc %}
                     <tr>
-                        <td>{{ item.id }}</td>
+                        <td>RM-G-{{ item.id }}</td>
                         <td>{{ item.categoria }}</td>
                         <td>{{ item.descripcion}}</td>
                         <td>{{ item.fc|date:'d-m-Y' }}</td>
