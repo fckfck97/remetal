@@ -48,6 +48,9 @@ class Proveedor(BaseModelo):
         null=True, blank=True
     )
 
+    saldo_favor = models.FloatField(default=0,null=True, blank=True)
+    saldo_deudor = models.FloatField(default=0,null=True, blank=True)
+
     def __str__(self):
         return '{}'.format(self.razon_social)
 
@@ -68,6 +71,9 @@ class ComprasEnc(BaseModelo):
     total=models.FloatField(default=0)
     pagado=models.BooleanField(default=False)
     monto = models.FloatField(default=0,null=True, blank=True)
+    abono_monto = models.FloatField(default=0,null=True, blank=True)
+    abono_monto_total = models.FloatField(default=0,null=True, blank=True)
+    abono=models.BooleanField(default=False)
     tipo_pago=models.CharField(max_length=50,null=True, blank=True)
     user_cobra=models.CharField(max_length=50,null=True,blank=True)
     descuento=models.FloatField(default=0)
@@ -77,13 +83,24 @@ class ComprasEnc(BaseModelo):
         return '{}'.format(self.observacion)
 
     
+    def save_abono_monto(self):
+        if self.monto == None:
+            self.monto = 0
+        self.abono_monto = self.abono_monto + self.monto
+        if self.abono_monto >= self.total:
+            self.pagado=True           
+        self.save()
+        
+
+
+
     def save(self):
         self.observacion = self.observacion.upper()
         if self.sub_total == None  or self.descuento == None:
             self.sub_total = 0
             self.descuento = 0
-            
         self.total = self.sub_total - self.descuento
+        self.abono_monto_total = self.total - self.abono_monto
         super(ComprasEnc,self).save()
 
     class Meta:

@@ -73,6 +73,19 @@
                 <td align="right">{{enc.descuento|floatformat:2}}$</td>
               </tr>
               <tr>
+                {% if enc.abono %}
+                <td>Ultimo Monto Abonado:</td>
+                <td align="right"><b>{{enc.monto|floatformat:2}}$</b></td>
+                <tr>
+                <td>Total Abonado:</td>
+                <td align="right"><b>{{enc.abono_monto|floatformat:2}}$</b></td>
+                </tr>
+                {% else %}
+                <td>Monto Pagado:</td>
+                <td align="right"><b>{{enc.monto|floatformat:2}}$</b></td>
+                {% endif %}
+              </tr>
+              <tr>
                 <td>Total:</td>
                 <td align="right"><b>{{enc.total|floatformat:2}}$</b></td>
               </tr>
@@ -80,10 +93,6 @@
               <tr>
                 <td>Metodo de Pago:</td>
                 <td align="right"><b>{{enc.tipo_pago}}</b></td>
-              </tr>
-              <tr>
-                <td>Monto Pagado:</td>
-                <td align="right"><b>{{enc.monto|floatformat:2}}$</b></td>
               </tr>
                   {% if cambio > 0 %}
                     <tr>

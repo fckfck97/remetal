@@ -135,7 +135,7 @@ def compras(request,compra_id=None):
         proveedor = request.POST.get("enc_proveedor")
         sub_total = 0
         descuento = 0
-        total = 0
+
         if not compra_id:
             prov=Proveedor.objects.get(pk=proveedor)
             enc = ComprasEnc(
@@ -204,19 +204,20 @@ def pago_compra(request, id):
         if metodo == "":
             return HttpResponse('No ha Seleccionado el Metodo de Pago.')
         if float(monto) < enc.total:
-            return HttpResponse(f'El monto agregado para el pago es menor al total {enc.total}$')
-        
-        enc.observacion = enc.observacion
-        enc.no_factura = enc.no_factura
-        enc.fecha_factura = enc.fecha_factura
-        enc.total = (enc.total- float(monto))
-        enc.pagado = True
-        enc.tipo_pago = metodo
-        enc.monto = float(monto)
-        enc.user_cobra = request.user.username
-        enc.save()
+            enc.abono = True
+            enc.tipo_pago = metodo
+            enc.monto = float(monto)
+            enc.user_cobra = request.user.username
+            enc.save_abono_monto()
+            return HttpResponse("ok")
+        else:
+            enc.pagado = True
+            enc.tipo_pago = metodo
+            enc.monto = float(monto)
+            enc.user_cobra = request.user.username
+            enc.save()
 
-        return HttpResponse("ok")
+            return HttpResponse("ok")
 
         
     
