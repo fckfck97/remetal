@@ -42,8 +42,11 @@
         <th data-field="observacion">Observación</th>
         <th data-field="fecha_factura">F. Factura</th>
         <th data-field="sub_total">Sub Total</th>
-        <th data-field="total">Total</th>
         <th data-field="estado">Estado</th>
+        <th data-field="abono_monto">Monto Abonado</th>
+        <th data-field="total">Total</th>
+
+
         <th class="all">Acciones</th>
       </thead>
       <tbody align="center">
@@ -54,8 +57,16 @@
           <td>{{item.observacion}}</td>
           <td>{{ item.fecha_factura|date:"d/m/Y"}}</td>
           <td>{{ item.sub_total|floatformat:2 }}$</td>
+          <td>{{ item.abono|yesno:"Abonando,Sin Abono" }}</td>
+          {% if item.abono %}
+          <td>{{ item.abono_monto|floatformat:2 }}$</td>
+          <td>{{ item.abono_monto_total|floatformat:2 }}$</td>
+          {% else %}
+          <td>Sin Abono</td>
           <td>{{ item.total|floatformat:2 }}$</td>
-          <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
+          {% endif %}
+          
+          
           <td>
             {% if item.total == 0 %}
             {% else %}
@@ -74,6 +85,9 @@
               <i class="fa-solid fa-money-bill"></i>
             </button>
             {% endif %}
+            {% if item.abono %}
+
+            {% else %}
             <a
               class="btn btn-sm btn-warning btn-circle" title="Editar"
               href="{% url 'compra:editar_compra' item.id %}"
@@ -85,6 +99,7 @@
               target="reportes"
               ><i class="fas fa-trash"></i
             ></a>
+            {% endif %}
           </td>
         </tr>
         {% endfor %}
@@ -124,7 +139,8 @@
           <td>{{ item.tipo_pago }}</td>
           <td>{{ item.monto|floatformat:2 }}$</td>
           <td>{{ item.user_cobra }}</td>
-          <td>{% if item.pagado %}
+          {% if item.pagado %}
+          <td>
             <i class="fa fa-circle-check text-success"></i>
           {% else %}
             <i class="fa fa-circle-xmark text-danger"></i>
