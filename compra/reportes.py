@@ -11,7 +11,11 @@ def imprimir_factura_compra(request,id):
         template_name="compra/reporte/imprimir_compra.html"
         enc = ComprasEnc.objects.get(id=id)
         det = ComprasDet.objects.filter(compra__id=id)
-        cambio = enc.monto - enc.total
+        if enc.monto > enc.total:
+            cambio = enc.monto - enc.total
+        else:
+            cambio = enc.abono_monto - enc.total
+            
         context={
             'request':request,
             'enc':enc,
