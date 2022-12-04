@@ -71,15 +71,28 @@ class FacturaEnc(BaseModelo2):
     numventa=models.CharField(max_length=150,null=True, blank=True)
     tipo_pago=models.CharField(max_length=50,null=True, blank=True)
     user_cobra=models.CharField(max_length=50,null=True,blank=True)
+    abono_monto = models.FloatField(default=0,null=True, blank=True)
+    abono_monto_total = models.FloatField(default=0,null=True, blank=True)
+    abono=models.BooleanField(default=False)
 
     def __str__(self):
         return '{}'.format(self.id)
+        
+    def save_abono_monto(self):
+        if self.monto == None:
+            self.monto = 0
+        self.abono_monto = self.abono_monto + self.monto
+        if self.abono_monto >= self.total:
+            self.pagado=True           
+        self.save()
+        
 
     def save(self):
         if self.sub_total == None  or self.descuento == None:
             self.sub_total = 0
             self.descuento = 0
         self.total = self.sub_total - self.descuento
+        self.abono_monto_total = self.total - self.abono_monto
         super(FacturaEnc,self).save()
 
     class Meta:

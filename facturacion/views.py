@@ -284,16 +284,19 @@ def pago_factura(request, id):
         if metodo == "":
             return HttpResponse('No ha Seleccionado el Metodo de Pago.')
         if float(monto) < enc.total:
-            return HttpResponse(f'El monto agregado para el pago es menor al total {enc.total}$')
-        enc.cliente = enc.cliente
-        enc.pagado = True
-        enc.tipo_pago = metodo
-        enc.monto = float(monto)
-        enc.user_cobra = request.user.username
-        enc.save()
-        enc = FacturaEnc.objects.get(pk=id)
-        enc.pagado = True
-        enc.save()
-        return HttpResponse("ok")
+            enc.abono = True
+            enc.tipo_pago = metodo
+            enc.monto = float(monto)
+            enc.user_cobra = request.user.username
+            enc.save_abono_monto()
+            return HttpResponse("ok")
+        else:
+            enc.pagado = True
+            enc.tipo_pago = metodo
+            enc.monto = float(monto)
+            enc.user_cobra = request.user.username
+            enc.save()
+
+            return HttpResponse("ok")
 
     return render(request, template_name, context)

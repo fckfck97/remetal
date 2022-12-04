@@ -14,7 +14,10 @@ def imprimir_factura_recibo(request,id):
 
         enc = FacturaEnc.objects.get(id=id)
         det = FacturaDet.objects.filter(factura=id)
-        cambio = enc.monto - enc.total
+        if enc.monto > enc.total:
+            cambio = enc.monto - enc.total
+        else:
+            cambio = enc.abono_monto - enc.total
         context={
             'request':request,
             'enc':enc,
