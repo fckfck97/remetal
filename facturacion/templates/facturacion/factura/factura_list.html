@@ -45,8 +45,9 @@
         <th data-field="fecha_factura">F. Factura</th>
         <th data-field="sub_total">Sub Total</th>
         <th data-field="descuento">Gastos Adic.</th>
-        <th data-field="total">Total</th>
         <th data-field="estado">Estado</th>
+        <th data-field="abono_monto">Monto Abonado</th>
+        <th data-field="total">Total</th>
         <th class="all">Acciones</th>
       </thead>
       <tbody align="center">
@@ -58,11 +59,17 @@
           <td>{{ item.sub_total|floatformat:2 }}$</td>
           {% if item.descuento > 0  %} 
           <td>{{ item.descuento|floatformat:2}}$</td>
-            {% else %}
-            <td>Sin Gastos A.</td>
-            {% endif%}
+          {% else %}
+          <td>Sin Gastos A.</td>
+          {% endif%}
+          <td>{{ item.abono|yesno:"Abonando,Sin Abono" }}</td>
+          {% if item.abono %}
+          <td>{{ item.abono_monto|floatformat:2 }}$</td>
+          <td>{{ item.abono_monto_total|floatformat:2 }}$</td>
+          {% else %}
+          <td>Sin Abono</td>
           <td>{{ item.total|floatformat:2 }}$</td>
-          <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
+          {% endif %}
           <td>
             {% if item.total == 0 %}
             {% else %}
@@ -81,6 +88,9 @@
               <i class="fa-solid fa-money-bill"></i>
             </button>
             {% endif %}
+            {% if item.abono %}
+
+            {% else %}
             <a
               class="btn btn-sm btn-warning btn-circle" title="Editar"
               href="{% url 'facturacion:editar_factura' item.id %}"
@@ -92,6 +102,7 @@
             target="reportes"
             ><i class="fas fa-trash"></i
           ></a>
+          {% endif %}
           </td>
         </tr>
         {% endfor %}
