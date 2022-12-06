@@ -90,9 +90,6 @@ class ComprasEnc(BaseModelo):
         if self.abono_monto >= self.total:
             self.pagado=True           
         self.save()
-        
-
-
 
     def save(self):
         self.observacion = self.observacion.upper()
@@ -116,15 +113,26 @@ class ComprasDet(BaseModelo):
     total=models.FloatField(default=0)
     costo=models.FloatField(default=0)
     descuento=models.FloatField(default=0)
+    desecho=models.FloatField(default=0)
 
     def __str__(self):
         return '{}'.format(self.producto)
 
+
+    def material_desecho(self):
+        self.cantidad = self.cantidad - self.desecho
+        self.save()
+
+        
     def save(self):
         self.sub_total = float(float(self.cantidad) * float(self.precio_prv))
         self.total = self.sub_total - float(self.descuento)
         super(ComprasDet, self).save()
     
+
+    
+
+
     class Mega:
         verbose_name_plural = "Detalles Compras"
         verbose_name="Detalle Compra"

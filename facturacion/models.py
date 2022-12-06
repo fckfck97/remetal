@@ -113,6 +113,7 @@ class FacturaDet(BaseModelo2):
     total=models.FloatField(default=0)
     estado=models.BooleanField(default=False)
     user_borra=models.CharField(max_length=50,null=True,blank=True)
+    desecho=models.FloatField(default=0)
 
     def __str__(self):
         return '{}'.format(self.producto)
@@ -121,7 +122,11 @@ class FacturaDet(BaseModelo2):
         self.sub_total = float(float((self.cantidad)) * float(self.precio))
         self.total = self.sub_total - float(self.descuento)
         super(FacturaDet, self).save()
-    
+
+    def material_desecho(self):
+        self.cantidad = float(float((self.cantidad)) - float(self.desecho))
+        self.save()
+
     class Meta:
         verbose_name_plural = "Detalles Facturas"
         verbose_name="Detalle Factura"

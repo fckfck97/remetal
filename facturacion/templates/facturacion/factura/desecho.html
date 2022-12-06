@@ -1,0 +1,57 @@
+    <label class="text-danger"
+      >¿Eliminar Desecho de Factura
+      <b>RM-F-{{enc}}</b>?</label
+    >
+    <div>
+      <div class="form-group">
+        <label class="control-label">Usuario</label>
+        <input type="text" id="usuario" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label class="control-label">Contraseña</label>
+        <input type="password" id="password" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label class="control-label">Cantidad</label>
+        <input type="text" id="cantidad" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label class="control-label">Producto</label>
+        <input type="text" id="producto" class="form-control" required />
+      </div>
+    </div>
+    <table
+    id="table"
+    data-toggle="table"
+    data-pagination="true"
+    data-search="true"
+    data-toolbar=".buttons-toolbar"
+    data-locale="es-MX"
+    data-sort-order="desc"
+    >
+    <thead align="center">
+      <th data-field="id">Id</th>
+      <th data-field="codigo">Código</th>
+      <th data-field="descripcion">
+        Descripción
+      </th>
+      <th data-field="cantidad">Cant</th>
+      
+      <th data-field="total">Total</th>
+    </thead>
+    <tbody align="center">
+      {% for item in det %}
+      <tr>
+        <td>{{ item.id}}</td>
+        <td>{{ item.producto.codigo }}</td>
+        <td>{{ item.producto.descripcion }}</td>
+        <td>{{ item.cantidad }}KG</td>
+       
+        <td>{{ item.total|floatformat:2 }}$</td>
+          
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+

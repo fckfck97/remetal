@@ -218,6 +218,7 @@ def facturas(request, id=None):
             )
 
             if det:
+                
                 det.save()
 
             return redirect("facturacion:editar_factura", id=id)
@@ -273,11 +274,10 @@ class FacturaEncDelete(SinPrivilegios, DeleteView):
 
 def pago_factura(request, id):
     template_name = "facturacion/factura/pagar_factura.html"
-
     enc = FacturaEnc.objects.get(pk=id)
+    
     if request.method == "GET":
         context = {"det": enc}
-
     if request.method == "POST":
         metodo = request.POST.get("metodo")
         monto = request.POST.get("monto")
@@ -299,4 +299,31 @@ def pago_factura(request, id):
 
             return HttpResponse("ok")
 
+    return render(request, template_name, context)
+
+
+def desecho(request, id):
+    template_name = "facturacion/factura/desecho.html"
+    enc = FacturaEnc.objects.get(pk=id)
+    detalle = FacturaDet.objects.filter(factura=enc,estado=False)
+
+    if request.method == "GET":
+        context = {"enc": enc, "det":detalle}
+    
+    if request.method == "POST":
+        usr = request.POST.get("usuario")
+        pas = request.POST.get("pass")
+        cant = request.POST.get("cant")
+        prod = request.POST.get("prod")
+        det = FacturaDet.objects.get(pk=prod)
+        user = authenticate(username=usr, password=pas)
+        if not user:
+            return HttpResponse("Usuario o Clave Incorrecta")
+        if not user.is_active:
+            return HttpResponse("Usuario Inactivo")
+        if user.is_superuser or user.has_perm("fac.sup_caja_facturadet"):
+            det.desecho = cant
+            det.material_desecho()
+            return HttpResponse(f"Cantidad {cant} de Desecho del Producto {prod} eliminada ")
+        return HttpResponse("Usuario no autorizado")
     return render(request, template_name, context)
