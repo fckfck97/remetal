@@ -87,6 +87,9 @@
             >
               <i class="fa-solid fa-money-bill"></i>
             </button>
+            <button type="button" class="btn btn-sm btn-warning btn-circle" title="Eliminar Desecho" onclick="borrar_detalle({{ item.id }})">
+              <i class="fa-regular fa-circle-xmark"></i>
+            </button>
             {% endif %}
             {% if item.abono %}
 
@@ -96,12 +99,7 @@
               href="{% url 'facturacion:editar_factura' item.id %}"
               ><i class="far fa-edit"></i
             ></a>
-            <a
-            class="btn btn-sm btn-danger btn-circle" title="Eliminar"
-            onclick="return abrir_modal('{% url 'facturacion:eliminar_enc' item.id %}')"
-            target="reportes"
-            ><i class="fas fa-trash"></i
-          ></a>
+            <a         
           {% endif %}
           </td>
         </tr>
@@ -237,6 +235,78 @@
                   cancelar: function(){}
                   }
           });
+      }
+
+      function borrar_detalle(id) {
+        // mensaje(id);
+        $.confirm({
+          theme: "material",
+          icon: "fab fa-keycdn",
+          type: 'red',
+          title: "Confirmación Requerida",
+          content: 'url:/facturacion/eliminar/desecho/' + id,
+          onContentReady: function () {
+            var self = this;
+            this.$content.find('#usuario').val('{{ user.username }}');
+            this.$content.find('#usuario').select();
+            this.$content.find('#usuario').focus();
+          },
+          buttons: {
+            borrar: {
+              text: "Eliminar",
+              btnClass: "btn btn-danger",
+              action: function () {
+                var usuario = this.$content.find('input#usuario');
+                var pass = this.$content.find('input#password');
+                var cant = this.$content.find('input#cantidad');
+                var prod = this.$content.find('input#producto');
+    
+                if (!usuario.val().trim()) {
+                  mensaje("Usuario es requerido", 'red');
+                  return false;
+                }
+    
+                if (!pass.val().trim()) {
+                  mensaje("Contraseña es Requerida", "red");
+                  return false;
+                }
+
+                if (!cant.val().trim()) {
+                  mensaje("Cantidad de Desecho es Requerida", "red");
+                  return false;
+                }
+
+                if (!prod.val().trim()) {
+                  mensaje("Producto No Seleccionado", "red");
+                  return false;
+                }
+    
+                var data = {"usuario": usuario.val(), "pass": pass.val(), "cant": cant.val(), "prod": prod.val() };
+                console.log(data);
+    
+                var token = '{{csrf_token}}';
+                $.ajax({
+                  headers: { "X-CSRFToken": token },
+                  type: "POST",
+                  data: data,
+                  url: '/facturacion/eliminar/desecho/' + id,
+                  success: function (r) {
+                    console.log(r);
+                    if (r === "ok") {
+                      location.reload(true);
+                    } else {
+                      mensaje(r, 'red');
+                    }
+                  },
+                  error: function (a, b, c) {
+                    mensaje(c);
+                  }
+                });
+              }
+            },
+            cancelar: function () { }
+          }
+        });
       }
      
 </script>

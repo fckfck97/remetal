@@ -46,6 +46,7 @@
         <thead>
           <th>Código</th>
           <th align="right">Cant.</th>
+          <th align="right">DM.</th>
           <th align="right">P. Unit.</th>
           <th align="right">Sub Total</th>
           <th align="right">Total</th>
@@ -55,6 +56,7 @@
           <tr>
             <td>{{obj.producto.id}}</td>
             <td>{{obj.cantidad}} KG</td>
+            <td>{{obj.desecho}} KG</td>
             <td>{{obj.precio|floatformat:2}}$</td>
             <td>{{obj.sub_total|floatformat:2}}$</td>
             <td>{{obj.total|floatformat:2}}$</td>
