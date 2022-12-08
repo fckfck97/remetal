@@ -245,6 +245,7 @@
           type: 'red',
           title: "Confirmación Requerida",
           content: 'url:/facturacion/eliminar/desecho/' + id,
+          columnClass: 'col-md-8 col-md-offset-2',
           onContentReady: function () {
             var self = this;
             this.$content.find('#usuario').val('{{ user.username }}');
