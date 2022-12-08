@@ -322,6 +322,9 @@ def desecho(request, id):
         if not user.is_active:
             return HttpResponse("Usuario Inactivo")
         if user.is_superuser or user.has_perm("fac.sup_caja_facturadet"):
+            if float(cant) > det.cantidad or float(cant) == det.cantidad:
+                return HttpResponse(f"La Cantidad de Desecho del Producto es mayor o igual a la Cantidad de Compra")
+
             det.desecho = cant
             det.material_desecho()
             return HttpResponse(f"Cantidad {cant} de Desecho del Producto {prod} eliminada ")
