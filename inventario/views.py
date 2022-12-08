@@ -257,14 +257,8 @@ class GastosNew(SuccessMessageMixin,SinPrivilegios,CreateView):
         form_post = self.form_class(form_data)
         if request.method == 'POST':
             if 'descripcion' in request.POST:
-                descripcion = request.POST['descripcion'].upper()
-                desc = Gastos.objects.filter(descripcion=descripcion).exists()
-                if desc ==  True:
-                    messages.error(request,'Ya Existe un Gasto Registrado con la Misma Descripcion.')
-                    return redirect("inventario:lista_gastos")
-                else:
-                    self.form_valid(form_post)
-                    return redirect("inventario:lista_gastos")
+                self.form_valid(form_post)
+                return redirect("inventario:lista_gastos")
             return render(request, self.template_name, {'form': form})
 
     def form_valid(self, form):

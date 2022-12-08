@@ -101,18 +101,4 @@ class GastosForm(forms.ModelForm):
 
         self.fields['descripcion'].widget.attrs["required"] = "required"
 
-    def clean(self):
-        try:
-            sc = Gastos.objects.get(
-                descripcion=self.cleaned_data["descripcion"].upper()
-            )
-
-            if not self.instance.pk:
-                print("Registro ya existe")
-                raise forms.ValidationError("Registro Ya Existe")
-            elif self.instance.pk != sc.pk:
-                print("Cambio no permitido")
-                raise forms.ValidationError("Cambio No Permitido")
-        except Gastos.DoesNotExist:
-            pass
-        return self.cleaned_data
+    

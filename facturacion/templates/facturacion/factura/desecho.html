@@ -21,7 +21,7 @@
       </div>
     </div>
     <table
-    id="table"
+    id="tblProducto"
     data-toggle="table"
     data-pagination="true"
     data-search="true"
@@ -53,5 +53,8 @@
       {% endfor %}
     </tbody>
   </table>
-
-
+  {% block js_page %}
+  <script>
+    $('#tblProducto').bootstrapTable()
+  </script>
+{% endblock %}
