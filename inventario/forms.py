@@ -1,5 +1,5 @@
 from django import forms
-from .models import Categoria, SubCategoria, Producto, Gastos, Categoria_Gastos
+from .models import Categoria, SubCategoria, Producto, Gastos
 
 # formulario para la vista de las categorias
 
@@ -60,31 +60,14 @@ class ProductoForm(forms.ModelForm):
         self.fields['precio'].widget.attrs['min'] = 0
 
 
-class CategoriaGastosForm(forms.ModelForm):
-    class Meta:
-        model = Categoria_Gastos
-        fields = ['descripcion']
-        labels = {'descripcion': "Descripción de categoría"}
-        widget = {'descripcion': forms.TextInput}
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['descripcion'].widget.attrs.update(
-            {'class': 'form-control'})
-
-
 class GastosForm(forms.ModelForm):
-    categoria = forms.ModelChoiceField(
-        queryset=Categoria_Gastos.objects.filter(estado=True)
-        .order_by('descripcion')
-    )
     fc = forms.DateInput()
 
     class Meta:
         model = Gastos
-        fields = ['categoria', 'descripcion', 'monto_gastos','fc']
+        fields = ['subcategoria', 'descripcion', 'monto_gastos','fc']
         labels = {'descripcion': "Descripcion", 'monto_gastos': 'Monto',
-                  'categoria': 'Categoria', 'fc': 'Fecha'}
+                  'subcategoria': 'SubCategoria', 'fc': 'Fecha'}
         widget = {'Descripción': forms.TextInput,
                   'monto_gastos': forms.NumberInput}
 
@@ -94,7 +77,7 @@ class GastosForm(forms.ModelForm):
             {'class': 'form-control', 'min': '0','step': '0.01'})
         self.fields['descripcion'].widget.attrs.update(
             {'class': 'form-control'})
-        self.fields['categoria'].widget.attrs.update(
+        self.fields['subcategoria'].widget.attrs.update(
             {'class': 'form-select'})
         self.fields['fc'].widget.attrs.update(
             {'class': 'form-control'})
