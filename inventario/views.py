@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, CreateView, UpdateView,DeleteView
-from .models import Categoria, Categoria_Gastos, SubCategoria, Producto, Gastos
-from .forms import CategoriaForm, SubCategoriaForm, ProductoForm, GastosForm, CategoriaGastosForm
+from .models import Categoria, SubCategoria, Producto, Gastos
+from .forms import CategoriaForm, SubCategoriaForm, ProductoForm, GastosForm
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse_lazy
 from base.views import SinPrivilegios
 from django.contrib import messages
-
+from django.db.models import Q
+from django.db.models import Sum
 
 #Vistas de Categoria crear, editar eliminar y ver el listadp
 class CategoriaView(SinPrivilegios,ListView):
@@ -191,7 +192,7 @@ class ProductoNew(SuccessMessageMixin,SinPrivilegios,CreateView):
             context["codigo"] = codigo + 1
         
         context["producto"] = Producto.objects.all()
-        context["categorias"] = Categoria.objects.all()
+        context["categorias"] = Categoria.objects.filter(descripcion__icontains='MAT')
         context["subcategorias"] = SubCategoria.objects.all()
         return context
 
@@ -213,7 +214,7 @@ class ProductoEdit(SuccessMessageMixin,SinPrivilegios,UpdateView):
     def get_context_data(self, **kwargs):
         pk = self.kwargs.get('pk')
         context = super(ProductoEdit, self).get_context_data(**kwargs)
-        context["categorias"] = Categoria.objects.all()
+        context["categorias"] = Categoria.objects.filter(descripcion__icontains='MAT')
         context["subcategorias"] = SubCategoria.objects.all()
         context["obj"] = Producto.objects.filter(pk=pk).first()
         context["codigo"] = pk
@@ -251,6 +252,13 @@ class GastosNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     success_message="Nuevo Gasto Registrado Satisfactoriamente"
     permission_required="inventario.add_gastos"
 
+    def get_context_data(self, **kwargs):
+        context = super(GastosNew, self).get_context_data(**kwargs)
+        
+        context["categorias"] = Categoria.objects.filter(descripcion__icontains='GASTOS')
+        context["subcategorias"] = SubCategoria.objects.all()
+        return context
+
     def post(self, request, *args, **kwargs):
         form = self.form_class()
         form_data = request.POST or None
@@ -281,6 +289,13 @@ class GastosEdit(SuccessMessageMixin,SinPrivilegios, UpdateView):
         form.instance.estado = True
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super(GastosEdit, self).get_context_data(**kwargs)
+        
+        context["categorias"] = Categoria.objects.filter(descripcion__icontains='GASTOS')
+        context["subcategorias"] = SubCategoria.objects.all()
+        return context
+
 @login_required(login_url='/login/')
 @permission_required('inventario.change_gastos', login_url='base:sin_privilegios')
 def inhabilitargasto(request, id):
@@ -295,68 +310,25 @@ def inhabilitargasto(request, id):
     return HttpResponse("FAIL")
 
 
-#Vistas de Categoria crear, editar eliminar y ver el listadp
-class Categoria_Gastos_View(SinPrivilegios,ListView):
-    permission_required = "inventario.view_categoria_gastos"
-    model = Categoria_Gastos
-    template_name = "inventario/categoria_gastos/categoria_list.html"
-    context_object_name = 'obj'
-    
-class Categoria_Gastos_New(SuccessMessageMixin,SinPrivilegios,CreateView):
-    permission_required="inventario.add_categoria_gastos"
-    model=Categoria_Gastos
-    template_name="inventario/categoria_gastos/categoria_form.html"
-    context_object_name = "obj"
-    form_class=CategoriaGastosForm
-    success_message="Categoria Creada Satisfactoriamente"
-    success_url=reverse_lazy("inventario:lista_categoria_gastos")
+class SearchResultsView(ListView):
+    model = Gastos
+    template_name = "inventario/search/search_results.html"
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class()
-        form_data = request.POST or None
-        form_post = self.form_class(form_data)
-        if request.method == 'POST':
-            if 'descripcion' in request.POST:
-                descripcion = request.POST['descripcion'].upper()
-                desc = Categoria_Gastos.objects.filter(descripcion=descripcion).exists()
-                if desc ==  True:
-                    messages.error(request,'Ya Existe una Categoria de Gastos Registrado con la Misma Descripcion.')
-                    return redirect("inventario:lista_categoria_gastos")
-                else:
-                    self.form_valid(form_post)
-                    return redirect("inventario:lista_categoria_gastos")
-            return render(request, self.template_name, {'form': form})
+    def get_queryset(self):
+        try:
+            query = self.request.GET.get("q")
+            gastos = Gastos.objects.filter(subcategoria__descripcion__icontains=query).exists()
+            if gastos ==  False:
+                messages.error(self.request,'No Existe un Gastos con la Descripcion.')
+                return redirect("inventario:lista_gastos")
+            else:
+                object_list = Gastos.objects.filter(
+                    Q(subcategoria__descripcion__icontains=query)
+                )
+                total = Gastos.objects.filter(subcategoria__descripcion__icontains=query).aggregate(Sum('monto_gastos'))
+                return object_list
+        except:
+            messages.error(self.request, 'Factura de Gastos no Disponible')
+            return redirect("inventario:lista_gastos")
 
-    def form_valid(self, form):
-        form.instance.uc = self.request.user
-        form.instance.estado = True
-        return super().form_valid(form)
-
-
-class Categoria_Gastos_Edit(SuccessMessageMixin,SinPrivilegios,UpdateView):
-    permission_required="inventario.change_categoria_gastos"
-    model=Categoria_Gastos
-    template_name="inventario/categoria_gastos/categoria_form.html"
-    context_object_name = "obj"
-    form_class=CategoriaGastosForm
-    success_url=reverse_lazy("inventario:lista_categoria_gastos")
-    success_message="Categoria Actualizada Satisfactoriamente"
-
-    def form_valid(self, form):
-        form.instance.um = self.request.user.id
-        return super().form_valid(form)
-
-
-@login_required(login_url='/login/')
-@permission_required('inventario.change_categoria_gastos', login_url='base:sin_privilegios')
-def inhabilitarcatgas(request, id):
-    categoria = Categoria_Gastos.objects.filter(pk=id).first()
-
-    if request.method=="POST":
-        if categoria:
-            categoria.estado = not categoria.estado
-            categoria.save()
-            return HttpResponse("OK")
-        return HttpResponse("FAIL")
-    
-    return HttpResponse("FAIL")
+        

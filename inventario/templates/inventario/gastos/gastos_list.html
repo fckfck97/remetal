@@ -22,10 +22,10 @@
       <hr>
       <div class="buttons-toolbar">
         <a class="btn btn-primary mb-3" onclick="return abrir_modal('{% url 'inventario:nuevo_gastos' %}')" href="#"><i class="fa-solid fa-circle-plus"></i> Nuevo Gasto</a>
-        <a class="btn btn-primary mb-3" href="{% url 'inventario:lista_categoria_gastos'%}"
-        >Lista Cat-Gastos</a
-      >
       </div>
+      <form action="{% url 'inventario:search_results' %}" method="get" target="reportes">
+        <input class="form-control" name="q" type="text" placeholder="Busqueda de Gasto con Reporte">
+      </form>
       {% if not obj %}
       <div class="alert alert-info">No hay Gastos Cargados</div>
       {% else %}
@@ -44,8 +44,9 @@
     >
           <thead align="center">
               <th data-field='codigo'>Codigo</th>
+              <th data-field='categoria'>Categoria</th>
               <th data-field='descripcion'>Descripción</th>
-              <th data-field='categoria'>Monto</th>
+              <th data-field='monto'>Monto</th>
               <th data-field='estado'>Estado</th>
               <th data-field='fc'>F. Creado</th>
               <th class="all">Acciones</th>
@@ -55,6 +56,7 @@
             {% for item in obj %}
             <tr>
                 <td>RM-G-{{ item.id }}</td>
+                <td>{{ item.subcategoria }}</td>
                 <td>{{ item.descripcion }}</td>
                 <td>{{ item.monto_gastos|floatformat:2 }}$</td>
                 <td >{#item.estado|yesno:"Activo,Inactivo"#}

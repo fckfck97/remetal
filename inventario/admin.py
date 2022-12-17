@@ -19,11 +19,6 @@ class Producto(ImportExportModelAdmin):
     list_display = ('codigo','descripcion',)
     search_fields = ('codigo','descripcion',)
 
-@admin.register(models.Categoria_Gastos)
-class Categoria_Gastos(ImportExportModelAdmin):
-    list_display = ('descripcion','uc',)
-    search_fields = ('descripcion','uc',)
-
 @admin.register(models.Gastos)
 class Gastos(ImportExportModelAdmin):
     list_display = ('descripcion','fc',)

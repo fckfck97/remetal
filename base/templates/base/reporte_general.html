@@ -61,45 +61,45 @@
                     <h4>Comercializadora Remetal, C.A</b><br />
                         <small>RIF: J-31131248-0</small><br />
                         <small>Reporte de Compra, Venta y Gastos.</small><br />
-                        <small>Al Mes {{ mes }} del Ano {{ ano }}</small><br />
+                        <small>Al Ano {{ ano }}</small><br />
                     </h4>
                             
                   
                 </center>
             </div>
-
+            <b>Visualizacion de Datos de Diciembre</b><br />
             <table class="table">
                 <thead>
                     <tr>
-                        {% if total_neto < 0 %}
-                        <th>Perdidas Neta del Mes Actual</th>
-                        {% else %}
-                        <th>Ganancias Neta Mes Actual</th>
-                        {% endif %}
+                        <th>Compra</th>
+                        <th>Venta</th>
                         <th>Gastos</th>
-                        {% if total < 0 %}
-                        <th>Total Perdidas Mes Actual</th>
+
+                        {% if total_neto < 0 %}
+                        <th>Perdida Neta del Mes</th>
                         {% else %}
-                        <th>Total Ganancias Mes Actual</th>
+                        <th>Ganancia Neta del Mes</th>
                         {% endif %}
-                        {% if total_ano < 0 %}
-                        <th>Perdidas que va en el Ano</th>
+                        
+                        {% if total < 0 %}
+                        <th>Total Perdidas del Mes</th>
                         {% else %}
-                        <th>Ganancias Anuales</th>
+                        <th>Total Ganancia del Mes</th>
                         {% endif %}
                     </tr>
                 </thead>
                 <tbody>
    
                     <tr>
-                        <td>{{ total_neto|floatformat:2 }}$</td>
+                        <td>{{ compra|floatformat:2 }}$</td>
+                        <td>{{ venta|floatformat:2 }}$</td>
                         {% if gastos < 0 %}
                         <td> Sin Gastos</td>
                         {% else %}
                         <td>{{ gastos|floatformat:2 }}$</td>
                         {% endif %}
+                        <td>{{ total_neto|floatformat:2 }}$</td>
                         <td>{{ total|floatformat:2 }}$</td>
-                        <td>{{ total_ano|floatformat:2 }}$</td>
                     </tr>
 
                 </tbody>

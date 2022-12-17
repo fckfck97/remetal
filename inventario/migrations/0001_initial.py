@@ -28,21 +28,7 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'Categorias',
             },
         ),
-        migrations.CreateModel(
-            name='Categoria_Gastos',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('estado', models.BooleanField(default=True)),
-                ('fc', models.DateTimeField(auto_now_add=True)),
-                ('fm', models.DateTimeField(auto_now=True)),
-                ('um', models.IntegerField(blank=True, null=True)),
-                ('descripcion', models.CharField(help_text='Descripción de la Categoría', max_length=100, unique=True)),
-                ('uc', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='auth.user')),
-            ],
-            options={
-                'verbose_name_plural': 'Categorias de Gastos',
-            },
-        ),
+
         migrations.CreateModel(
             name='SubCategoria',
             fields=[

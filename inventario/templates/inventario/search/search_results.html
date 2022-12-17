@@ -60,8 +60,8 @@
                 <center>
                     <h4>Comercializadora Remetal, C.A</b><br />
                         <small>RIF: J-31131248-0</small><br />
-                        <small>Reporte de Gastos General de la Empresa.</h4>
-                    <h3>Reporte<br><small>Período: {{f1 | date:"d/m/Y"}} - {{f2 | date:"d/m/Y"}}</small></h3>
+                        <small>Reporte de Gastos</h4>
+                    <h3>Reporte<br></h3>
                 </center>
             </div>
 
@@ -76,7 +76,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in enc %}
+                    {% for item in object_list %}
                     <tr>
                         <td>RM-G-{{ item.id }}</td>
                         <td>{{ item.subcategoria }}</td>
@@ -86,11 +86,7 @@
                     </tr>
                     {% endfor %}
                 </tbody>
-            </table>
-            <div class="suma-total">
-                <h3><b>Total Gastado:</b> {{total}}$</h3>
-              </div>
-        
+            </table>       
         </div>
     </div>
 </body>
