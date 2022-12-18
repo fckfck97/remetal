@@ -164,7 +164,6 @@
                     <td>Sin Gastos A.</td>
                     {% endif%}
                     <td>{{ item.total|floatformat:2 }}$</td>
-                    
                     <td>
                       <button type="button" class="btn btn-sm btn-warning btn-circle" title="Eliminar producto" onclick="borrar_detalle({{ item.id }})">
                         <i class="fa-regular fa-circle-xmark"></i>
@@ -237,7 +236,7 @@
     cant = cant < 0 ? 0 : cant;
 
     prec = $('#precio').val();
-    prec = Number.parseFloat(prec).toPrecision(2)
+    prec = Number.parseFloat(prec)
 
     prec = prec === "" ? 0 : +prec;
     prec = prec < 0 ? 0 : prec;
