@@ -26,6 +26,7 @@
     >
           <thead align="center">
               <th data-field='id'>Id</th>
+              <th data-field='title'>Tipo</th>
               <th data-field='descripcion'>Descripción</th>
               <th data-field='estado'>Estado</th>
               <th data-field='fc'>F. Creado</th>
@@ -35,6 +36,7 @@
             {% for item in obj %}
             <tr>
                 <td>{{ item.id }}</td>
+                <td>{{ item.title }}</td>
                 <td>{{ item.descripcion }}</td>
                 <td >{#item.estado|yesno:"Activo,Inactivo"#}
                   <div class="cursor-pointer">

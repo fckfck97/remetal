@@ -37,6 +37,7 @@ class ProveedorForm(forms.ModelForm):
         except Proveedor.DoesNotExist:
             pass
         return self.cleaned_data
+        
 class ComprasEncForm(forms.ModelForm):
     fecha_compra = forms.DateInput()
     fecha_factura = forms.DateInput()

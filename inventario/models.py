@@ -3,9 +3,23 @@ from base.models import BaseModelo
 # Create your models here.
 
 class Categoria(BaseModelo):
+    SEL='Seleccion Una Opcion:'
+    MAT='MATERIAL'
+    GAS='GASTOS'
+    OTR='OTRO'
+    TIPO = [
+        (SEL,'Seleccion Una Opcion:'),
+        (MAT,'MATERIAL'),
+        (GAS,'GASTOS'),
+        (OTR,'OTRO')
+    ]
+    title=models.CharField(
+        max_length=25,
+        choices=TIPO,
+        default=SEL
+    )
     descripcion = models.CharField(
         max_length=100,
-        help_text='Descripción de la Categoría',
         unique=True
     )
 

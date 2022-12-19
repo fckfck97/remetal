@@ -59,20 +59,6 @@ class CategoriaEdit(SuccessMessageMixin,SinPrivilegios,UpdateView):
     success_url=reverse_lazy("inventario:lista_categoria")
     success_message="Categoria Actualizada Satisfactoriamente"
 
-    # def post(self, request, *args, **kwargs):
-    #     form = self.form_class()
-    #     if request.method == 'POST':
-    #         if 'descripcion' in request.POST:
-    #             descripcion = request.POST['descripcion'].upper()
-    #             desc = Categoria.objects.filter(descripcion=descripcion).exists()
-    #             if desc ==  True:
-    #                 messages.error(request,'Ya Existe una Categoria con la Misma Descripcion.')
-    #                 return redirect("inventario:lista_categoria")
-    #             else:
-    #                 self.form_valid(form)
-    #                 return redirect("inventario:lista_categoria")
-    #         return render(request, self.template_name, {'form': form})
-
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
@@ -192,7 +178,7 @@ class ProductoNew(SuccessMessageMixin,SinPrivilegios,CreateView):
             context["codigo"] = codigo + 1
         
         context["producto"] = Producto.objects.all()
-        context["categorias"] = Categoria.objects.filter(descripcion__icontains='MAT')
+        context["categorias"] = Categoria.objects.filter(title__icontains='MATERIAL')
         context["subcategorias"] = SubCategoria.objects.all()
         return context
 
@@ -214,7 +200,7 @@ class ProductoEdit(SuccessMessageMixin,SinPrivilegios,UpdateView):
     def get_context_data(self, **kwargs):
         pk = self.kwargs.get('pk')
         context = super(ProductoEdit, self).get_context_data(**kwargs)
-        context["categorias"] = Categoria.objects.filter(descripcion__icontains='MAT')
+        context["categorias"] = Categoria.objects.filter(title__icontains='MATERIAL')
         context["subcategorias"] = SubCategoria.objects.all()
         context["obj"] = Producto.objects.filter(pk=pk).first()
         context["codigo"] = pk
@@ -255,7 +241,7 @@ class GastosNew(SuccessMessageMixin,SinPrivilegios,CreateView):
     def get_context_data(self, **kwargs):
         context = super(GastosNew, self).get_context_data(**kwargs)
         
-        context["categorias"] = Categoria.objects.filter(descripcion__icontains='GASTOS')
+        context["categorias"] = Categoria.objects.filter(title__icontains='GASTOS')
         context["subcategorias"] = SubCategoria.objects.all()
         return context
 
@@ -292,7 +278,7 @@ class GastosEdit(SuccessMessageMixin,SinPrivilegios, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(GastosEdit, self).get_context_data(**kwargs)
         
-        context["categorias"] = Categoria.objects.filter(descripcion__icontains='GASTOS')
+        context["categorias"] = Categoria.objects.filter(title__icontains='GASTOS')
         context["subcategorias"] = SubCategoria.objects.all()
         return context
 
