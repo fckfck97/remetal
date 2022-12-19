@@ -7,15 +7,17 @@ from .models import Categoria, SubCategoria, Producto, Gastos
 class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categoria
-        fields = ['descripcion']
-        labels = {'descripcion': "Descripción de categoría"}
+        fields = ['title','descripcion']
+        labels = {'title':'Tipo de Categoria','descripcion': "Descripción de categoría"}
         widget = {'descripcion': forms.TextInput}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['descripcion'].widget.attrs.update(
             {'class': 'form-control'})
-
+        self.fields['title'].widget.attrs.update(
+            {'class': 'form-control'})
+        
 
 # formulario para la vista de las subcategorias
 
