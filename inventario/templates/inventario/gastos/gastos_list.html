@@ -8,7 +8,7 @@
     </div>
     <!-- Card Body -->
     <div class="card-body">
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-4">
           <input type="date" class="form-control" name="f1" id="f1">
         </div>
@@ -19,12 +19,16 @@
           <button class="btn btn-warning" type="button" id="btnPrint">Imprimir</button>
         </div>
       </div>
-      <hr>
+      <hr> -->
       <div class="buttons-toolbar">
         <a class="btn btn-primary mb-3" onclick="return abrir_modal('{% url 'inventario:nuevo_gastos' %}')" href="#"><i class="fa-solid fa-circle-plus"></i> Nuevo Gasto</a>
       </div>
       <form action="{% url 'inventario:search_results' %}" method="get" target="reportes">
-        <input class="form-control" name="q" type="text" placeholder="Busqueda de Gasto con Reporte">
+        <div class="row">
+          <div class="col-md-4 mb-2">
+            <input class="form-control" name="q" type="text" placeholder="Busqueda de Gasto con Reporte">
+          </div>
+        </div>
       </form>
       {% if not obj %}
       <div class="alert alert-info">No hay Gastos Cargados</div>
