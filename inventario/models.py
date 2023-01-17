@@ -56,9 +56,7 @@ class Producto(BaseModelo):
         max_length=20,
         unique=True,
         blank=True,
-        null=True
-
-    )
+        null=True)
     descripcion = models.CharField(max_length=200)
     precio = models.FloatField(default=0)
     existencia = models.FloatField(default=0)
